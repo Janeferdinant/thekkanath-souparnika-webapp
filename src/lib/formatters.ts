@@ -24,6 +24,8 @@ export function formatINR(paise: number, showDecimals: boolean = false): string 
   }).format(rupees);
 }
 
+export const formatCurrencyPaise = formatINR;
+
 /**
  * Validates Indian Phone Numbers (10 digits with optional +91 or 0 prefix)
  */
