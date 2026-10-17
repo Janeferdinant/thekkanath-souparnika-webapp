@@ -31,6 +31,39 @@ export const VENUE_INFO = {
 
 export const HALLS: Hall[] = [
   {
+    id: 'auditorium',
+    slug: 'auditorium',
+    name: 'Thekkanath Souparnika (Full Venue)',
+    floor: 'Full Facility (All Levels)',
+    capacityText: 'Up to 300 guests',
+    capacityNumber: 300,
+    airConditioned: true,
+    coverImage: '/assets/venue/venue-000.jpg',
+    galleryImages: [
+      '/assets/venue/venue-000.jpg',
+      '/assets/venue/venue-001.jpg',
+      '/assets/venue/venue-002.jpg',
+      '/assets/venue/venue-003.jpg',
+      '/assets/venue/venue-004.jpg',
+    ],
+    description:
+      'Complete private access to the entire Thekkanath Souparnika venue, including Stage Hall, Welcome Hall, Banquet Dining Hall, and Open Terrace Hall. Available in Morning (8 AM - 3 PM) and Evening (5 PM - 10 PM) sessions.',
+    suggestedUses: [
+      'Grand Weddings & Receptions',
+      'Large Celebrations & Banquets',
+      'Corporate Summits & Conventions',
+    ],
+    features: [
+      'Exclusive booking of all 4 halls',
+      'Stage & Ceremonial Seating',
+      'Grand Dining Banquet Hall',
+      'Air-conditioned suites',
+      'Dedicated on-site parking (40-50 cars)',
+    ],
+    published: true,
+    sortOrder: 0,
+  },
+  {
     id: 'stage-hall',
     slug: 'stage-hall',
     name: 'Stage Hall',

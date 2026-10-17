@@ -1,4 +1,10 @@
-import { Booking, MaintenanceBlock, BookingStatus } from '../types/models';
+import { Booking, MaintenanceBlock, BookingStatus, BookingSession } from '../types/models';
+
+export const SESSION_TIMES: Record<BookingSession, { startTime: string; endTime: string }> = {
+  morning: { startTime: '08:00', endTime: '15:00' },
+  evening: { startTime: '17:00', endTime: '22:00' },
+  full_day: { startTime: '08:00', endTime: '22:00' },
+};
 
 export interface TimeSlot {
   date: string; // YYYY-MM-DD
@@ -61,6 +67,7 @@ export interface ConflictCheckResult {
 /**
  * Core conflict detection algorithm.
  * Checks a proposed booking against all existing bookings and maintenance blocks for a given hall.
+ * If the whole auditorium is booked, it cascades a block to all constituent halls.
  */
 export function checkHallAvailability(
   hallId: string,
@@ -80,10 +87,11 @@ export function checkHallAvailability(
     };
   }
 
-  // 2. Check confirmed & active bookings on the same hall and date
+  // 2. Check confirmed & active bookings on the same hall, or whole auditorium booking on that date
   for (const b of existingBookings) {
     if (excludeBookingId && b.id === excludeBookingId) continue;
-    if (b.hallId !== hallId) continue;
+    const isRelevantHall = b.hallId === hallId || b.hallId === 'auditorium';
+    if (!isRelevantHall) continue;
     if (b.eventDate !== proposedDate) continue;
 
     if (isBlockingStatus(b.status, b.holdExpiresAt)) {
@@ -98,9 +106,10 @@ export function checkHallAvailability(
     }
   }
 
-  // 3. Check maintenance blocks on the same hall and date
+  // 3. Check maintenance blocks on the same hall or auditorium
   for (const m of existingMaintenance) {
-    if (m.hallId !== hallId) continue;
+    const isRelevantMaint = m.hallId === hallId || m.hallId === 'auditorium';
+    if (!isRelevantMaint) continue;
     if (m.status === 'completed') continue;
     if (m.startDate <= proposedDate && m.endDate >= proposedDate) {
       if (doIntervalsOverlap(proposedStartTime, proposedEndTime, m.startTime, m.endTime)) {
@@ -117,6 +126,66 @@ export function checkHallAvailability(
   return {
     hasConflict: false,
     message: 'Hall is available for the requested date and time slot.',
+  };
+}
+
+/**
+ * Auditorium Two-Session Conflict Check.
+ * Checks availability for the entire facility (Auditorium) for either 'morning', 'evening', or 'full_day'.
+ * Automatically accounts for turnaround buffer (15:00-17:00).
+ * Blocks if ANY constituent hall or the auditorium itself is already reserved.
+ */
+export function checkAuditoriumAvailability(
+  proposedDate: string,
+  proposedSession: BookingSession,
+  existingBookings: Booking[],
+  existingMaintenance: MaintenanceBlock[],
+  excludeBookingId?: string
+): ConflictCheckResult {
+  const sessionRange = SESSION_TIMES[proposedSession];
+  if (!sessionRange) {
+    return {
+      hasConflict: true,
+      conflictType: 'invalid_range',
+      message: `Invalid session requested: ${proposedSession}`,
+    };
+  }
+
+  // Check all active bookings on that date across any hall or the auditorium
+  for (const b of existingBookings) {
+    if (excludeBookingId && b.id === excludeBookingId) continue;
+    if (b.eventDate !== proposedDate) continue;
+
+    if (isBlockingStatus(b.status, b.holdExpiresAt)) {
+      if (doIntervalsOverlap(sessionRange.startTime, sessionRange.endTime, b.startTime, b.endTime)) {
+        return {
+          hasConflict: true,
+          conflictType: 'booking',
+          conflictingItemTitle: `${b.reference} (${b.customerName} - ${b.hallName})`,
+          message: `Conflict with existing booking ${b.reference} (${b.hallName}, ${b.startTime} - ${b.endTime})`,
+        };
+      }
+    }
+  }
+
+  // Check all maintenance blocks on that date across any hall
+  for (const m of existingMaintenance) {
+    if (m.status === 'completed') continue;
+    if (m.startDate <= proposedDate && m.endDate >= proposedDate) {
+      if (doIntervalsOverlap(sessionRange.startTime, sessionRange.endTime, m.startTime, m.endTime)) {
+        return {
+          hasConflict: true,
+          conflictType: 'maintenance',
+          conflictingItemTitle: m.title,
+          message: `Venue facility is blocked for maintenance: ${m.title} (${m.hallName}, ${m.startTime} - ${m.endTime})`,
+        };
+      }
+    }
+  }
+
+  return {
+    hasConflict: false,
+    message: `Auditorium is available for the ${proposedSession} session on ${proposedDate}.`,
   };
 }
 

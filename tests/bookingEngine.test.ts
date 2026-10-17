@@ -3,7 +3,9 @@ import {
   doIntervalsOverlap,
   isValidTimeRange,
   checkHallAvailability,
+  checkAuditoriumAvailability,
   canTransitionBookingStatus,
+  SESSION_TIMES,
 } from '../src/lib/bookingEngine';
 import { Booking, MaintenanceBlock } from '../src/types/models';
 
@@ -181,5 +183,87 @@ describe('Booking Status Transitions', () => {
   it('disallows invalid transitions from terminal states', () => {
     expect(canTransitionBookingStatus('completed', 'confirmed')).toBe(false);
     expect(canTransitionBookingStatus('cancelled', 'confirmed')).toBe(false);
+  });
+});
+
+describe('Booking Engine - Auditorium Two-Session Booking & Cascading Conflicts', () => {
+  const auditoriumBooking: Booking = {
+    id: 'aud-bkg-1',
+    reference: 'TS-BKG-2026-AUD1',
+    customerId: 'cust-10',
+    customerName: 'Sanjay Menon',
+    customerPhone: '9447123456',
+    customerEmail: 'sanjay@example.com',
+    hallId: 'auditorium',
+    hallName: 'Thekkanath Souparnika Auditorium (Full Venue)',
+    session: 'morning',
+    eventType: 'Wedding & Reception',
+    eventDate: '2026-12-05',
+    startTime: '08:00',
+    endTime: '15:00',
+    guestCount: 250,
+    status: 'confirmed',
+    createdAt: '2026-10-18',
+    updatedAt: '2026-10-18',
+  };
+
+  it('exports exact session timings matching the spec', () => {
+    expect(SESSION_TIMES.morning).toEqual({ startTime: '08:00', endTime: '15:00' });
+    expect(SESSION_TIMES.evening).toEqual({ startTime: '17:00', endTime: '22:00' });
+    expect(SESSION_TIMES.full_day).toEqual({ startTime: '08:00', endTime: '22:00' });
+  });
+
+  it('detects conflict when auditorium is booked for morning and another booking tries to book morning session', () => {
+    const result = checkAuditoriumAvailability('2026-12-05', 'morning', [auditoriumBooking], []);
+    expect(result.hasConflict).toBe(true);
+    expect(result.message).toContain('Conflict with existing booking');
+  });
+
+  it('allows evening session on the same date with automatic 2-hour turnaround buffer (15:00-17:00)', () => {
+    const result = checkAuditoriumAvailability('2026-12-05', 'evening', [auditoriumBooking], []);
+    expect(result.hasConflict).toBe(false);
+  });
+
+  it('detects conflict for full day if morning session is already booked', () => {
+    const result = checkAuditoriumAvailability('2026-12-05', 'full_day', [auditoriumBooking], []);
+    expect(result.hasConflict).toBe(true);
+  });
+
+  it('cascades conflict to individual halls when auditorium is booked', () => {
+    // Attempting to book stage-hall during auditorium morning booking window
+    const stageHallConflict = checkHallAvailability(
+      'stage-hall',
+      '2026-12-05',
+      '10:00',
+      '14:00',
+      [auditoriumBooking],
+      []
+    );
+    expect(stageHallConflict.hasConflict).toBe(true);
+  });
+
+  it('detects conflict when an individual hall is already booked and someone tries to book the whole auditorium', () => {
+    const singleHallBooking: Booking = {
+      id: 'single-bkg',
+      reference: 'TS-BKG-2026-099',
+      customerId: 'cust-20',
+      customerName: 'Radha',
+      customerPhone: '9447000000',
+      customerEmail: 'radha@example.com',
+      hallId: 'dining-hall',
+      hallName: 'Dining Hall',
+      eventType: 'Family Gathering',
+      eventDate: '2026-12-06',
+      startTime: '11:00',
+      endTime: '14:00',
+      guestCount: 50,
+      status: 'confirmed',
+      createdAt: '2026-10-18',
+      updatedAt: '2026-10-18',
+    };
+
+    const result = checkAuditoriumAvailability('2026-12-06', 'morning', [singleHallBooking], []);
+    expect(result.hasConflict).toBe(true);
+    expect(result.message).toContain('Dining Hall');
   });
 });

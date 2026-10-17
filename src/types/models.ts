@@ -65,6 +65,8 @@ export type EnquiryStatus =
   | 'lost'
   | 'closed';
 
+export type BookingSession = 'morning' | 'evening' | 'full_day';
+
 export interface Enquiry {
   id: string;
   reference: string; // e.g. TS-ENQ-2026-1001
@@ -73,6 +75,7 @@ export interface Enquiry {
   customerEmail: string;
   eventType: EventType;
   preferredDate: string; // YYYY-MM-DD
+  session?: BookingSession;
   startTime?: string; // HH:mm
   endTime?: string; // HH:mm
   preferredHallId?: string; // hall id or 'any'
@@ -106,6 +109,7 @@ export interface Booking {
   customerEmail: string;
   hallId: string;
   hallName: string;
+  session?: BookingSession;
   eventType: EventType;
   eventDate: string; // YYYY-MM-DD
   startTime: string; // HH:mm
