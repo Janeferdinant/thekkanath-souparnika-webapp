@@ -243,7 +243,30 @@ export interface Vendor {
   phone: string;
   email?: string;
   status: 'active' | 'inactive';
+  isPreferredCaterer?: boolean;
+  cuisineSpecialties?: string[];
   notes?: string;
+}
+
+export type ReferralStatus = 'registered' | 'earned' | 'payable' | 'disbursed' | 'voided';
+export type ReferralScheme = 'flat' | 'percentage';
+
+export interface ReferralRecord {
+  id: string;
+  bookingId?: string;
+  enquiryId?: string;
+  referrerName: string;
+  referrerPhone: string;
+  referrerEmail?: string;
+  upiId?: string;
+  scheme: ReferralScheme;
+  bonusPaise: number;
+  status: ReferralStatus;
+  paidAt?: string;
+  transactionRef?: string;
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface AuditLogEntry {
