@@ -66,6 +66,7 @@ export type EnquiryStatus =
   | 'closed';
 
 export type BookingSession = 'morning' | 'evening' | 'full_day';
+export type FinancialAccount = 'account_1' | 'account_2';
 
 export interface Enquiry {
   id: string;
@@ -121,6 +122,7 @@ export interface Booking {
   advancePaidPaise?: number; // Integer paise
   specialRequirements?: string;
   assignedManagerId?: string;
+  allocatedAccount?: FinancialAccount;
   cancellationReason?: string;
   createdAt: string;
   updatedAt: string;
@@ -188,6 +190,7 @@ export interface PaymentReceipt {
   bookingId: string;
   bookingReference: string;
   customerName: string;
+  allocatedAccount?: FinancialAccount;
   amountPaise: number;
   paymentMethod: 'cash' | 'bank_transfer' | 'upi' | 'cheque';
   transactionReference?: string;
