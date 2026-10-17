@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Thekkanath Souparnika — Business Owner's User Manual</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap');
+
+    @page {
+      size: A4 portrait;
+      margin: 12mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #1f2937;
+      background: #f1f5f3;
+      line-height: 1.5;
+      font-size: 9.5pt;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .manual-container {
+      max-width: 900px;
+      margin: 24px auto;
+      background: #ffffff;
+      padding: 32px 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+      }
+      .manual-container {
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        border-radius: 0;
+      }
+      .page-break {
+        page-break-after: always;
+        break-after: page;
+      }
+    }
+
+    .header-banner {
+      background: linear-gradient(135deg, #0d1f17 0%, #1b3328 100%);
+      color: #ffffff;
+      padding: 22px 26px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border-bottom: 4px solid #c5a059;
+    }
+
+    .header-banner .badge {
+      display: inline-block;
+      background: rgba(197, 160, 89, 0.2);
+      color: #fce7b0;
+      border: 1px solid #c5a059;
+      font-size: 7.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+
+    .header-banner h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 20pt;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+      letter-spacing: -0.3px;
+    }
+
+    .header-banner .subtitle {
+      font-size: 10pt;
+      color: #e2ebd8;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 13pt;
+      color: #11281e;
+      border-bottom: 1.5px solid #e1ebe3;
+      padding-bottom: 5px;
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+
+    h3 {
+      font-size: 10.5pt;
+      color: #1b3328;
+      font-weight: 700;
+      margin-top: 14px;
+      margin-bottom: 6px;
+    }
+
+    p {
+      margin-bottom: 8px;
+      color: #374151;
+      font-size: 9.5pt;
+    }
+
+    .screenshot-card {
+      margin: 14px 0;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #0f172a;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .screenshot-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .callout-box {
+      background: #f8faf9;
+      border: 1px solid #d5ded8;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      font-size: 9pt;
+    }
+
+    .callout-box.tip {
+      background: #f0fdf4;
+      border-color: #86efac;
+      color: #14532d;
+    }
+
+    .callout-box.alert {
+      background: #fdf8ed;
+      border-color: #fde68a;
+      color: #78350f;
+    }
+
+    .callout-box.how {
+      background: #f0f9ff;
+      border-color: #bae6fd;
+      color: #0369a1;
+    }
+
+    .badge-icon {
+      font-weight: 800;
+      font-size: 8pt;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 9pt;
+    }
+
+    th, td {
+      border: 1px solid #e2e8f0;
+      padding: 8px 12px;
+      text-align: left;
+    }
+
+    th {
+      background: #1b3328;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 8.5pt;
+    }
+
+    tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    .flowchart-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .flow-node {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 10px 8px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    }
+
+    .flow-node .node-header {
+      font-weight: 700;
+      font-size: 8pt;
+      padding: 4px;
+      border-radius: 4px;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .flow-node .node-body {
+      font-size: 8pt;
+      color: #4b5563;
+      line-height: 1.3;
+    }
+
+    .footer {
+      margin-top: 32px;
+      padding-top: 14px;
+      border-top: 1px solid #e2e8f0;
+      text-align: center;
+      font-size: 8pt;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+
+<div class="manual-container">
+
+  <!-- COVER BANNER -->
+  <div class="header-banner">
+    <div class="badge">Auditorium Operations Manual · Owner Edition</div>
+    <h1>Thekkanath Souparnika Venue Management System</h1>
+    <div class="subtitle">A Non-Technical, Step-by-Step Practical Guide for Business Owners & Staff</div>
+  </div>
+
+  <div class="callout-box">
+    <strong>Welcome to Your Venue Operations Suite:</strong> This web software replaces paper diaries, prevents accidental double-bookings, logs every rupee of guest advance payments, and allows Kerala wedding hosts to inquire 24/7 with 0% middleman commissions. You can manage everything from any laptop, tablet, or smartphone.
+  </div>
+
+  <h2>The Complete 5-Stage Venue Booking Lifecycle</h2>
+  <div class="flowchart-grid">
+    <div class="flow-node">
+      <div class="node-header" style="background:#0284c7;">1. Inbound Lead</div>
+      <div class="node-body">Guest explores halls on web & submits requested date</div>
+    </div>
+    <div class="flow-node">
+      <div class="node-header" style="background:#b45309;">2. Direct Chat</div>
+      <div class="node-body">Owner taps WhatsApp to greet family & discuss pricing</div>
+    </div>
+    <div class="flow-node">
+      <div class="node-header" style="background:#16a34a;">3. Lock & Advance</div>
+      <div class="node-body">Select date, log advance token; date is locked 100%</div>
+    </div>
+    <div class="flow-node">
+      <div class="node-header" style="background:#1b3328;">4. Event Staging</div>
+      <div class="node-body">Chiller AC pre-cools to 22°C; audio & mics verified</div>
+    </div>
+    <div class="flow-node">
+      <div class="node-header" style="background:#7c3aed;">5. Settlement</div>
+      <div class="node-body">Collect final balance and issue GST tax receipt</div>
+    </div>
+  </div>
+
+  <h2>Chapter 1: The Public Website (Customer Experience)</h2>
+  <p>Over 80% of Kerala wedding inquiries originate from mobile phones. The public portal showcases transparent hall capacities, parking specs, and direct WhatsApp connect:</p>
+  
+  <div class="screenshot-card">
+    <img src="manual_assets/cropped/02_home_page.png" alt="Public Homepage">
+  </div>
+
+  <table>
+    <tr><th>Feature</th><th>What Guests Experience</th></tr>
+    <tr><td><strong>Instant WhatsApp Connect</strong></td><td>Header button lets mobile guests chat directly with management.</td></tr>
+    <tr><td><strong>Accurate Capacity Specs</strong></td><td>Shows 1200+ floating capacity, 40–50 car parking on PWD road, and Rs. 0 fees.</td></tr>
+    <tr><td><strong>Hall Explorer</strong></td><td>Guests toggle between Stage Hall (AC), Welcome Hall, Dining Hall, and Open Hall.</td></tr>
+  </table>
+
+  <h2>Chapter 2: Daily Operations Command Center (/admin)</h2>
+  <p>Open this screen every morning to review revenue, active reservations, and today's functions:</p>
+  
+  <div class="screenshot-card">
+    <img src="manual_assets/cropped/01_admin_dashboard.png" alt="Admin Dashboard">
+  </div>
+
+  <table>
+    <tr><th>Metric / Button</th><th>Purpose & Action</th></tr>
+    <tr><td><strong>KPI Cards</strong></td><td>Live counters for Total Collections, Confirmed Events, and Open Inquiries.</td></tr>
+    <tr><td><strong>+ New Booking</strong></td><td>Opens the reservation dialog when taking bookings over phone or counter.</td></tr>
+    <tr><td><strong>Upcoming Events</strong></td><td>Shows functions scheduled for today, tomorrow, and this weekend with host contacts.</td></tr>
+  </table>
+
+  <h2>Chapter 3: Customer Enquiries & Lead Pipeline (/admin/enquiries)</h2>
+  <div class="screenshot-card">
+    <img src="manual_assets/cropped/06_enquiries_pipeline.png" alt="Enquiries Pipeline">
+  </div>
+  <p><strong>1-Click WhatsApp Connection:</strong> Tap the WhatsApp icon on any inquiry card to launch a pre-formatted greeting confirming date availability. Once the family agrees, click <strong>"Convert to Booking"</strong> to transfer all contact details directly into the booking engine!</p>
+
+  <h2>Chapter 4: The Booking Engine & Conflict Prevention Safeguard</h2>
+  <div class="screenshot-card">
+    <img src="manual_assets/cropped/08_new_booking_modal.png" alt="Create New Booking Modal" style="max-width:500px; margin:0 auto;">
+  </div>
+  <div class="callout-box alert">
+    <span class="badge-icon">Zero Double-Bookings Safeguard</span>
+    The built-in conflict engine evaluates hall, date, and time overlaps before confirming. If another staff member took the same date, the system immediately rejects the overlap and alerts you with the existing booking reference.
+  </div>
+
+  <h2>Chapter 5: Visual Availability Calendar (/admin/calendar)</h2>
+  <div class="screenshot-card">
+    <img src="manual_assets/cropped/09_calendar_view.png" alt="Booking Calendar">
+  </div>
+  <table>
+    <tr><th>Pill Color</th><th>Status</th><th>Meaning</th></tr>
+    <tr><td><strong style="color:#16a34a;">■ Green</strong></td><td>Confirmed Booking</td><td>Advance token received; date locked firmly.</td></tr>
+    <tr><td><strong style="color:#d97706;">■ Gold</strong></td><td>Tentative Hold</td><td>48-hour reservation while host confirms astrologer timings.</td></tr>
+    <tr><td><strong style="color:#dc2626;">■ Red</strong></td><td>Maintenance Blackout</td><td>Hall closed for floor polishing, AC service, or painting.</td></tr>
+  </table>
+
+  <h2>Chapter 6: Event Staging & Maintenance Protocols (/admin/operations)</h2>
+  <div class="screenshot-card">
+    <img src="manual_assets/cropped/10_operations_checklists.png" alt="Operations Checklists">
+  </div>
+  <table>
+    <tr><th>Countdown</th><th>Action</th><th>Responsible Staff</th></tr>
+    <tr><td><strong>T - 2 Hours</strong></td><td>Test wireless microphones, replace AA batteries, check podium acoustic levels.</td><td>AV Technician</td></tr>
+    <tr><td><strong>T - 1 Hour</strong></td><td>Switch on Stage Hall central AC chillers to pre-cool hall to 22°C before guests arrive.</td><td>HVAC Supervisor</td></tr>
+    <tr><td><strong>T - 30 Mins</strong></td><td>Unlock VIP dressing suites; verify diesel generator fuel level on automatic standby.</td><td>Operations Manager</td></tr>
+    <tr><td><strong>Post-Event</strong></td><td>Sanitize dining tables, clear trash, inspect hall for forgotten guest valuables.</td><td>Cleaning Supervisor</td></tr>
+  </table>
+
+  <h2>Chapter 7: Finance, Billing & Counter Payments (/admin/finance)</h2>
+  <div class="screenshot-card">
+    <img src="manual_assets/cropped/11_finance_ledger.png" alt="Finance Dashboard">
+  </div>
+  <div class="callout-box tip">
+    <span class="badge-icon">0% Fee Dynamic UPI QR Codes</span>
+    Show the customer the on-screen dynamic UPI QR code at the office counter. When scanned via Google Pay, PhonePe, or Paytm, 100% of the funds clear into your HDFC current account with <strong>Rs. 0 in payment gateway commissions</strong>!
+  </div>
+
+  <h2>Chapter 8: Grounded AI Copilot & Settings (/admin/ai)</h2>
+  <div class="screenshot-card">
+    <img src="manual_assets/cropped/12_ai_copilot.png" alt="AI Copilot">
+  </div>
+  <p>Ask natural questions: <em>"What is our total revenue collected this month?"</em> or <em>"Draft a polite WhatsApp message confirming booking TS-2026-003."</em> The AI evaluates your venue database and gives instant answers.</p>
+
+  <h2>Chapter 9: The 5-Minute Daily Routine for Venue Owners</h2>
+  <table>
+    <tr><th>Time</th><th>Action</th><th>Location</th></tr>
+    <tr><td><strong>09:00 AM</strong></td><td>Review inbound web leads; tap WhatsApp icon to greet prospects.</td><td><code>/admin/enquiries</code></td></tr>
+    <tr><td><strong>09:30 AM</strong></td><td>Verify today's staging: AC pre-cooling, audio mics, and dressing suites.</td><td><code>/admin/operations</code></td></tr>
+    <tr><td><strong>12:00 PM</strong></td><td>Check expiring 48-hr tentative holds; collect advance token.</td><td><code>/admin/bookings</code></td></tr>
+    <tr><td><strong>05:00 PM</strong></td><td>Reconcile office cash drawer with receipts logged in Finance.</td><td><code>/admin/finance</code></td></tr>
+  </table>
+
+  <div class="footer">
+    <strong>Thekkanath Souparnika Auditorium & Events Venue</strong> · Nellikunnu, Thrissur, Kerala — 680005<br/>
+    Telephone: +91 8129764370 · Email: thekkanathsouparnika@gmail.com
+  </div>
+
+</div>
+
+</body>
+</html>

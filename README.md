@@ -291,6 +291,11 @@ The entire production stack can be hosted at **₹0/month** on industry-standard
 
 ## 8. Management & Staff Operations Manual
 
+For a complete, beginner-friendly walkthrough with actual application screenshots, vector flowcharts, and annotated callouts designed for non-technical business owners, refer to:
+- **📄 Printable Business Owner's User Manual (PDF):** [docs/THEKKANATH_SOUPARNIKA_OWNER_MANUAL.pdf](file:///c:/Users/Asus/Documents/Antigravity-Projects/thekkanath-souparnika-webapp/docs/THEKKANATH_SOUPARNIKA_OWNER_MANUAL.pdf)
+- **🌐 Interactive Web Manual (HTML):** [docs/THEKKANATH_SOUPARNIKA_OWNER_MANUAL.html](file:///c:/Users/Asus/Documents/Antigravity-Projects/thekkanath-souparnika-webapp/docs/THEKKANATH_SOUPARNIKA_OWNER_MANUAL.html)
+- **🐍 PDF Generator Script:** [scripts/generate_owner_manual_pdf.py](file:///c:/Users/Asus/Documents/Antigravity-Projects/thekkanath-souparnika-webapp/scripts/generate_owner_manual_pdf.py)
+
 ### For General Manager & Super Admin
 - **Dashboard Review:** Open `/admin` every morning to review new leads, confirmed booking revenue, and scheduled event turnover.
 - **Audit Compliance:** Access `/admin/audit-log` to inspect staff actions, booking cancellations, and payment entries.
