@@ -10,6 +10,31 @@ export interface ReferrerContact {
   totalPaidPaise?: number;
 }
 
+export const DEFAULT_REFERRERS: ReferrerContact[] = [
+  {
+    id: 'ref-1',
+    name: 'Rahul Varma',
+    phone: '9446123456',
+    email: 'rahul.varma@example.com',
+    upiId: 'rahul@okhdfcbank',
+    totalReferrals: 3,
+  },
+  {
+    id: 'ref-2',
+    name: 'Aiswarya Lakshmi',
+    phone: '8129555666',
+    email: 'aiswarya@gmail.com',
+    totalReferrals: 1,
+  },
+  {
+    id: 'ref-3',
+    name: 'George Nellikunnu',
+    phone: '9847111222',
+    email: 'george@thekkanath.org',
+    totalReferrals: 5,
+  },
+];
+
 /**
  * Default flat reward: ₹2,500 (in paise)
  */

@@ -34,7 +34,7 @@ export const PublicHeader: React.FC = () => {
   return (
     <>
       {/* Top Contact Strip */}
-      <div className="bg-forest-900 text-cream-100 text-xs py-2 px-4 border-b border-forest-800">
+      <div className="bg-burgundy-950 text-cream-100 text-xs py-2 px-4 border-b border-burgundy-900">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-4 flex-wrap">
             <span className="inline-flex items-center gap-1.5 text-cream-200">
@@ -42,7 +42,7 @@ export const PublicHeader: React.FC = () => {
               Nellikunnu Market Junction, Thrissur
             </span>
             <span className="hidden md:inline-flex items-center gap-1 text-cream-300">
-              · On PWD Bus Route · Highway Access
+              · On PWD Bus Route · 40–50 Dedicated Parking
             </span>
           </div>
 
@@ -75,33 +75,39 @@ export const PublicHeader: React.FC = () => {
       </div>
 
       {/* Main Navigation */}
-      <header className="sticky top-0 z-40 bg-cream-50/95 backdrop-blur-md border-b border-cream-200 shadow-subtle">
+      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-rose-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
           {/* Brand Logo */}
           <Link to="/" className="flex items-center gap-3.5 group">
-            <div className="w-11 h-11 rounded-full bg-forest-800 border-2 border-gold-500/80 flex items-center justify-center text-gold-400 font-serif font-bold text-lg shadow-inner group-hover:scale-105 transition-transform">
-              TS
+            <div className="w-12 h-12 rounded-full overflow-hidden p-1 bg-gradient-to-br from-burgundy-900 via-burgundy-800 to-wine-950 border border-gold-400/50 shadow-md group-hover:scale-105 transition-transform flex items-center justify-center">
+              <img
+                src="/assets/brand/burgundy-lotus-emblem.png"
+                alt="Thekkanath Souparnika Lotus Crest"
+                className="w-full h-full object-contain filter drop-shadow"
+              />
             </div>
             <div>
-              <div className="font-serif font-bold text-xl sm:text-2xl text-forest-900 tracking-tight leading-none">
+              <div className="font-serif font-bold text-xl sm:text-2xl text-burgundy-950 tracking-tight leading-none group-hover:text-burgundy-800 transition-colors">
                 Thekkanath Souparnika
               </div>
-              <div className="text-[10px] tracking-widest uppercase font-semibold text-gold-700 mt-1">
-                Hall & Events Venue · Thrissur
+              <div className="text-[10px] tracking-widest uppercase font-semibold text-gold-700 mt-1 flex items-center gap-1.5">
+                <span>Auditorium & Events Venue</span>
+                <span className="text-gray-300">·</span>
+                <span className="text-gray-500 font-normal">Thrissur</span>
               </div>
             </div>
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-7 text-sm font-medium text-ink-700">
+          <nav className="hidden lg:flex items-center gap-7 text-sm font-medium text-gray-700">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
                 className={`transition-colors py-1 relative ${
                   isActive(link.path)
-                    ? 'text-forest-900 font-bold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-gold-500'
-                    : 'hover:text-forest-800'
+                    ? 'text-burgundy-950 font-bold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-gradient-to-r after:from-gold-500 after:to-rose-400'
+                    : 'hover:text-burgundy-800'
                 }`}
               >
                 {link.label}
@@ -113,7 +119,7 @@ export const PublicHeader: React.FC = () => {
           <div className="flex items-center gap-3">
             <Link
               to="/enquire"
-              className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold bg-forest-800 text-cream-50 hover:bg-forest-900 shadow-sm transition-all"
+              className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold bg-burgundy-900 text-white hover:bg-burgundy-950 shadow-sm border border-gold-500/30 transition-all hover:scale-[1.02]"
             >
               <Calendar className="w-4 h-4 text-gold-400" />
               <span>Check Date / Enquire</span>
@@ -121,7 +127,7 @@ export const PublicHeader: React.FC = () => {
 
             <Link
               to="/admin"
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-medium text-ink-600 hover:text-forest-900 hover:bg-cream-200 border border-cream-300 transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-medium text-gray-600 hover:text-burgundy-950 hover:bg-burgundy-50 border border-gray-200 transition-colors"
               title="Staff & Management Portal"
             >
               <Lock className="w-3.5 h-3.5 text-gold-600" />
@@ -131,7 +137,7 @@ export const PublicHeader: React.FC = () => {
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-lg text-forest-900 hover:bg-cream-200 focus:outline-none"
+              className="lg:hidden p-2 rounded-lg text-burgundy-950 hover:bg-burgundy-50 focus:outline-none"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

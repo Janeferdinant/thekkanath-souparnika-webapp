@@ -5,27 +5,31 @@ import { VENUE_INFO } from '../../data/venueData';
 
 export const PublicFooter: React.FC = () => {
   return (
-    <footer className="bg-forest-950 text-cream-100 pt-16 pb-10 border-t border-forest-900">
+    <footer className="bg-burgundy-950 text-cream-100 pt-16 pb-12 border-t border-burgundy-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-forest-900">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-burgundy-900/80">
           {/* Col 1: Brand & Identity */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-forest-800 border border-gold-500/80 flex items-center justify-center text-gold-400 font-serif font-bold text-lg">
-                TS
+              <div className="w-12 h-12 rounded-full overflow-hidden p-1 bg-burgundy-900 border border-gold-400/40 flex items-center justify-center">
+                <img
+                  src="/assets/brand/ivory-lotus-crest.png"
+                  alt="Thekkanath Souparnika Crest"
+                  className="w-full h-full object-contain filter drop-shadow"
+                />
               </div>
               <div>
                 <h3 className="font-serif font-bold text-xl text-white">Thekkanath Souparnika</h3>
-                <p className="text-[10px] text-gold-400 uppercase tracking-widest">Hall & Events Venue</p>
+                <p className="text-[10px] text-gold-400 uppercase tracking-widest">Auditorium & Events Venue</p>
               </div>
             </div>
             <p className="text-xs text-cream-300 leading-relaxed max-w-sm">
-              Thoughtfully designed auditorium and events venue in Thrissur, Kerala. Featuring four distinct halls, air-conditioned comfort, solar hybrid power, and generous on-site parking.
+              Thoughtfully curated luxury auditorium and gathering spaces in Thrissur, Kerala. Featuring four coordinated halls, solar hybrid uninterrupted power, pure tested water, and 40–50 dedicated on-site parking spots.
             </p>
             <div className="pt-2">
               <Link
                 to="/enquire"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-gold-500 text-forest-950 hover:bg-gold-400 transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold bg-gradient-to-r from-gold-500 to-rose-400 text-burgundy-950 hover:from-gold-400 hover:to-rose-300 transition-all shadow-md"
               >
                 <span>Make an Enquiry</span>
                 <ExternalLink className="w-3.5 h-3.5" />
@@ -84,7 +88,7 @@ export const PublicFooter: React.FC = () => {
                 <Phone className="w-4 h-4 text-gold-400 shrink-0" />
                 <div className="flex flex-col">
                   <a href={`tel:${VENUE_INFO.phones[0]}`} className="hover:text-gold-300">
-                    {VENUE_INFO.displayPhones[0]}
+                    {VENUE_INFO.displayPhones[0]} (Ferdinant N.)
                   </a>
                   <a href={`tel:${VENUE_INFO.phones[1]}`} className="hover:text-gold-300">
                     {VENUE_INFO.displayPhones[1]}
@@ -101,13 +105,13 @@ export const PublicFooter: React.FC = () => {
           </div>
 
           {/* Col 4: Venue Info & Reservations */}
-          <div className="bg-forest-900/60 p-4 rounded-xl border border-forest-800 text-xs space-y-2">
+          <div className="bg-burgundy-900/60 p-4 rounded-2xl border border-burgundy-800 text-xs space-y-2">
             <div className="flex items-center gap-2 text-gold-400 font-semibold">
               <ShieldAlert className="w-4 h-4" />
               <span>Celebrations & Enquiries</span>
             </div>
             <p className="text-[11px] text-cream-300 leading-relaxed">
-              All hall spaces accommodate up to 100 guests each, and the venue is ideally suited for gatherings of up to 300 guests across coordinated areas. Rental packages, date availability, and arrangements are coordinated directly with our team.
+              Bookings are coordinated directly with our on-site management team. Reserving the full auditorium provides complete exclusive access across all halls with 40–50 parking spaces.
             </p>
             <div className="pt-1">
               <Link
