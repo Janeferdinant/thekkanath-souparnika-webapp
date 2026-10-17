@@ -42,6 +42,8 @@ const STORAGE_KEYS = {
   DOCUMENTS: 'ts_documents',
   AUDIT_LOG: 'ts_audit_log',
   SETTINGS: 'ts_venue_settings',
+  PROFILES: 'ts_profiles',
+  REFERRALS: 'ts_referrals',
 };
 
 /**
@@ -111,7 +113,63 @@ export const StorageService = {
   },
 
   getAvailableProfiles(): UserProfile[] {
-    return DEMO_PROFILES;
+    return load<UserProfile[]>(STORAGE_KEYS.PROFILES, DEMO_PROFILES);
+  },
+
+  createProfile(profile: Omit<UserProfile, 'id' | 'createdAt'>): UserProfile {
+    const profiles = this.getAvailableProfiles();
+    const newProfile: UserProfile = {
+      ...profile,
+      id: `usr-${Date.now()}`,
+      createdAt: new Date().toISOString(),
+    };
+    profiles.push(newProfile);
+    save(STORAGE_KEYS.PROFILES, profiles);
+    this.logAction('STAFF_CREATED', 'UserProfile', newProfile.id, `Created staff member ${newProfile.fullName} (${newProfile.role})`);
+    return newProfile;
+  },
+
+  updateProfileRole(id: string, role: any): void {
+    const profiles = this.getAvailableProfiles();
+    const p = profiles.find((x) => x.id === id);
+    if (p) {
+      p.role = role;
+      save(STORAGE_KEYS.PROFILES, profiles);
+      this.logAction('STAFF_ROLE_UPDATED', 'UserProfile', id, `Updated role for ${p.fullName} to ${role}`);
+    }
+  },
+
+  removeProfile(id: string): void {
+    const profiles = this.getAvailableProfiles().filter((p) => p.id !== id);
+    save(STORAGE_KEYS.PROFILES, profiles);
+    this.logAction('STAFF_REMOVED', 'UserProfile', id, `Removed staff member ${id}`);
+  },
+
+  // Referrals
+  getReferrals(): any[] {
+    return load<any[]>(STORAGE_KEYS.REFERRALS, DEMO_REFERRALS);
+  },
+
+  updateReferral(id: string, updates: any): void {
+    const refs = this.getReferrals();
+    const item = refs.find((r) => r.id === id);
+    if (item) {
+      Object.assign(item, updates, { updatedAt: new Date().toISOString() });
+      save(STORAGE_KEYS.REFERRALS, refs);
+    }
+  },
+
+  createReferral(rec: any): any {
+    const refs = this.getReferrals();
+    const newRec = {
+      ...rec,
+      id: `ref-${Date.now()}`,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+    refs.unshift(newRec);
+    save(STORAGE_KEYS.REFERRALS, refs);
+    return newRec;
   },
 
   // Enquiries

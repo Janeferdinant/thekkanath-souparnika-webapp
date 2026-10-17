@@ -4,6 +4,11 @@ import {
   Search,
   Plus,
   AlertTriangle,
+  Mail,
+  ArrowUpDown,
+  Sun,
+  Moon,
+  Calendar,
 } from 'lucide-react';
 import { StorageService } from '../../lib/storage';
 import { Booking, BookingStatus, EventType } from '../../types/models';
@@ -13,6 +18,8 @@ import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 import { Modal } from '../../components/ui/Modal';
 import { useToast } from '../../context/ToastContext';
+import { EmailActivityDrawer } from '../../components/admin/EmailActivityDrawer';
+import { sortBookingsByEventDate } from '../../lib/adminEngine';
 
 export const BookingsPage: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -22,7 +29,9 @@ export const BookingsPage: React.FC = () => {
   const [bookings, setBookings] = useState<Booking[]>(() => StorageService.getBookings());
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [sortOrder, setSortOrder] = useState<'upcoming' | 'desc' | 'created'>('upcoming');
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
+  const [emailDrawerOpen, setEmailDrawerOpen] = useState(false);
 
   // New Booking Modal State
   const [newBookingModalOpen, setNewBookingModalOpen] = useState(false);
@@ -74,6 +83,16 @@ export const BookingsPage: React.FC = () => {
       );
     }
     return true;
+  });
+
+  const sortedBookings = [...filteredBookings].sort((a, b) => {
+    if (sortOrder === 'upcoming') {
+      return new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime();
+    }
+    if (sortOrder === 'desc') {
+      return new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime();
+    }
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
 
   const handleCreateBooking = (e: React.FormEvent) => {
@@ -148,17 +167,28 @@ export const BookingsPage: React.FC = () => {
           </p>
         </div>
 
-        <Button
-          variant="primary"
-          size="md"
-          onClick={() => {
-            setCreationError(null);
-            setNewBookingModalOpen(true);
-          }}
-          leftIcon={<Plus className="w-4 h-4" />}
-        >
-          Create New Booking
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="md"
+            onClick={() => setEmailDrawerOpen(true)}
+            leftIcon={<Mail className="w-4 h-4 text-burgundy-700" />}
+          >
+            Email Activity
+          </Button>
+
+          <Button
+            variant="primary"
+            size="md"
+            onClick={() => {
+              setCreationError(null);
+              setNewBookingModalOpen(true);
+            }}
+            leftIcon={<Plus className="w-4 h-4" />}
+          >
+            Create New Booking
+          </Button>
+        </div>
       </div>
 
       {/* Filter and Search */}
@@ -174,26 +204,43 @@ export const BookingsPage: React.FC = () => {
           />
         </div>
 
-        <div className="flex flex-wrap items-center gap-1.5 text-xs w-full md:w-auto">
-          {[
-            { id: 'all', label: 'All' },
-            { id: 'confirmed', label: 'Confirmed' },
-            { id: 'tentative_hold', label: 'Holds' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'cancelled', label: 'Cancelled' },
-          ].map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setStatusFilter(tab.id)}
-              className={`px-3 py-1.5 rounded-lg font-medium transition-colors ${
-                statusFilter === tab.id
-                  ? 'bg-forest-800 text-white font-bold'
-                  : 'bg-cream-100 text-ink-700 hover:bg-cream-200'
-              }`}
+        <div className="flex flex-wrap items-center gap-3 w-full md:w-auto justify-between md:justify-end">
+          {/* Status Tabs */}
+          <div className="flex flex-wrap items-center gap-1.5 text-xs">
+            {[
+              { id: 'all', label: 'All' },
+              { id: 'confirmed', label: 'Confirmed' },
+              { id: 'tentative_hold', label: 'Holds' },
+              { id: 'completed', label: 'Completed' },
+              { id: 'cancelled', label: 'Cancelled' },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setStatusFilter(tab.id)}
+                className={`px-3 py-1.5 rounded-lg font-medium transition-colors ${
+                  statusFilter === tab.id
+                    ? 'bg-forest-800 text-white font-bold'
+                    : 'bg-cream-100 text-ink-700 hover:bg-cream-200'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Sort Controls */}
+          <div className="flex items-center gap-1.5 bg-cream-50 px-2.5 py-1 rounded-xl border border-cream-200 text-xs">
+            <ArrowUpDown className="w-3.5 h-3.5 text-gray-500" />
+            <select
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value as 'upcoming' | 'desc' | 'created')}
+              className="bg-transparent text-gray-700 font-medium focus:outline-none text-xs cursor-pointer"
             >
-              {tab.label}
-            </button>
-          ))}
+              <option value="upcoming">Sort: Upcoming Event (Asc)</option>
+              <option value="desc">Sort: Event Date (Desc)</option>
+              <option value="created">Sort: Recently Created</option>
+            </select>
+          </div>
         </div>
       </div>
 
@@ -212,17 +259,22 @@ export const BookingsPage: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-cream-200">
-              {filteredBookings.length === 0 ? (
+              {sortedBookings.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="py-8 text-center text-ink-500">
                     No bookings found.
                   </td>
                 </tr>
               ) : (
-                filteredBookings.map((b) => (
+                sortedBookings.map((b) => (
                   <tr key={b.id} className="hover:bg-cream-50/80 transition-colors">
                     <td className="px-5 py-4">
-                      <div className="font-bold text-forest-950">{b.customerName}</div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-forest-950">{b.customerName}</span>
+                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-cream-200 text-forest-900 font-medium">
+                          {b.allocatedAccount || 'Account 1'}
+                        </span>
+                      </div>
                       <div className="text-[11px] text-ink-500 font-mono mt-0.5">{b.reference}</div>
                       <div className="text-[11px] text-ink-600 font-medium mt-0.5">
                         +91 {b.customerPhone}
@@ -240,6 +292,28 @@ export const BookingsPage: React.FC = () => {
                       <div className="text-[11px] text-ink-500 mt-0.5">
                         {formatTime12h(b.startTime)} - {formatTime12h(b.endTime)}
                       </div>
+                      {b.session && (
+                        <div className="mt-1">
+                          <span
+                            className={`inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
+                              b.session === 'morning'
+                                ? 'bg-amber-100 text-amber-900'
+                                : b.session === 'evening'
+                                ? 'bg-indigo-100 text-indigo-900'
+                                : 'bg-rose-100 text-rose-900'
+                            }`}
+                          >
+                            {b.session === 'morning' ? (
+                              <Sun className="w-3 h-3" />
+                            ) : b.session === 'evening' ? (
+                              <Moon className="w-3 h-3" />
+                            ) : (
+                              <Calendar className="w-3 h-3" />
+                            )}
+                            <span>{b.session.replace('_', ' ')}</span>
+                          </span>
+                        </div>
+                      )}
                     </td>
 
                     <td className="px-5 py-4">
@@ -529,6 +603,9 @@ export const BookingsPage: React.FC = () => {
           </div>
         </form>
       </Modal>
+
+      {/* In-App Email Activity Drawer */}
+      <EmailActivityDrawer isOpen={emailDrawerOpen} onClose={() => setEmailDrawerOpen(false)} />
     </div>
   );
 };

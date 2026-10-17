@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, Plus } from 'lucide-react';
+import { Phone, Plus, MessageCircle, Star, Utensils } from 'lucide-react';
 import { StorageService } from '../../lib/storage';
 import { Vendor } from '../../types/models';
 import { Badge } from '../../components/ui/Badge';
@@ -18,6 +18,8 @@ export const VendorsPage: React.FC = () => {
   const [contactPerson, setContactPerson] = useState('');
   const [phone, setPhone] = useState('');
   const [notes, setNotes] = useState('');
+  const [isPreferredCaterer, setIsPreferredCaterer] = useState(false);
+  const [cuisineSpecialties, setCuisineSpecialties] = useState('Traditional Kerala Sadhya, Buffet');
 
   const handleCreateVendor = (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,12 +32,15 @@ export const VendorsPage: React.FC = () => {
       phone: phone.trim(),
       status: 'active',
       notes: notes.trim(),
+      isPreferredCaterer: isPreferredCaterer || category === 'Catering Equipment',
+      cuisineSpecialties: cuisineSpecialties.split(',').map((s) => s.trim()).filter(Boolean),
     });
 
     setVendors(StorageService.getVendors());
     setModalOpen(false);
     setName('');
     setPhone('');
+    setIsPreferredCaterer(false);
     success('Vendor Added', `Supplier ${name} saved to vendor directory.`);
   };
 
@@ -76,15 +81,51 @@ export const VendorsPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="font-serif text-lg font-bold text-forest-950">{v.name}</h3>
+                <div className="flex items-center justify-between">
+                  <h3 className="font-serif text-lg font-bold text-forest-950">{v.name}</h3>
+                  {v.isPreferredCaterer && (
+                    <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300">
+                      <Star className="w-3 h-3 fill-amber-500 text-amber-600" />
+                      <span>Preferred Caterer</span>
+                    </span>
+                  )}
+                </div>
+
                 <div className="space-y-1 text-xs text-ink-600 mt-2">
                   <div className="text-ink-800 font-semibold">Contact: {v.contactPerson}</div>
-                  <div className="flex items-center gap-2">
-                    <Phone className="w-3.5 h-3.5 text-gold-600" />
-                    <span>+91 {v.phone}</span>
+                  <div className="flex items-center gap-3">
+                    <a
+                      href={`tel:${v.phone}`}
+                      className="flex items-center gap-1.5 text-forest-800 hover:text-gold-700 font-medium"
+                    >
+                      <Phone className="w-3.5 h-3.5 text-gold-600" />
+                      <span>+91 {v.phone}</span>
+                    </a>
+                    <a
+                      href={`https://wa.me/91${v.phone.replace(/\D/g, '')}?text=Hello%20${encodeURIComponent(v.name)}%2C%20regarding%20Thekkanath%20Souparnika%20event%20catering.`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1 text-[11px] text-emerald-700 hover:text-emerald-900 font-bold"
+                    >
+                      <MessageCircle className="w-3.5 h-3.5" />
+                      <span>WhatsApp</span>
+                    </a>
                   </div>
                 </div>
               </div>
+
+              {v.cuisineSpecialties && v.cuisineSpecialties.length > 0 && (
+                <div className="flex flex-wrap gap-1 pt-1">
+                  {v.cuisineSpecialties.map((tag, i) => (
+                    <span
+                      key={i}
+                      className="px-2 py-0.5 rounded-md bg-cream-100 text-[10px] font-medium text-forest-900"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
 
               {v.notes && (
                 <div className="p-3 rounded-xl bg-cream-50 border border-cream-200 text-xs text-ink-700">

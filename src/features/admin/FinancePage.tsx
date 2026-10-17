@@ -4,6 +4,10 @@ import {
   ArrowDownLeft,
   ArrowUpRight,
   FileSpreadsheet,
+  Download,
+  Printer,
+  AlertCircle,
+  ShieldCheck,
 } from 'lucide-react';
 import { StorageService } from '../../lib/storage';
 import { PaymentReceipt, ExpenseRecord, Quotation } from '../../types/models';
@@ -12,6 +16,8 @@ import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 import { Modal } from '../../components/ui/Modal';
 import { useToast } from '../../context/ToastContext';
+import { calculateDualAccountStats } from '../../lib/adminEngine';
+import { generateTaxFilingReport } from '../../lib/documentGenerator';
 
 export const FinancePage: React.FC = () => {
   const { success } = useToast();
@@ -52,6 +58,33 @@ export const FinancePage: React.FC = () => {
   const totalExpensesPaise = expenses.reduce((acc, e) => acc + e.amountPaise, 0);
   const totalBookedRevenuePaise = bookings.reduce((acc, b) => acc + (b.totalAgreedPaise || 0), 0);
   const totalReceivablePaise = Math.max(0, totalBookedRevenuePaise - totalCollectionsPaise);
+  const dualStats = calculateDualAccountStats(bookings);
+
+  const handleExportTaxXlsx = () => {
+    const report = generateTaxFilingReport('FY 2026-27', bookings, expenses);
+    const blob = new Blob([report.csvReceipts + '\n\n' + report.csvExpenses], {
+      type: 'text/csv;charset=utf-8;',
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'CA_Tax_Filing_FY2026-27_No_GST.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    success('Export Generated', 'Downloaded CA Tax Receipts & Expenses register without GST.');
+  };
+
+  const handlePrintTaxPdf = () => {
+    const report = generateTaxFilingReport('FY 2026-27', bookings, expenses);
+    const printWin = window.open('', '_blank');
+    if (printWin) {
+      printWin.document.write(report.summaryHtml);
+      printWin.document.close();
+      printWin.focus();
+      printWin.print();
+    }
+  };
 
   const handleRecordPayment = (e: React.FormEvent) => {
     e.preventDefault();
@@ -178,10 +211,18 @@ export const FinancePage: React.FC = () => {
           <Button
             variant="outline"
             size="sm"
-            onClick={exportCSV}
-            leftIcon={<FileSpreadsheet className="w-3.5 h-3.5" />}
+            onClick={handleExportTaxXlsx}
+            leftIcon={<Download className="w-3.5 h-3.5 text-forest-800" />}
           >
-            Export Ledger CSV
+            CA Tax Export (.xlsx)
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handlePrintTaxPdf}
+            leftIcon={<Printer className="w-3.5 h-3.5 text-forest-800" />}
+          >
+            Print Tax Report
           </Button>
           <Button
             variant="outline"
@@ -242,6 +283,107 @@ export const FinancePage: React.FC = () => {
             {formatINR(totalReceivablePaise)}
           </div>
           <p className="text-[10px] text-ink-400">Due prior to / on event day</p>
+        </div>
+      </div>
+
+      {/* Dual Account Load Balancing & ₹20L Statutory Limit Gauges */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Account 1 */}
+        <div
+          className={`p-5 rounded-2xl border shadow-sm space-y-3 ${
+            dualStats['Account 1'].isNearCeiling
+              ? 'bg-amber-50/80 border-amber-300'
+              : 'bg-white border-cream-200'
+          }`}
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-burgundy-100 text-burgundy-900 font-bold flex items-center justify-center text-xs">
+                A1
+              </div>
+              <div>
+                <h3 className="font-serif font-bold text-sm text-forest-950">Primary Entity (Account 1)</h3>
+                <span className="text-[10px] text-ink-500">Statutory ₹20L Annual Limit · No GST</span>
+              </div>
+            </div>
+            <span className="text-xs font-bold font-mono px-2 py-0.5 rounded-full bg-cream-100 text-forest-900">
+              {dualStats['Account 1'].percentUtilized.toFixed(1)}% Used
+            </span>
+          </div>
+
+          <div className="space-y-1">
+            <div className="flex items-center justify-between text-xs font-semibold">
+              <span className="text-forest-950">{formatINR(dualStats['Account 1'].totalTurnoverPaise)}</span>
+              <span className="text-ink-400">Cap: ₹20,00,000</span>
+            </div>
+            <div className="w-full bg-cream-100 h-2.5 rounded-full overflow-hidden">
+              <div
+                className={`h-full transition-all duration-500 rounded-full ${
+                  dualStats['Account 1'].isNearCeiling
+                    ? 'bg-amber-500'
+                    : 'bg-gradient-to-r from-burgundy-700 to-rose-600'
+                }`}
+                style={{ width: `${Math.min(100, dualStats['Account 1'].percentUtilized)}%` }}
+              />
+            </div>
+            <div className="flex items-center justify-between text-[11px] text-ink-500 pt-0.5">
+              <span>Remaining Headroom: <strong>{formatINR(dualStats['Account 1'].headroomPaise)}</strong></span>
+              {dualStats['Account 1'].isNearCeiling && (
+                <span className="text-amber-700 font-bold flex items-center gap-1">
+                  <AlertCircle className="w-3 h-3" /> Approaching Limit
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Account 2 */}
+        <div
+          className={`p-5 rounded-2xl border shadow-sm space-y-3 ${
+            dualStats['Account 2'].isNearCeiling
+              ? 'bg-amber-50/80 border-amber-300'
+              : 'bg-white border-cream-200'
+          }`}
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-900 font-bold flex items-center justify-center text-xs">
+                A2
+              </div>
+              <div>
+                <h3 className="font-serif font-bold text-sm text-forest-950">Secondary Entity (Account 2)</h3>
+                <span className="text-[10px] text-ink-500">Statutory ₹20L Annual Limit · No GST</span>
+              </div>
+            </div>
+            <span className="text-xs font-bold font-mono px-2 py-0.5 rounded-full bg-cream-100 text-forest-900">
+              {dualStats['Account 2'].percentUtilized.toFixed(1)}% Used
+            </span>
+          </div>
+
+          <div className="space-y-1">
+            <div className="flex items-center justify-between text-xs font-semibold">
+              <span className="text-forest-950">{formatINR(dualStats['Account 2'].totalTurnoverPaise)}</span>
+              <span className="text-ink-400">Cap: ₹20,00,000</span>
+            </div>
+            <div className="w-full bg-cream-100 h-2.5 rounded-full overflow-hidden">
+              <div
+                className={`h-full transition-all duration-500 rounded-full ${
+                  dualStats['Account 2'].isNearCeiling
+                    ? 'bg-amber-500'
+                    : 'bg-gradient-to-r from-indigo-700 to-purple-600'
+                }`}
+                style={{ width: `${Math.min(100, dualStats['Account 2'].percentUtilized)}%` }}
+              />
+            </div>
+            <div className="flex items-center justify-between text-[11px] text-ink-500 pt-0.5">
+              <span>Remaining Headroom: <strong>{formatINR(dualStats['Account 2'].headroomPaise)}</strong></span>
+              {dualStats['Account 2'].isNearCeiling && (
+                <span className="text-amber-700 font-bold flex items-center gap-1">
+                  <AlertCircle className="w-3 h-3" /> Approaching Limit
+                </span>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 

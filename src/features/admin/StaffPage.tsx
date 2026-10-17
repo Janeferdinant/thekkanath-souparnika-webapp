@@ -1,10 +1,82 @@
-import React from 'react';
-import { Phone, Mail, ShieldAlert } from 'lucide-react';
+import React, { useState } from 'react';
+import { Phone, Mail, ShieldAlert, ShieldCheck, UserPlus, Trash2, Lock } from 'lucide-react';
 import { StorageService } from '../../lib/storage';
 import { Badge } from '../../components/ui/Badge';
+import { Button } from '../../components/ui/Button';
+import { Modal } from '../../components/ui/Modal';
+import { UserProfile, UserRole } from '../../types/models';
+import { canManageStaff } from '../../lib/adminEngine';
+import { useToast } from '../../context/ToastContext';
 
 export const StaffPage: React.FC = () => {
-  const profiles = StorageService.getAvailableProfiles();
+  const { success, error } = useToast();
+  const currentUser = StorageService.getCurrentUser();
+  const isSuperAdmin = canManageStaff(currentUser?.role);
+
+  const [profiles, setProfiles] = useState<UserProfile[]>(() =>
+    StorageService.getAvailableProfiles()
+  );
+
+  // Add Staff Modal State
+  const [addModalOpen, setAddModalOpen] = useState(false);
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [role, setRole] = useState<UserRole>('manager');
+
+  const handleAddStaff = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isSuperAdmin) {
+      error('Access Denied: Only Super Admin can add staff members.');
+      return;
+    }
+    if (!fullName.trim() || !email.trim()) {
+      error('Please provide full name and email address.');
+      return;
+    }
+
+    try {
+      const created = StorageService.createProfile({
+        fullName: fullName.trim(),
+        email: email.trim(),
+        phone: phone.trim() || undefined,
+        role,
+      });
+      setProfiles((prev) => [...prev, created]);
+      setAddModalOpen(false);
+      setFullName('');
+      setEmail('');
+      setPhone('');
+      setRole('manager');
+      success(`Added ${created.fullName} to staff roster.`);
+    } catch {
+      error('Failed to create staff member.');
+    }
+  };
+
+  const handleRoleChange = (id: string, newRole: UserRole) => {
+    if (!isSuperAdmin) {
+      error('Access Denied: Only Super Admin can change staff roles.');
+      return;
+    }
+    StorageService.updateProfileRole(id, newRole);
+    setProfiles((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, role: newRole } : p))
+    );
+    success('Staff role updated successfully.');
+  };
+
+  const handleRemoveStaff = (id: string, name: string) => {
+    if (!isSuperAdmin) {
+      error('Access Denied: Only Super Admin can remove staff.');
+      return;
+    }
+    if (confirm(`Are you sure you want to remove ${name} from the staff roster?`)) {
+      StorageService.removeProfile(id);
+      setProfiles((prev) => prev.filter((p) => p.id !== id));
+      success(`Removed ${name} from roster.`);
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -15,7 +87,37 @@ export const StaffPage: React.FC = () => {
             Authorized management team, booking managers, and operations staff
           </p>
         </div>
+
+        {isSuperAdmin ? (
+          <Button
+            variant="primary"
+            size="md"
+            onClick={() => setAddModalOpen(true)}
+            leftIcon={<UserPlus className="w-4 h-4" />}
+          >
+            Add Staff Member
+          </Button>
+        ) : (
+          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs font-medium">
+            <Lock className="w-3.5 h-3.5 text-amber-700" />
+            <span>Read-Only View (Requires Super Admin)</span>
+          </div>
+        )}
       </div>
+
+      {/* Role Notice Banner */}
+      {!isSuperAdmin && (
+        <div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200 text-xs text-amber-900 flex items-start gap-3">
+          <ShieldAlert className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+          <div>
+            <div className="font-bold">Super Admin Privilege Enforcement</div>
+            <p className="text-[11px] text-amber-800 mt-0.5">
+              You are signed in as <strong>{currentUser?.fullName || 'Guest'}</strong> (Role:{' '}
+              {currentUser?.role || 'viewer'}). Modifying staff permissions, adding members, or altering credentials is restricted strictly to Super Admin.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Staff Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -33,9 +135,23 @@ export const StaffPage: React.FC = () => {
                     .join('')
                     .slice(0, 2)}
                 </div>
-                <Badge variant={p.role === 'super_admin' ? 'gold' : 'default'}>
-                  {p.role.replace('_', ' ').toUpperCase()}
-                </Badge>
+                {isSuperAdmin ? (
+                  <select
+                    value={p.role}
+                    onChange={(e) => handleRoleChange(p.id, e.target.value as UserRole)}
+                    className="text-xs font-bold px-2 py-1 rounded-lg border border-cream-300 bg-cream-50 text-forest-900 focus:outline-none focus:ring-1 focus:ring-forest-600"
+                  >
+                    <option value="super_admin">SUPER ADMIN</option>
+                    <option value="administrator">ADMINISTRATOR</option>
+                    <option value="manager">MANAGER</option>
+                    <option value="caretaker">CARETAKER</option>
+                    <option value="viewer">VIEWER</option>
+                  </select>
+                ) : (
+                  <Badge variant={p.role === 'super_admin' ? 'gold' : 'default'}>
+                    {p.role.replace('_', ' ').toUpperCase()}
+                  </Badge>
+                )}
               </div>
 
               <div>
@@ -55,13 +171,96 @@ export const StaffPage: React.FC = () => {
               </div>
             </div>
 
-            <div className="pt-3 border-t border-cream-200 text-[10px] text-ink-500 flex justify-between">
-              <span>Account Active</span>
+            <div className="pt-3 border-t border-cream-200 text-[10px] text-ink-500 flex items-center justify-between">
               <span>Joined: {new Date(p.createdAt).toLocaleDateString('en-IN')}</span>
+              {isSuperAdmin && p.role !== 'super_admin' && (
+                <button
+                  type="button"
+                  onClick={() => handleRemoveStaff(p.id, p.fullName)}
+                  className="text-red-600 hover:text-red-800 p-1 rounded hover:bg-red-50 transition-colors"
+                  title="Remove staff"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
+              )}
             </div>
           </div>
         ))}
       </div>
+
+      {/* Add Staff Modal */}
+      {isSuperAdmin && (
+        <Modal
+          isOpen={addModalOpen}
+          onClose={() => setAddModalOpen(false)}
+          title="Add New Staff Member"
+        >
+          <form onSubmit={handleAddStaff} className="space-y-4 text-xs">
+            <div className="space-y-1">
+              <label className="font-bold text-ink-800">Full Name *</label>
+              <input
+                type="text"
+                required
+                placeholder="e.g. John K. Joseph"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                className="w-full px-3 py-2 rounded-xl border border-cream-300 bg-white"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <label className="font-bold text-ink-800">Email Address *</label>
+              <input
+                type="email"
+                required
+                placeholder="e.g. john@thekkanath.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-3 py-2 rounded-xl border border-cream-300 bg-white"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <label className="font-bold text-ink-800">Contact Phone</label>
+              <input
+                type="tel"
+                placeholder="e.g. 9847000000"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="w-full px-3 py-2 rounded-xl border border-cream-300 bg-white"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <label className="font-bold text-ink-800">Assigned Role</label>
+              <select
+                value={role}
+                onChange={(e) => setRole(e.target.value as UserRole)}
+                className="w-full px-3 py-2 rounded-xl border border-cream-300 bg-white"
+              >
+                <option value="administrator">Administrator</option>
+                <option value="manager">Booking Manager</option>
+                <option value="caretaker">Caretaker / Operations</option>
+                <option value="viewer">Viewer (Read-Only)</option>
+              </select>
+            </div>
+
+            <div className="pt-4 border-t border-cream-200 flex items-center justify-end gap-3">
+              <Button
+                variant="outline"
+                size="sm"
+                type="button"
+                onClick={() => setAddModalOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button variant="gold" size="md" type="submit">
+                Save & Authorize Staff
+              </Button>
+            </div>
+          </form>
+        </Modal>
+      )}
 
       {/* Sensitive Payroll Disclosure */}
       <div className="p-5 rounded-2xl bg-forest-900 text-cream-100 border border-forest-800 text-xs space-y-1.5">
