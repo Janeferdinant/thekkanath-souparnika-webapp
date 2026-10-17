@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Thekkanath Souparnika — 360° Photo Sphere Capture Manual (Illustrated)</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap');
+
+    @page {
+      size: A4 portrait;
+      margin: 14mm 14mm 14mm 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #17231c;
+      background: #ffffff;
+      line-height: 1.45;
+      font-size: 9.5pt;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .header-banner {
+      background: linear-gradient(135deg, #0d1f17 0%, #173829 100%);
+      color: #ffffff;
+      padding: 20px 24px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      border-bottom: 4px solid #c5a059;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-text h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 19pt;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+      letter-spacing: -0.3px;
+    }
+
+    .header-text .subtitle {
+      font-size: 10pt;
+      color: #dfecdc;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(197, 160, 89, 0.25);
+      color: #f3d798;
+      border: 1px solid #c5a059;
+      font-size: 7.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 2px 8px;
+      border-radius: 5px;
+      margin-bottom: 6px;
+    }
+
+    .section {
+      margin-bottom: 16px;
+      page-break-inside: avoid;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 12.5pt;
+      color: #11281e;
+      border-bottom: 1.5px solid #e1ebe3;
+      padding-bottom: 4px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    h3 {
+      font-size: 10pt;
+      color: #193a2c;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    p {
+      margin-bottom: 6px;
+      color: #2e3d34;
+      font-size: 9pt;
+    }
+
+    .diagram-container {
+      background: #f7faf8;
+      border: 1px solid #dbe6dd;
+      border-radius: 10px;
+      padding: 12px;
+      margin: 10px 0;
+      text-align: center;
+    }
+
+    .diagram-title {
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: #1c382b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 10px 0;
+    }
+
+    .card-wrong {
+      background: #fff5f5;
+      border: 1.5px solid #f87171;
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+
+    .card-correct {
+      background: #f0fdf4;
+      border: 1.5px solid #4ade80;
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+
+    .card-label {
+      font-size: 9pt;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 6px;
+    }
+
+    .card-wrong .card-label { color: #dc2626; }
+    .card-correct .card-label { color: #16a34a; }
+
+    .rings-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin: 10px 0;
+    }
+
+    .ring-card {
+      background: #ffffff;
+      border: 1px solid #d5e2d8;
+      border-radius: 8px;
+      padding: 8px 6px;
+      text-align: center;
+    }
+
+    .ring-degree {
+      font-size: 11pt;
+      font-weight: 800;
+      color: #1c382b;
+    }
+
+    .ring-label {
+      font-size: 7.5pt;
+      font-weight: 700;
+      color: #c5a059;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .ring-desc {
+      font-size: 7pt;
+      color: #4b5e52;
+      margin-top: 4px;
+      line-height: 1.3;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0 12px 0;
+      font-size: 8.5pt;
+    }
+
+    th {
+      background: #173829;
+      color: #ffffff;
+      text-align: left;
+      padding: 6px 10px;
+      font-weight: 600;
+    }
+
+    td {
+      padding: 6px 10px;
+      border: 1px solid #e1ebe2;
+      color: #2b3a32;
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) td {
+      background: #f9fbf9;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+
+    .footer-note {
+      margin-top: 14px;
+      border-top: 1px solid #d9e5dc;
+      padding-top: 8px;
+      font-size: 7.5pt;
+      color: #6a7d72;
+      text-align: center;
+    }
+
+    .svg-graphic {
+      width: 100%;
+      max-height: 180px;
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== PAGE 1 ==================== -->
+  <div class="header-banner">
+    <div class="header-text">
+      <div class="badge">Auditorium Field Operations · Illustrated Guide</div>
+      <h1>Thekkanath Souparnika</h1>
+      <div class="subtitle">Capturing 360° Spherical Panoramas for Interactive Virtual Tour</div>
+    </div>
+    <div style="text-align: right; color: #dfbf78; font-size: 8pt; font-weight: 600;">
+      Thrissur, Kerala<br>
+      Standard 2:1 Equirectangular
+    </div>
+  </div>
+
+  <!-- SECTION 1: APPS -->
+  <div class="section">
+    <h2>1. Recommended Android Applications</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 25%;">App Name</th>
+          <th style="width: 30%;">Availability</th>
+          <th>Shooting Mechanism</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Google Camera (GCam)</strong></td>
+          <td>Google Pixel (native) or GCam Port (Samsung, OnePlus, Xiaomi)</td>
+          <td>Select <strong>Photo Sphere</strong> mode. Automatically shoots when crosshair aligns with target dots.</td>
+        </tr>
+        <tr>
+          <td><strong>Panorama 360 & VR</strong></td>
+          <td>Free on Google Play Store (TeliportMe)</td>
+          <td>Tap 360 capture. Real-time gyroscope guidance circle stitches full spherical view automatically.</td>
+        </tr>
+        <tr>
+          <td><strong>Photosphere 360</strong></td>
+          <td>Free on Google Play Store</td>
+          <td>Full spherical coverage grid. Generates unwrapped 360° × 180° equirectangular JPEG files.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 2: THE NODAL POINT WITH GRAPHICAL ILLUSTRATION -->
+  <div class="section">
+    <h2>2. The Critical "Nodal Point" Rule (Avoiding Stitch Errors)</h2>
+    <p>The single most important principle in 360 photography is keeping the camera lens at a fixed point in space:</p>
+
+    <div class="comparison-grid">
+      <!-- WRONG GRAPHIC -->
+      <div class="card-wrong">
+        <div class="card-label">❌ WRONG: Swinging Arms Around Body</div>
+        <svg class="svg-graphic" viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg">
+          <!-- Person Center -->
+          <circle cx="140" cy="70" r="14" fill="#dc2626" opacity="0.8"/>
+          <text x="140" y="74" font-size="8" fill="#ffffff" font-weight="bold" text-anchor="middle">PERSON</text>
+          
+          <!-- Wide Orbit Path -->
+          <circle cx="140" cy="70" r="48" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,4"/>
+          
+          <!-- Swinging Phone Positions -->
+          <rect x="180" y="63" width="16" height="14" rx="3" fill="#991b1b"/>
+          <rect x="132" y="15" width="16" height="14" rx="3" fill="#991b1b"/>
+          <rect x="84" y="63" width="16" height="14" rx="3" fill="#991b1b"/>
+          <rect x="132" y="111" width="16" height="14" rx="3" fill="#991b1b"/>
+
+          <!-- Curved Arrow showing orbit -->
+          <path d="M 195 55 A 48 48 0 0 0 155 23" fill="none" stroke="#dc2626" stroke-width="2.5" marker-end="url(#arrow)"/>
+          
+          <!-- Label -->
+          <text x="140" y="136" font-size="7.5" fill="#7f1d1d" font-weight="bold" text-anchor="middle">
+            Lens travels in a 3-foot wide orbit (creates broken seams)
+          </text>
+        </svg>
+        <p style="font-size: 8pt; color: #7f1d1d; margin-top: 4px;">
+          <strong>Result:</strong> Parallax tearing. Auditorium stage pillars, handrails, and dining tables appear sliced and misaligned.
+        </p>
+      </div>
+
+      <!-- CORRECT GRAPHIC -->
+      <div class="card-correct">
+        <div class="card-label">✅ CORRECT: Body Rotating Around Phone</div>
+        <svg class="svg-graphic" viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg">
+          <!-- Fixed Phone Center Axis -->
+          <circle cx="140" cy="70" r="8" fill="#16a34a"/>
+          <circle cx="140" cy="70" r="18" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="2,2"/>
+          <rect x="134" y="62" width="12" height="16" rx="2" fill="#15803d"/>
+          <text x="140" y="55" font-size="8" fill="#15803d" font-weight="bold" text-anchor="middle">PHONE (STAYS FIXED)</text>
+
+          <!-- Person Orbiting around phone -->
+          <circle cx="140" cy="115" r="11" fill="#22c55e" opacity="0.85"/>
+          <text x="140" y="119" font-size="7" fill="#ffffff" font-weight="bold" text-anchor="middle">YOU</text>
+
+          <!-- Orbit Path of Photographer -->
+          <circle cx="140" cy="70" r="45" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="3,3"/>
+          <path d="M 175 100 A 45 45 0 0 1 105 100" fill="none" stroke="#16a34a" stroke-width="2"/>
+
+          <!-- Label -->
+          <text x="140" y="136" font-size="7.5" fill="#14532d" font-weight="bold" text-anchor="middle">
+            Phone pivots on 1 imaginary center pin (perfect seamless stitch)
+          </text>
+        </svg>
+        <p style="font-size: 8pt; color: #14532d; margin-top: 4px;">
+          <strong>Result:</strong> Seamless alignment. The background stitches flawlessly across all banquet tables, lights, and floor lines.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: PHONE SCREEN VIEWFINDER DIAGRAM -->
+  <div class="section">
+    <h2>3. Inside the Viewfinder: How the Target Dot System Works</h2>
+    <div class="diagram-container">
+      <svg class="svg-graphic" style="max-height: 150px;" viewBox="0 0 480 140" xmlns="http://www.w3.org/2000/svg">
+        <!-- Phone Frame -->
+        <rect x="170" y="5" width="140" height="130" rx="14" fill="#111827" stroke="#374151" stroke-width="3"/>
+        <rect x="178" y="14" width="124" height="112" rx="6" fill="#1e293b"/>
+        
+        <!-- Horizon Guideline -->
+        <line x1="178" y1="70" x2="302" y2="70" stroke="#475569" stroke-width="1" stroke-dasharray="2,2"/>
+        
+        <!-- Fixed Center Ring -->
+        <circle cx="240" cy="70" r="18" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+        <circle cx="240" cy="70" r="3" fill="#f59e0b"/>
+
+        <!-- Target Dot floating to be captured -->
+        <circle cx="265" cy="70" r="9" fill="#38bdf8" stroke="#ffffff" stroke-width="1.5"/>
+        <circle cx="265" cy="70" r="3" fill="#ffffff"/>
+
+        <!-- Instruction Arrow -->
+        <path d="M 240 70 L 260 70" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+        <!-- Left Explanatory Callout -->
+        <rect x="15" y="45" width="140" height="50" rx="6" fill="#ffffff" stroke="#c5a059" stroke-width="1"/>
+        <text x="85" y="63" font-size="7.5" fill="#1c382b" font-weight="bold" text-anchor="middle">CENTER RING</text>
+        <text x="85" y="76" font-size="6.8" fill="#4b5e52" text-anchor="middle">Keep camera steady &</text>
+        <text x="85" y="87" font-size="6.8" fill="#4b5e52" text-anchor="middle">pan toward target dot</text>
+        <line x1="155" y1="70" x2="218" y2="70" stroke="#c5a059" stroke-width="1.2"/>
+
+        <!-- Right Explanatory Callout -->
+        <rect x="325" y="45" width="140" height="50" rx="6" fill="#ffffff" stroke="#0284c7" stroke-width="1"/>
+        <text x="395" y="63" font-size="7.5" fill="#0369a1" font-weight="bold" text-anchor="middle">TARGET DOT</text>
+        <text x="395" y="76" font-size="6.8" fill="#4b5e52" text-anchor="middle">Dot enters center ring ➔</text>
+        <text x="395" y="87" font-size="6.8" fill="#4b5e52" text-anchor="middle">Camera snaps automatically</text>
+        <line x1="325" y1="70" x2="276" y2="70" stroke="#0284c7" stroke-width="1.2"/>
+      </svg>
+      <div style="font-size: 8pt; color: #44594c; margin-top: 4px;">
+        Hold phone in portrait (vertical). Turn slowly until the <strong>blue target dot</strong> enters the <strong>center ring</strong>. The shutter fires automatically.
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 2 ==================== -->
+  <div class="page-break"></div>
+
+  <div class="header-banner" style="margin-bottom: 14px; padding: 14px 20px;">
+    <div>
+      <div class="badge">Part 2 · Sequence & Venue Nodes</div>
+      <h1 style="font-size: 15pt;">5-Ring Elevation Protocol & Capture Nodes</h1>
+    </div>
+    <div style="color: #dfbf78; font-size: 8pt; font-weight: 600;">Thekkanath Souparnika</div>
+  </div>
+
+  <!-- SECTION 4: 5-RING ELEVATION DIAGRAM -->
+  <div class="section">
+    <h2>4. The 5 Vertical Elevation Rings (Complete 360° × 180° Sphere)</h2>
+    <p>To capture all walls, ceiling, and floor, complete 5 circular passes at these vertical angles:</p>
+
+    <!-- ELEVATION RINGS GRAPHIC -->
+    <div class="diagram-container" style="padding: 10px;">
+      <svg class="svg-graphic" style="max-height: 140px;" viewBox="0 0 500 120" xmlns="http://www.w3.org/2000/svg">
+        <!-- Person Center Stick -->
+        <circle cx="250" cy="85" r="8" fill="#1c382b"/>
+        <line x1="250" y1="93" x2="250" y2="115" stroke="#1c382b" stroke-width="3"/>
+
+        <!-- Ring 3: Zenith (+90) -->
+        <line x1="250" y1="85" x2="250" y2="10" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="3,3"/>
+        <circle cx="250" cy="10" r="5" fill="#f59e0b"/>
+        <text x="250" y="24" font-size="7.5" fill="#b45309" font-weight="bold" text-anchor="middle">+90° Zenith (Ceiling Center)</text>
+
+        <!-- Ring 2: Upper (+45) -->
+        <line x1="250" y1="85" x2="350" y2="25" stroke="#10b981" stroke-width="2"/>
+        <circle cx="350" cy="25" r="4.5" fill="#10b981"/>
+        <text x="365" y="28" font-size="7.5" fill="#047857" font-weight="bold" text-anchor="start">+45° Ring (Lighting & AC)</text>
+
+        <!-- Ring 1: Horizon (0) -->
+        <line x1="250" y1="85" x2="390" y2="85" stroke="#3b82f6" stroke-width="2.5"/>
+        <circle cx="390" cy="85" r="5" fill="#3b82f6"/>
+        <text x="402" y="89" font-size="8" fill="#1d4ed8" font-weight="bold" text-anchor="start">0° Horizon (Eye Level · 360°)</text>
+
+        <!-- Ring 4: Lower (-45) -->
+        <line x1="250" y1="85" x2="330" y2="112" stroke="#6366f1" stroke-width="2"/>
+        <circle cx="330" cy="112" r="4.5" fill="#6366f1"/>
+        <text x="345" y="115" font-size="7.5" fill="#4338ca" font-weight="bold" text-anchor="start">-45° Ring (Chairs & Stage)</text>
+
+        <!-- Ring 5: Nadir (-90) -->
+        <line x1="250" y1="85" x2="250" y2="118" stroke="#ef4444" stroke-width="2" stroke-dasharray="2,2"/>
+        <circle cx="250" cy="118" r="4" fill="#ef4444"/>
+        <text x="240" y="117" font-size="7.5" fill="#b91c1c" font-weight="bold" text-anchor="end">-90° Nadir (Floor)</text>
+      </svg>
+    </div>
+
+    <!-- RINGS TABLE CARDS -->
+    <div class="rings-grid">
+      <div class="ring-card" style="border-top: 3px solid #3b82f6;">
+        <div class="ring-degree">0°</div>
+        <div class="ring-label">Pass 1: Horizon</div>
+        <div class="ring-desc">Eye level. Full 360° loop capturing all 4 walls.</div>
+      </div>
+      <div class="ring-card" style="border-top: 3px solid #10b981;">
+        <div class="ring-degree">+45°</div>
+        <div class="ring-label">Pass 2: Upper</div>
+        <div class="ring-desc">Tilt up 45°. Captures stage lights and AC vents.</div>
+      </div>
+      <div class="ring-card" style="border-top: 3px solid #f59e0b;">
+        <div class="ring-degree">+90°</div>
+        <div class="ring-label">Pass 3: Zenith</div>
+        <div class="ring-desc">Look straight up to complete top sphere.</div>
+      </div>
+      <div class="ring-card" style="border-top: 3px solid #6366f1;">
+        <div class="ring-degree">-45°</div>
+        <div class="ring-label">Pass 4: Lower</div>
+        <div class="ring-desc">Tilt down 45°. Captures seating & tables.</div>
+      </div>
+      <div class="ring-card" style="border-top: 3px solid #ef4444;">
+        <div class="ring-degree">-90°</div>
+        <div class="ring-label">Pass 5: Nadir</div>
+        <div class="ring-desc">Point straight down at floor. Step back slightly.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: VENUE FLOOR PLAN & 6 VANTAGE NODES -->
+  <div class="section">
+    <h2>5. The 6 Key Shooting Vantage Nodes at Thekkanath Souparnika</h2>
+    <div class="diagram-container" style="padding: 10px 14px;">
+      <svg class="svg-graphic" style="max-height: 120px;" viewBox="0 0 540 100" xmlns="http://www.w3.org/2000/svg">
+        <!-- Node 1 -->
+        <rect x="5" y="15" width="80" height="70" rx="8" fill="#ffffff" stroke="#c5a059" stroke-width="1.5"/>
+        <circle cx="45" cy="35" r="10" fill="#1c382b"/>
+        <text x="45" y="39" font-size="8" fill="#ffffff" font-weight="bold" text-anchor="middle">1</text>
+        <text x="45" y="58" font-size="7.5" fill="#1c382b" font-weight="bold" text-anchor="middle">FRONT GATE</text>
+        <text x="45" y="70" font-size="6.5" fill="#64748b" text-anchor="middle">40-50 Cars Parking</text>
+
+        <line x1="85" y1="50" x2="95" y2="50" stroke="#94a3b8" stroke-width="2"/>
+
+        <!-- Node 2 -->
+        <rect x="95" y="15" width="80" height="70" rx="8" fill="#ffffff" stroke="#c5a059" stroke-width="1.5"/>
+        <circle cx="135" cy="35" r="10" fill="#1c382b"/>
+        <text x="135" y="39" font-size="8" fill="#ffffff" font-weight="bold" text-anchor="middle">2</text>
+        <text x="135" y="58" font-size="7.5" fill="#1c382b" font-weight="bold" text-anchor="middle">WELCOME</text>
+        <text x="135" y="70" font-size="6.5" fill="#64748b" text-anchor="middle">Ground Floor Foyer</text>
+
+        <line x1="175" y1="50" x2="185" y2="50" stroke="#94a3b8" stroke-width="2"/>
+
+        <!-- Node 3 -->
+        <rect x="185" y="15" width="80" height="70" rx="8" fill="#ffffff" stroke="#c5a059" stroke-width="1.5"/>
+        <circle cx="225" cy="35" r="10" fill="#1c382b"/>
+        <text x="225" y="39" font-size="8" fill="#ffffff" font-weight="bold" text-anchor="middle">3</text>
+        <text x="225" y="58" font-size="7.5" fill="#1c382b" font-weight="bold" text-anchor="middle">STAGE HALL</text>
+        <text x="225" y="70" font-size="6.5" fill="#64748b" text-anchor="middle">Aisle Facing Stage</text>
+
+        <line x1="265" y1="50" x2="275" y2="50" stroke="#94a3b8" stroke-width="2"/>
+
+        <!-- Node 4 -->
+        <rect x="275" y="15" width="80" height="70" rx="8" fill="#ffffff" stroke="#c5a059" stroke-width="1.5"/>
+        <circle cx="315" cy="35" r="10" fill="#1c382b"/>
+        <text x="315" y="39" font-size="8" fill="#ffffff" font-weight="bold" text-anchor="middle">4</text>
+        <text x="315" y="58" font-size="7.5" fill="#1c382b" font-weight="bold" text-anchor="middle">ON STAGE</text>
+        <text x="315" y="70" font-size="6.5" fill="#64748b" text-anchor="middle">Host's View of Hall</text>
+
+        <line x1="355" y1="50" x2="365" y2="50" stroke="#94a3b8" stroke-width="2"/>
+
+        <!-- Node 5 -->
+        <rect x="365" y="15" width="80" height="70" rx="8" fill="#ffffff" stroke="#c5a059" stroke-width="1.5"/>
+        <circle cx="405" cy="35" r="10" fill="#1c382b"/>
+        <text x="405" y="39" font-size="8" fill="#ffffff" font-weight="bold" text-anchor="middle">5</text>
+        <text x="405" y="58" font-size="7.5" fill="#1c382b" font-weight="bold" text-anchor="middle">DINING HALL</text>
+        <text x="405" y="70" font-size="6.5" fill="#64748b" text-anchor="middle">1st Floor Banquet</text>
+
+        <line x1="445" y1="50" x2="455" y2="50" stroke="#94a3b8" stroke-width="2"/>
+
+        <!-- Node 6 -->
+        <rect x="455" y="15" width="80" height="70" rx="8" fill="#ffffff" stroke="#c5a059" stroke-width="1.5"/>
+        <circle cx="495" cy="35" r="10" fill="#1c382b"/>
+        <text x="495" y="39" font-size="8" fill="#ffffff" font-weight="bold" text-anchor="middle">6</text>
+        <text x="495" y="58" font-size="7.5" fill="#1c382b" font-weight="bold" text-anchor="middle">OPEN HALL</text>
+        <text x="495" y="70" font-size="6.5" fill="#64748b" text-anchor="middle">Terrace Pavilion</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- SECTION 6: FILE HANDOVER -->
+  <div class="section">
+    <h2>6. File Export & Handover to Web Team</h2>
+    <div style="background: #fbf6ec; border: 1px solid #c5a059; border-radius: 8px; padding: 10px 14px;">
+      <p style="font-size: 8.5pt; color: #4a3810; margin-bottom: 4px;">
+        <strong>📁 Unwrapped 2:1 Format:</strong> When stitched, the photo appears flat with a 2:1 aspect ratio (e.g. <code>4096 × 2048 px</code> or <code>8192 × 4096 px</code>).
+      </p>
+      <p style="font-size: 8.5pt; color: #4a3810; margin-bottom: 0;">
+        <strong>🚀 How to Send:</strong> Send via Google Drive link or as a <strong>"Document"</strong> in WhatsApp (do not send as normal photo to avoid WhatsApp compression). Our team will place the files into <code>public/assets/tour/</code> and activate the live 360° viewer route.
+      </p>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    Thekkanath Souparnika Hall & Events Venue · Nellikunnu, Thrissur, Kerala — 680005 · +91 8129764370 · thekkanathsouparnika@gmail.com
+  </div>
+
+</body>
+</html>

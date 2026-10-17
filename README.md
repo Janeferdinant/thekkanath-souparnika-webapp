@@ -371,3 +371,24 @@ npm run build
 ```
 
 Detailed test logs and verification records are preserved in [docs/TEST_REPORT.md](file:///c:/Users/Asus/Documents/Antigravity-Projects/thekkanath-souparnika-webapp/docs/TEST_REPORT.md).
+
+---
+
+## 12. 360° Virtual Tour Field Manual (Android Photo Sphere)
+
+To create an interactive virtual tour for Thekkanath Souparnika without requiring expensive 360° spherical camera hardware, venue staff and photographers can capture high-resolution equirectangular panoramas using any modern Android smartphone.
+
+We provide a complete, 3-page illustrated manual containing vector diagrams, nodal point geometry, viewfinder alignment walkthroughs, and venue floorplan maps:
+
+- **📄 Printable PDF Field Manual:** [docs/THEKKANATH_SOUPARNIKA_360_PHOTOSPHERE_MANUAL.pdf](file:///c:/Users/Asus/Documents/Antigravity-Projects/thekkanath-souparnika-webapp/docs/THEKKANATH_SOUPARNIKA_360_PHOTOSPHERE_MANUAL.pdf)
+- **🌐 Interactive Web HTML Version:** [docs/THEKKANATH_SOUPARNIKA_360_PHOTOSPHERE_MANUAL.html](file:///c:/Users/Asus/Documents/Antigravity-Projects/thekkanath-souparnika-webapp/docs/THEKKANATH_SOUPARNIKA_360_PHOTOSPHERE_MANUAL.html)
+- **🐍 PDF Generator Script:** [scripts/generate_manual_pdf.py](file:///c:/Users/Asus/Documents/Antigravity-Projects/thekkanath-souparnika-webapp/scripts/generate_manual_pdf.py)
+
+### Summary of the 6 Venue Capture Nodes:
+1. **Compound Front Gate:** Main entry gate looking into the 40–50 car parking lot and exterior building facade.
+2. **Welcome Hall Foyer:** Just inside the glass entrance doors showcasing elder accessibility and reception.
+3. **Stage Hall (Audience):** Center aisle 15 ft back from stage showcasing decorated stage and air conditioning.
+4. **On the Stage:** Standing center stage looking forward over the audience rows and main entrance.
+5. **Dining Hall:** Center aisle between rows of banquet dining tables with garden window views.
+6. **Open Hall Pavilion:** Center floor of the breezy covered rooftop terrace pavilion.
+
