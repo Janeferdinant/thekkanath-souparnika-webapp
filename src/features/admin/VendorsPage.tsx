@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, Plus, MessageCircle, Star, Utensils } from 'lucide-react';
+import { Phone, Plus, MessageCircle, Star } from 'lucide-react';
 import { StorageService } from '../../lib/storage';
 import { Vendor } from '../../types/models';
 import { Badge } from '../../components/ui/Badge';
@@ -173,6 +173,31 @@ export const VendorsPage: React.FC = () => {
               <option value="Plumbing">Plumbing & Water</option>
             </select>
           </div>
+
+          <div className="space-y-1">
+            <label className="flex items-center gap-2 cursor-pointer font-bold text-ink-800">
+              <input
+                type="checkbox"
+                checked={isPreferredCaterer}
+                onChange={(e) => setIsPreferredCaterer(e.target.checked)}
+                className="rounded text-forest-700"
+              />
+              <span>Mark as Preferred Catering Partner</span>
+            </label>
+          </div>
+
+          {isPreferredCaterer && (
+            <div className="space-y-1">
+              <label className="font-bold text-ink-800">Cuisine Specialties (comma-separated)</label>
+              <input
+                type="text"
+                placeholder="e.g. Traditional Kerala Sadhya, Buffet, North Indian"
+                value={cuisineSpecialties}
+                onChange={(e) => setCuisineSpecialties(e.target.value)}
+                className="w-full px-3 py-2 rounded-xl border border-cream-300 bg-white"
+              />
+            </div>
+          )}
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1">

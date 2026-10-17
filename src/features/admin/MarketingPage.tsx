@@ -7,9 +7,7 @@ import {
   ShieldAlert,
   Gift,
   CheckCircle,
-  ArrowRight,
   CreditCard,
-  DollarSign,
 } from 'lucide-react';
 import { StorageService } from '../../lib/storage';
 import { ReferralRecord, ReferralStatus } from '../../types/models';
@@ -287,7 +285,7 @@ export const MarketingPage: React.FC = () => {
                                 : r.status === 'payable'
                                 ? 'warning'
                                 : r.status === 'earned'
-                                ? 'primary'
+                                ? 'info'
                                 : 'default'
                             }
                           >

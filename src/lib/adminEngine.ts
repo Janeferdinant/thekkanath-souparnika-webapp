@@ -34,13 +34,13 @@ export function calculateDualAccountStats(
   bookings: Booking[]
 ): Record<FinancialAccount, AccountStats> {
   const result: Record<FinancialAccount, AccountStats> = {
-    'Account 1': {
+    account_1: {
       totalTurnoverPaise: 0,
       headroomPaise: CEILING_TURNOVER_PAISE,
       percentUtilized: 0,
       isNearCeiling: false,
     },
-    'Account 2': {
+    account_2: {
       totalTurnoverPaise: 0,
       headroomPaise: CEILING_TURNOVER_PAISE,
       percentUtilized: 0,
@@ -50,13 +50,13 @@ export function calculateDualAccountStats(
 
   for (const b of bookings) {
     if (b.status === 'cancelled') continue;
-    const account = b.allocatedAccount || 'Account 1';
+    const account = b.allocatedAccount || 'account_1';
     if (result[account]) {
-      result[account].totalTurnoverPaise += b.totalAmountPaise || 0;
+      result[account].totalTurnoverPaise += b.totalAgreedPaise || 0;
     }
   }
 
-  for (const key of ['Account 1', 'Account 2'] as FinancialAccount[]) {
+  for (const key of ['account_1', 'account_2'] as FinancialAccount[]) {
     const acc = result[key];
     acc.headroomPaise = Math.max(0, CEILING_TURNOVER_PAISE - acc.totalTurnoverPaise);
     acc.percentUtilized = Math.min(100, (acc.totalTurnoverPaise / CEILING_TURNOVER_PAISE) * 100);

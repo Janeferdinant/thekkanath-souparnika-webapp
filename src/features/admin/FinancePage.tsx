@@ -3,11 +3,9 @@ import {
   Plus,
   ArrowDownLeft,
   ArrowUpRight,
-  FileSpreadsheet,
   Download,
   Printer,
   AlertCircle,
-  ShieldCheck,
 } from 'lucide-react';
 import { StorageService } from '../../lib/storage';
 import { PaymentReceipt, ExpenseRecord, Quotation } from '../../types/models';
@@ -165,37 +163,6 @@ export const FinancePage: React.FC = () => {
     success('Quotation Created', `Quotation ${newQ.reference} created for ${newQ.customerName}`);
   };
 
-  const exportCSV = () => {
-    const csvContent =
-      'data:text/csv;charset=utf-8,' +
-      'Type,Reference,Party/Description,Date,Amount_INR,Method,Status\n' +
-      payments
-        .map(
-          (p) =>
-            `Receipt,${p.reference},"${p.customerName}",${p.receivedAt.split('T')[0]},${
-              p.amountPaise / 100
-            },${p.paymentMethod},${p.status}`
-        )
-        .join('\n') +
-      '\n' +
-      expenses
-        .map(
-          (e) =>
-            `Expense,${e.id},"${e.description}",${e.expenseDate},${e.amountPaise / 100},${
-              e.paymentMethod
-            },${e.status}`
-        )
-        .join('\n');
-
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `Thekkanath_Souparnika_Ledger_${new Date().toISOString().split('T')[0]}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -291,7 +258,7 @@ export const FinancePage: React.FC = () => {
         {/* Account 1 */}
         <div
           className={`p-5 rounded-2xl border shadow-sm space-y-3 ${
-            dualStats['Account 1'].isNearCeiling
+            dualStats.account_1.isNearCeiling
               ? 'bg-amber-50/80 border-amber-300'
               : 'bg-white border-cream-200'
           }`}
@@ -307,28 +274,28 @@ export const FinancePage: React.FC = () => {
               </div>
             </div>
             <span className="text-xs font-bold font-mono px-2 py-0.5 rounded-full bg-cream-100 text-forest-900">
-              {dualStats['Account 1'].percentUtilized.toFixed(1)}% Used
+              {dualStats.account_1.percentUtilized.toFixed(1)}% Used
             </span>
           </div>
 
           <div className="space-y-1">
             <div className="flex items-center justify-between text-xs font-semibold">
-              <span className="text-forest-950">{formatINR(dualStats['Account 1'].totalTurnoverPaise)}</span>
+              <span className="text-forest-950">{formatINR(dualStats.account_1.totalTurnoverPaise)}</span>
               <span className="text-ink-400">Cap: ₹20,00,000</span>
             </div>
             <div className="w-full bg-cream-100 h-2.5 rounded-full overflow-hidden">
               <div
                 className={`h-full transition-all duration-500 rounded-full ${
-                  dualStats['Account 1'].isNearCeiling
+                  dualStats.account_1.isNearCeiling
                     ? 'bg-amber-500'
                     : 'bg-gradient-to-r from-burgundy-700 to-rose-600'
                 }`}
-                style={{ width: `${Math.min(100, dualStats['Account 1'].percentUtilized)}%` }}
+                style={{ width: `${Math.min(100, dualStats.account_1.percentUtilized)}%` }}
               />
             </div>
             <div className="flex items-center justify-between text-[11px] text-ink-500 pt-0.5">
-              <span>Remaining Headroom: <strong>{formatINR(dualStats['Account 1'].headroomPaise)}</strong></span>
-              {dualStats['Account 1'].isNearCeiling && (
+              <span>Remaining Headroom: <strong>{formatINR(dualStats.account_1.headroomPaise)}</strong></span>
+              {dualStats.account_1.isNearCeiling && (
                 <span className="text-amber-700 font-bold flex items-center gap-1">
                   <AlertCircle className="w-3 h-3" /> Approaching Limit
                 </span>
@@ -340,7 +307,7 @@ export const FinancePage: React.FC = () => {
         {/* Account 2 */}
         <div
           className={`p-5 rounded-2xl border shadow-sm space-y-3 ${
-            dualStats['Account 2'].isNearCeiling
+            dualStats.account_2.isNearCeiling
               ? 'bg-amber-50/80 border-amber-300'
               : 'bg-white border-cream-200'
           }`}
@@ -356,28 +323,28 @@ export const FinancePage: React.FC = () => {
               </div>
             </div>
             <span className="text-xs font-bold font-mono px-2 py-0.5 rounded-full bg-cream-100 text-forest-900">
-              {dualStats['Account 2'].percentUtilized.toFixed(1)}% Used
+              {dualStats.account_2.percentUtilized.toFixed(1)}% Used
             </span>
           </div>
 
           <div className="space-y-1">
             <div className="flex items-center justify-between text-xs font-semibold">
-              <span className="text-forest-950">{formatINR(dualStats['Account 2'].totalTurnoverPaise)}</span>
+              <span className="text-forest-950">{formatINR(dualStats.account_2.totalTurnoverPaise)}</span>
               <span className="text-ink-400">Cap: ₹20,00,000</span>
             </div>
             <div className="w-full bg-cream-100 h-2.5 rounded-full overflow-hidden">
               <div
                 className={`h-full transition-all duration-500 rounded-full ${
-                  dualStats['Account 2'].isNearCeiling
+                  dualStats.account_2.isNearCeiling
                     ? 'bg-amber-500'
                     : 'bg-gradient-to-r from-indigo-700 to-purple-600'
                 }`}
-                style={{ width: `${Math.min(100, dualStats['Account 2'].percentUtilized)}%` }}
+                style={{ width: `${Math.min(100, dualStats.account_2.percentUtilized)}%` }}
               />
             </div>
             <div className="flex items-center justify-between text-[11px] text-ink-500 pt-0.5">
-              <span>Remaining Headroom: <strong>{formatINR(dualStats['Account 2'].headroomPaise)}</strong></span>
-              {dualStats['Account 2'].isNearCeiling && (
+              <span>Remaining Headroom: <strong>{formatINR(dualStats.account_2.headroomPaise)}</strong></span>
+              {dualStats.account_2.isNearCeiling && (
                 <span className="text-amber-700 font-bold flex items-center gap-1">
                   <AlertCircle className="w-3 h-3" /> Approaching Limit
                 </span>

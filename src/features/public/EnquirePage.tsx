@@ -21,7 +21,7 @@ import { Button } from '../../components/ui/Button';
 import { SESSION_TIMES } from '../../lib/bookingEngine';
 import { PreferredCaterersCard } from '../../components/public/PreferredCaterersCard';
 import { sendEnquiryAcknowledgmentEmail } from '../../lib/emailService';
-import { DEFAULT_REFERRERS, searchReferrers, ReferrerContact } from '../../lib/referralEngine';
+import { DEFAULT_REFERRERS, searchReferrers } from '../../lib/referralEngine';
 
 export const EnquirePage: React.FC = () => {
   const [searchParams] = useSearchParams();

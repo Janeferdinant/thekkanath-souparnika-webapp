@@ -25,6 +25,7 @@ import {
   DEMO_VENDORS,
   DEMO_DOCUMENTS,
   DEMO_AUDIT_LOG,
+  DEMO_REFERRALS,
 } from '../data/demoSeed';
 import { checkHallAvailability } from './bookingEngine';
 

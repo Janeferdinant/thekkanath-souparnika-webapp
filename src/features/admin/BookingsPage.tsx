@@ -85,15 +85,14 @@ export const BookingsPage: React.FC = () => {
     return true;
   });
 
-  const sortedBookings = [...filteredBookings].sort((a, b) => {
-    if (sortOrder === 'upcoming') {
-      return new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime();
-    }
-    if (sortOrder === 'desc') {
-      return new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime();
-    }
-    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-  });
+  const sortedBookings =
+    sortOrder === 'upcoming'
+      ? sortBookingsByEventDate(filteredBookings, true)
+      : sortOrder === 'desc'
+      ? sortBookingsByEventDate(filteredBookings, false)
+      : [...filteredBookings].sort(
+          (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
 
   const handleCreateBooking = (e: React.FormEvent) => {
     e.preventDefault();

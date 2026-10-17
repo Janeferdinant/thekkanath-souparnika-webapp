@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, Mail, ShieldAlert, ShieldCheck, UserPlus, Trash2, Lock } from 'lucide-react';
+import { Phone, Mail, ShieldAlert, UserPlus, Trash2, Lock } from 'lucide-react';
 import { StorageService } from '../../lib/storage';
 import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
@@ -22,7 +22,7 @@ export const StaffPage: React.FC = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [role, setRole] = useState<UserRole>('manager');
+  const [role, setRole] = useState<UserRole>('booking_manager');
 
   const handleAddStaff = (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,7 +47,7 @@ export const StaffPage: React.FC = () => {
       setFullName('');
       setEmail('');
       setPhone('');
-      setRole('manager');
+      setRole('booking_manager');
       success(`Added ${created.fullName} to staff roster.`);
     } catch {
       error('Failed to create staff member.');
@@ -143,9 +143,10 @@ export const StaffPage: React.FC = () => {
                   >
                     <option value="super_admin">SUPER ADMIN</option>
                     <option value="administrator">ADMINISTRATOR</option>
-                    <option value="manager">MANAGER</option>
-                    <option value="caretaker">CARETAKER</option>
-                    <option value="viewer">VIEWER</option>
+                    <option value="booking_manager">BOOKING MANAGER</option>
+                    <option value="operations_manager">OPERATIONS MANAGER</option>
+                    <option value="accounts">ACCOUNTS</option>
+                    <option value="staff">OPERATIONS STAFF</option>
                   </select>
                 ) : (
                   <Badge variant={p.role === 'super_admin' ? 'gold' : 'default'}>
@@ -239,9 +240,10 @@ export const StaffPage: React.FC = () => {
                 className="w-full px-3 py-2 rounded-xl border border-cream-300 bg-white"
               >
                 <option value="administrator">Administrator</option>
-                <option value="manager">Booking Manager</option>
-                <option value="caretaker">Caretaker / Operations</option>
-                <option value="viewer">Viewer (Read-Only)</option>
+                <option value="booking_manager">Booking Manager</option>
+                <option value="operations_manager">Operations Manager</option>
+                <option value="accounts">Accounts</option>
+                <option value="staff">Operations Staff</option>
               </select>
             </div>
 
