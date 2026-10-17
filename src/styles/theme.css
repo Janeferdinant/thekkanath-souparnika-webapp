@@ -1,0 +1,82 @@
+:root {
+  /* Primary Burgundy & Wine Palette */
+  --color-wine: #4A0E17;
+  --color-burgundy: #5B1D27;
+  --color-crimson: #7C2538;
+  --color-plum: #1A0510;
+  --color-plum-surface: #2A081B;
+
+  /* Rose Gold & Soft Blush */
+  --color-rose-gold: #E5A99B;
+  --color-rose-muted: #C47A88;
+  --color-blush-soft: #F2D6DC;
+  --color-blush-highlight: #FBF2F4;
+
+  /* Champagne & Antique Gold */
+  --color-champagne: #D4AF37;
+  --color-champagne-light: #F3E5AB;
+  --color-gold-antique: #8C6D37;
+  --color-gold-foil: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #E5A99B 100%);
+
+  /* Warm Ivory & Cream */
+  --color-ivory: #FDFBF7;
+  --color-ivory-warm: #FAF7F2;
+  --color-cream: #F5EFEB;
+
+  /* Liquid Glass & Refraction Tokens */
+  --glass-bg-dark: rgba(26, 5, 16, 0.75);
+  --glass-bg-light: rgba(253, 251, 247, 0.85);
+  --glass-border-rose: rgba(229, 169, 155, 0.25);
+  --glass-border-gold: rgba(212, 175, 55, 0.35);
+  --glass-specular: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 60%);
+  --glass-shadow: 0 12px 32px -4px rgba(26, 5, 16, 0.35);
+
+  /* Typography */
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Glassmorphism Refraction Utility Classes */
+.liquid-glass {
+  background: var(--glass-bg-dark);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid var(--glass-border-rose);
+  box-shadow: var(--glass-shadow);
+}
+
+.liquid-glass-light {
+  background: var(--glass-bg-light);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(196, 122, 136, 0.25);
+  box-shadow: 0 8px 24px -4px rgba(74, 14, 23, 0.08);
+}
+
+.glass-card-hover {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+.glass-card-hover:hover {
+  transform: translateY(-3px);
+  border-color: var(--glass-border-gold);
+  box-shadow: 0 20px 40px -8px rgba(74, 14, 23, 0.25);
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #E5A99B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.burgundy-gradient-text {
+  background: linear-gradient(135deg, #4A0E17 0%, #7C2538 50%, #B33951 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Tabular numbers for financial and time data */
+.tabular-data {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
