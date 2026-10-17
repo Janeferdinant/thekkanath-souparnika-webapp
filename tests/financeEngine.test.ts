@@ -47,18 +47,25 @@ describe('Finance Engine - Dual-Account Load Balancing (Under ₹20 Lakhs)', () 
     expect(allocated).toBe('account_1');
   });
 
-  it('calculates headroom and triggers 90% warning correctly', () => {
+  it('calculates headroom and triggers 90% warning and 98% lock alert correctly', () => {
     // ₹10 Lakhs = 50%
     const statusHalf = calculateHeadroom(10 * LAKH_PAISE);
     expect(statusHalf.percentageUsed).toBe(50);
     expect(statusHalf.remainingPaise).toBe(10 * LAKH_PAISE);
     expect(statusHalf.isWarning).toBe(false);
+    expect(statusHalf.isLocked).toBe(false);
     expect(statusHalf.isCapped).toBe(false);
 
     // ₹18.5 Lakhs = 92.5% -> warning true
     const statusWarn = calculateHeadroom(18.5 * LAKH_PAISE);
     expect(statusWarn.isWarning).toBe(true);
+    expect(statusWarn.isLocked).toBe(false);
     expect(statusWarn.isCapped).toBe(false);
+
+    // ₹19.65 Lakhs = 98.25% -> lock alert true
+    const statusLock = calculateHeadroom(19.65 * LAKH_PAISE);
+    expect(statusLock.isLocked).toBe(true);
+    expect(statusLock.isCapped).toBe(false);
 
     // ₹20 Lakhs = 100% -> capped true
     const statusCapped = calculateHeadroom(20 * LAKH_PAISE);

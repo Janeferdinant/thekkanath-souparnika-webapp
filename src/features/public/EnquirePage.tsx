@@ -47,11 +47,20 @@ export const EnquirePage: React.FC = () => {
   const [specialRequests, setSpecialRequests] = useState('');
   const [consentGiven, setConsentGiven] = useState(false);
 
-  // Referral Fields
-  const [hasReferrer, setHasReferrer] = useState(false);
-  const [referrerName, setReferrerName] = useState('');
-  const [referrerPhone, setReferrerPhone] = useState('');
-  const [referrerEmail, setReferrerEmail] = useState('');
+  // Referral Fields from optional ?ref= query parameter
+  const refQuery = searchParams.get('ref') || '';
+  const initialReferrerMatch = refQuery ? searchReferrers(refQuery, DEFAULT_REFERRERS)[0] : undefined;
+
+  const [hasReferrer, setHasReferrer] = useState(Boolean(refQuery));
+  const [referrerName, setReferrerName] = useState(
+    initialReferrerMatch ? initialReferrerMatch.name : ''
+  );
+  const [referrerPhone, setReferrerPhone] = useState(
+    initialReferrerMatch ? initialReferrerMatch.phone : refQuery
+  );
+  const [referrerEmail, setReferrerEmail] = useState(
+    initialReferrerMatch?.email || ''
+  );
 
   // Handle session change
   const handleSessionChange = (newSession: BookingSession) => {

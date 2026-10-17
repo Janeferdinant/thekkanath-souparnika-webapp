@@ -9,9 +9,10 @@ import {
   Sun,
   Moon,
   Calendar,
+  FileText,
 } from 'lucide-react';
 import { StorageService } from '../../lib/storage';
-import { Booking, BookingStatus, EventType } from '../../types/models';
+import { Booking, BookingStatus, EventType, FinancialAccount } from '../../types/models';
 import { HALLS } from '../../data/venueData';
 import { formatDate, formatTime12h, formatINR, generateReference } from '../../lib/formatters';
 import { Badge } from '../../components/ui/Badge';
@@ -20,6 +21,7 @@ import { Modal } from '../../components/ui/Modal';
 import { useToast } from '../../context/ToastContext';
 import { EmailActivityDrawer } from '../../components/admin/EmailActivityDrawer';
 import { sortBookingsByEventDate } from '../../lib/adminEngine';
+import { QuotationModal } from '../../components/admin/QuotationModal';
 
 export const BookingsPage: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -32,6 +34,7 @@ export const BookingsPage: React.FC = () => {
   const [sortOrder, setSortOrder] = useState<'upcoming' | 'desc' | 'created'>('upcoming');
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   const [emailDrawerOpen, setEmailDrawerOpen] = useState(false);
+  const [quoteModalOpen, setQuoteModalOpen] = useState(false);
 
   // New Booking Modal State
   const [newBookingModalOpen, setNewBookingModalOpen] = useState(false);
@@ -47,6 +50,7 @@ export const BookingsPage: React.FC = () => {
   const bookingStatus: BookingStatus = 'confirmed';
   const [totalAgreedRupees, setTotalAgreedRupees] = useState<number>(35000);
   const [advancePaidRupees, setAdvancePaidRupees] = useState<number>(10000);
+  const [allocatedAccountOverride, setAllocatedAccountOverride] = useState<'auto' | 'account_1' | 'account_2'>('auto');
   const [specialRequirements, setSpecialRequirements] = useState('');
   const [creationError, setCreationError] = useState<string | null>(null);
 
@@ -118,6 +122,7 @@ export const BookingsPage: React.FC = () => {
       status: bookingStatus,
       totalAgreedPaise: Math.round(totalAgreedRupees * 100),
       advancePaidPaise: Math.round(advancePaidRupees * 100),
+      allocatedAccount: allocatedAccountOverride === 'auto' ? undefined : allocatedAccountOverride,
       specialRequirements: specialRequirements.trim(),
     });
 
@@ -415,15 +420,47 @@ export const BookingsPage: React.FC = () => {
               </div>
             )}
 
-            {selectedBooking.status !== 'cancelled' && (
-              <div className="pt-3 border-t border-cream-200 flex justify-between items-center">
-                <Button
-                  variant="danger"
-                  size="sm"
-                  onClick={() => handleCancelBooking(selectedBooking.id)}
-                >
-                  Cancel Booking
-                </Button>
+            {/* Dual Account Allocation Override */}
+            <div className="p-3 rounded-xl bg-white border border-cream-200 flex items-center justify-between">
+              <div>
+                <span className="font-bold text-ink-800 block">Assigned Financial Account</span>
+                <span className="text-[10px] text-ink-500">Statutory ₹20L Annual Limit · No GST</span>
+              </div>
+              <select
+                value={selectedBooking.allocatedAccount || 'account_1'}
+                onChange={(e) => {
+                  const newAcc = e.target.value as FinancialAccount;
+                  StorageService.updateBooking(selectedBooking.id, { allocatedAccount: newAcc });
+                  setBookings(StorageService.getBookings());
+                  setSelectedBooking({ ...selectedBooking, allocatedAccount: newAcc });
+                  success('Account Reassigned', `Booking routed to ${newAcc === 'account_1' ? 'Account 1' : 'Account 2'}`);
+                }}
+                className="text-xs font-bold px-2.5 py-1.5 rounded-lg border border-cream-300 bg-cream-50 text-forest-950"
+              >
+                <option value="account_1">Primary Entity (Account 1)</option>
+                <option value="account_2">Secondary Entity (Account 2)</option>
+              </select>
+            </div>
+
+            <div className="pt-3 border-t border-cream-200 flex flex-wrap justify-between items-center gap-2">
+              <Button
+                variant="gold"
+                size="sm"
+                onClick={() => setQuoteModalOpen(true)}
+                leftIcon={<FileText className="w-3.5 h-3.5" />}
+              >
+                Generate Quotation
+              </Button>
+              <div className="flex items-center gap-2">
+                {selectedBooking.status !== 'cancelled' && (
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    onClick={() => handleCancelBooking(selectedBooking.id)}
+                  >
+                    Cancel Booking
+                  </Button>
+                )}
                 <Button
                   variant="outline"
                   size="sm"
@@ -432,7 +469,7 @@ export const BookingsPage: React.FC = () => {
                   Close
                 </Button>
               </div>
-            )}
+            </div>
           </div>
         </Modal>
       )}
@@ -575,6 +612,18 @@ export const BookingsPage: React.FC = () => {
                 className="w-full px-3 py-2 rounded-xl border border-cream-300 bg-white"
               />
             </div>
+            <div className="space-y-1">
+              <label className="font-bold text-ink-800">Financial Account Routing (No GST)</label>
+              <select
+                value={allocatedAccountOverride}
+                onChange={(e) => setAllocatedAccountOverride(e.target.value as any)}
+                className="w-full px-3 py-2 rounded-xl border border-cream-300 bg-white"
+              >
+                <option value="auto">Auto-Balance (Under ₹20L Limit)</option>
+                <option value="account_1">Primary Entity (Account 1)</option>
+                <option value="account_2">Secondary Entity (Account 2)</option>
+              </select>
+            </div>
           </div>
 
           <div className="space-y-1">
@@ -605,6 +654,25 @@ export const BookingsPage: React.FC = () => {
 
       {/* In-App Email Activity Drawer */}
       <EmailActivityDrawer isOpen={emailDrawerOpen} onClose={() => setEmailDrawerOpen(false)} />
+
+      {/* Client Quotation Suite Modal */}
+      {selectedBooking && (
+        <QuotationModal
+          isOpen={quoteModalOpen}
+          onClose={() => setQuoteModalOpen(false)}
+          initialData={{
+            customerName: selectedBooking.customerName,
+            customerPhone: selectedBooking.customerPhone,
+            customerEmail: selectedBooking.customerEmail,
+            hallName: selectedBooking.hallName,
+            eventDate: selectedBooking.eventDate,
+            session: selectedBooking.session,
+            baseRentRupees: selectedBooking.totalAgreedPaise
+              ? Math.round(selectedBooking.totalAgreedPaise / 100)
+              : 45000,
+          }}
+        />
+      )}
     </div>
   );
 };

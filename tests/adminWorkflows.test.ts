@@ -57,7 +57,7 @@ describe('Admin Console Workflows - Staff Gates, Sorting & Dual Account Dials', 
     expect(stats.account_1.percentUtilized).toBeCloseTo((8000000 / 200_000_000) * 100, 2);
     expect(stats.account_1.isNearCeiling).toBe(false);
 
-    // Test near-ceiling booking (₹18.5 Lakhs)
+    // Test near-ceiling booking (₹18.5 Lakhs -> 92.5%)
     const highBooking: Partial<Booking>[] = [
       {
         id: 'b-high',
@@ -68,5 +68,19 @@ describe('Admin Console Workflows - Staff Gates, Sorting & Dual Account Dials', 
     ];
     const highStats = calculateDualAccountStats(highBooking as Booking[]);
     expect(highStats.account_1.isNearCeiling).toBe(true);
+    expect(highStats.account_1.isLocked).toBe(false);
+
+    // Test lock-ceiling booking (₹19.7 Lakhs -> 98.5%)
+    const lockedBooking: Partial<Booking>[] = [
+      {
+        id: 'b-locked',
+        totalAgreedPaise: 197_000_000, // ₹19.7L
+        allocatedAccount: 'account_2',
+        status: 'confirmed',
+      },
+    ];
+    const lockedStats = calculateDualAccountStats(lockedBooking as Booking[]);
+    expect(lockedStats.account_2.isLocked).toBe(true);
+    expect(lockedStats.account_2.isNearCeiling).toBe(false);
   });
 });

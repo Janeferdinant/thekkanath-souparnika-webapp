@@ -6,6 +6,7 @@ import {
   Download,
   Printer,
   AlertCircle,
+  Lock,
 } from 'lucide-react';
 import { StorageService } from '../../lib/storage';
 import { PaymentReceipt, ExpenseRecord, Quotation } from '../../types/models';
@@ -15,7 +16,8 @@ import { Button } from '../../components/ui/Button';
 import { Modal } from '../../components/ui/Modal';
 import { useToast } from '../../context/ToastContext';
 import { calculateDualAccountStats } from '../../lib/adminEngine';
-import { generateTaxFilingReport } from '../../lib/documentGenerator';
+import { generateTaxFilingReport, generateQuotationDocument } from '../../lib/documentGenerator';
+import { QuotationModal } from '../../components/admin/QuotationModal';
 
 export const FinancePage: React.FC = () => {
   const { success } = useToast();
@@ -23,6 +25,7 @@ export const FinancePage: React.FC = () => {
   const [payments, setPayments] = useState<PaymentReceipt[]>(() => StorageService.getPayments());
   const [expenses, setExpenses] = useState<ExpenseRecord[]>(() => StorageService.getExpenses());
   const [quotes, setQuotes] = useState<Quotation[]>(() => StorageService.getQuotes());
+  const [selectedQuote, setSelectedQuote] = useState<Quotation | null>(null);
   const bookings = StorageService.getBookings();
 
   // Modals
@@ -43,13 +46,6 @@ export const FinancePage: React.FC = () => {
   const [expAmountRupees, setExpAmountRupees] = useState(5000);
   const [expVendor, setExpVendor] = useState('');
   const [expMethod, setExpMethod] = useState('Bank Transfer');
-
-  // New Quote Form
-  const [quoteCustomerName, setQuoteCustomerName] = useState('');
-  const [quoteHallName, setQuoteHallName] = useState('Stage Hall');
-  const [quoteEventDate, setQuoteEventDate] = useState('');
-  const [quoteItemDesc, setQuoteItemDesc] = useState('Hall Rental Fee');
-  const [quoteItemAmount, setQuoteItemAmount] = useState(35000);
 
   // Calculations
   const totalCollectionsPaise = payments.reduce((acc, p) => acc + p.amountPaise, 0);
@@ -81,6 +77,18 @@ export const FinancePage: React.FC = () => {
       printWin.document.close();
       printWin.focus();
       printWin.print();
+    }
+  };
+
+  const handlePrintQuote = (quote: Quotation) => {
+    const result = generateQuotationDocument(quote, 1000000);
+    const printWin = window.open('', '_blank');
+    if (printWin) {
+      printWin.document.write(result.html);
+      printWin.document.close();
+      printWin.focus();
+      printWin.print();
+      success('Quotation PDF', `Opened print document for ${quote.reference}`);
     }
   };
 
@@ -126,41 +134,6 @@ export const FinancePage: React.FC = () => {
     setExpenses(StorageService.getExpenses());
     setExpenseModalOpen(false);
     success('Expense Logged', `Recorded expense ${formatINR(newExp.amountPaise)} for ${newExp.category}`);
-  };
-
-  const handleCreateQuote = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!quoteCustomerName.trim() || !quoteEventDate) return;
-
-    const totalPaise = Math.round(quoteItemAmount * 100);
-    const newQ = StorageService.createQuote({
-      reference: generateReference('TS-QTE'),
-      customerName: quoteCustomerName.trim(),
-      customerEmail: 'customer@example.com',
-      customerPhone: '9847012345',
-      hallName: quoteHallName,
-      eventDate: quoteEventDate,
-      items: [
-        {
-          id: `qi-${Date.now()}`,
-          description: quoteItemDesc.trim(),
-          quantity: 1,
-          unitPricePaise: totalPaise,
-          totalPaise,
-        },
-      ],
-      subtotalPaise: totalPaise,
-      discountPaise: 0,
-      taxPaise: 0,
-      totalPaise,
-      status: 'approved_internally',
-      validUntil: new Date(Date.now() + 86400000 * 14).toISOString().split('T')[0],
-      approvedBy: 'Venue Manager',
-    });
-
-    setQuotes(StorageService.getQuotes());
-    setQuoteModalOpen(false);
-    success('Quotation Created', `Quotation ${newQ.reference} created for ${newQ.customerName}`);
   };
 
   return (
@@ -258,7 +231,9 @@ export const FinancePage: React.FC = () => {
         {/* Account 1 */}
         <div
           className={`p-5 rounded-2xl border shadow-sm space-y-3 ${
-            dualStats.account_1.isNearCeiling
+            dualStats.account_1.isLocked
+              ? 'bg-red-50/90 border-red-300'
+              : dualStats.account_1.isNearCeiling
               ? 'bg-amber-50/80 border-amber-300'
               : 'bg-white border-cream-200'
           }`}
@@ -273,7 +248,13 @@ export const FinancePage: React.FC = () => {
                 <span className="text-[10px] text-ink-500">Statutory ₹20L Annual Limit · No GST</span>
               </div>
             </div>
-            <span className="text-xs font-bold font-mono px-2 py-0.5 rounded-full bg-cream-100 text-forest-900">
+            <span
+              className={`text-xs font-bold font-mono px-2 py-0.5 rounded-full ${
+                dualStats.account_1.isLocked
+                  ? 'bg-red-200 text-red-950'
+                  : 'bg-cream-100 text-forest-900'
+              }`}
+            >
               {dualStats.account_1.percentUtilized.toFixed(1)}% Used
             </span>
           </div>
@@ -286,7 +267,9 @@ export const FinancePage: React.FC = () => {
             <div className="w-full bg-cream-100 h-2.5 rounded-full overflow-hidden">
               <div
                 className={`h-full transition-all duration-500 rounded-full ${
-                  dualStats.account_1.isNearCeiling
+                  dualStats.account_1.isLocked
+                    ? 'bg-red-600'
+                    : dualStats.account_1.isNearCeiling
                     ? 'bg-amber-500'
                     : 'bg-gradient-to-r from-burgundy-700 to-rose-600'
                 }`}
@@ -295,11 +278,15 @@ export const FinancePage: React.FC = () => {
             </div>
             <div className="flex items-center justify-between text-[11px] text-ink-500 pt-0.5">
               <span>Remaining Headroom: <strong>{formatINR(dualStats.account_1.headroomPaise)}</strong></span>
-              {dualStats.account_1.isNearCeiling && (
-                <span className="text-amber-700 font-bold flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" /> Approaching Limit
+              {dualStats.account_1.isLocked ? (
+                <span className="text-red-700 font-bold flex items-center gap-1">
+                  <Lock className="w-3 h-3" /> 98% Lock Alert — Divert to Account 2
                 </span>
-              )}
+              ) : dualStats.account_1.isNearCeiling ? (
+                <span className="text-amber-700 font-bold flex items-center gap-1">
+                  <AlertCircle className="w-3 h-3" /> Approaching Limit (90%)
+                </span>
+              ) : null}
             </div>
           </div>
         </div>
@@ -307,7 +294,9 @@ export const FinancePage: React.FC = () => {
         {/* Account 2 */}
         <div
           className={`p-5 rounded-2xl border shadow-sm space-y-3 ${
-            dualStats.account_2.isNearCeiling
+            dualStats.account_2.isLocked
+              ? 'bg-red-50/90 border-red-300'
+              : dualStats.account_2.isNearCeiling
               ? 'bg-amber-50/80 border-amber-300'
               : 'bg-white border-cream-200'
           }`}
@@ -322,7 +311,13 @@ export const FinancePage: React.FC = () => {
                 <span className="text-[10px] text-ink-500">Statutory ₹20L Annual Limit · No GST</span>
               </div>
             </div>
-            <span className="text-xs font-bold font-mono px-2 py-0.5 rounded-full bg-cream-100 text-forest-900">
+            <span
+              className={`text-xs font-bold font-mono px-2 py-0.5 rounded-full ${
+                dualStats.account_2.isLocked
+                  ? 'bg-red-200 text-red-950'
+                  : 'bg-cream-100 text-forest-900'
+              }`}
+            >
               {dualStats.account_2.percentUtilized.toFixed(1)}% Used
             </span>
           </div>
@@ -335,7 +330,9 @@ export const FinancePage: React.FC = () => {
             <div className="w-full bg-cream-100 h-2.5 rounded-full overflow-hidden">
               <div
                 className={`h-full transition-all duration-500 rounded-full ${
-                  dualStats.account_2.isNearCeiling
+                  dualStats.account_2.isLocked
+                    ? 'bg-red-600'
+                    : dualStats.account_2.isNearCeiling
                     ? 'bg-amber-500'
                     : 'bg-gradient-to-r from-indigo-700 to-purple-600'
                 }`}
@@ -344,11 +341,15 @@ export const FinancePage: React.FC = () => {
             </div>
             <div className="flex items-center justify-between text-[11px] text-ink-500 pt-0.5">
               <span>Remaining Headroom: <strong>{formatINR(dualStats.account_2.headroomPaise)}</strong></span>
-              {dualStats.account_2.isNearCeiling && (
-                <span className="text-amber-700 font-bold flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" /> Approaching Limit
+              {dualStats.account_2.isLocked ? (
+                <span className="text-red-700 font-bold flex items-center gap-1">
+                  <Lock className="w-3 h-3" /> 98% Lock Alert — Divert to Account 1
                 </span>
-              )}
+              ) : dualStats.account_2.isNearCeiling ? (
+                <span className="text-amber-700 font-bold flex items-center gap-1">
+                  <AlertCircle className="w-3 h-3" /> Approaching Limit (90%)
+                </span>
+              ) : null}
             </div>
           </div>
         </div>
@@ -493,6 +494,7 @@ export const FinancePage: React.FC = () => {
                   <th className="px-5 py-3">Total Amount</th>
                   <th className="px-5 py-3">Status</th>
                   <th className="px-5 py-3">Valid Until</th>
+                  <th className="px-5 py-3 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-cream-200">
@@ -513,6 +515,28 @@ export const FinancePage: React.FC = () => {
                       <Badge variant="gold">{q.status.replace('_', ' ').toUpperCase()}</Badge>
                     </td>
                     <td className="px-5 py-4 text-ink-600">{q.validUntil}</td>
+                    <td className="px-5 py-4 text-right">
+                      <div className="flex items-center justify-end gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handlePrintQuote(q)}
+                          leftIcon={<Printer className="w-3.5 h-3.5 text-forest-800" />}
+                        >
+                          Print PDF
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            setSelectedQuote(q);
+                            setQuoteModalOpen(true);
+                          }}
+                        >
+                          Inspect
+                        </Button>
+                      </div>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -692,83 +716,18 @@ export const FinancePage: React.FC = () => {
         </form>
       </Modal>
 
-      {/* Create Quote Modal */}
-      <Modal
+      {/* Quotation Suite Modal */}
+      <QuotationModal
         isOpen={quoteModalOpen}
-        onClose={() => setQuoteModalOpen(false)}
-        title="Create Versioned Quotation"
-        subtitle="Generate itemized estimate for prospective customer"
-        maxWidth="md"
-      >
-        <form onSubmit={handleCreateQuote} className="space-y-4 text-xs">
-          <div className="space-y-1">
-            <label className="font-bold text-ink-800">Customer Name *</label>
-            <input
-              type="text"
-              required
-              value={quoteCustomerName}
-              onChange={(e) => setQuoteCustomerName(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl border border-cream-300 bg-white"
-            />
-          </div>
-
-          <div className="space-y-1">
-            <label className="font-bold text-ink-800">Hall *</label>
-            <select
-              value={quoteHallName}
-              onChange={(e) => setQuoteHallName(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl border border-cream-300 bg-white"
-            >
-              <option value="Stage Hall">Stage Hall</option>
-              <option value="Welcome Hall">Welcome Hall</option>
-              <option value="Dining Hall">Dining Hall</option>
-              <option value="Open Hall">Open Hall</option>
-            </select>
-          </div>
-
-          <div className="space-y-1">
-            <label className="font-bold text-ink-800">Event Date *</label>
-            <input
-              type="date"
-              required
-              value={quoteEventDate}
-              onChange={(e) => setQuoteEventDate(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl border border-cream-300 bg-white"
-            />
-          </div>
-
-          <div className="space-y-1">
-            <label className="font-bold text-ink-800">Line Item Description *</label>
-            <input
-              type="text"
-              required
-              value={quoteItemDesc}
-              onChange={(e) => setQuoteItemDesc(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl border border-cream-300 bg-white"
-            />
-          </div>
-
-          <div className="space-y-1">
-            <label className="font-bold text-ink-800">Agreed Amount (₹) *</label>
-            <input
-              type="number"
-              required
-              value={quoteItemAmount}
-              onChange={(e) => setQuoteItemAmount(parseInt(e.target.value, 10) || 0)}
-              className="w-full px-3 py-2 rounded-xl border border-cream-300 bg-white"
-            />
-          </div>
-
-          <div className="pt-3 border-t border-cream-200 flex justify-end gap-2">
-            <Button variant="outline" size="sm" type="button" onClick={() => setQuoteModalOpen(false)}>
-              Cancel
-            </Button>
-            <Button variant="gold" size="md" type="submit">
-              Save Quotation
-            </Button>
-          </div>
-        </form>
-      </Modal>
+        onClose={() => {
+          setQuoteModalOpen(false);
+          setSelectedQuote(null);
+        }}
+        existingQuote={selectedQuote}
+        onQuoteSaved={() => {
+          setQuotes(StorageService.getQuotes());
+        }}
+      />
     </div>
   );
 };

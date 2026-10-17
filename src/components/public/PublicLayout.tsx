@@ -28,19 +28,31 @@ export const PublicLayout: React.FC = () => {
       {/* Mobile Fixed Bottom Navigation Dock */}
       <nav
         aria-label="Mobile quick actions"
-        className="fixed bottom-0 inset-x-0 z-50 lg:hidden bg-white/95 backdrop-blur-lg border-t border-rose-100/90 shadow-luxury py-2 px-4"
+        className="fixed bottom-0 inset-x-0 z-50 lg:hidden bg-white/95 backdrop-blur-lg border-t border-rose-100/90 shadow-luxury py-2 px-2"
       >
-        <div className="max-w-md mx-auto grid grid-cols-4 gap-1 text-center">
+        <div className="max-w-md mx-auto grid grid-cols-5 gap-1 text-center">
           <Link
             to="/halls"
             className={`flex flex-col items-center justify-center py-1 rounded-xl transition-colors ${
-              location.pathname.startsWith('/halls')
+              location.pathname === '/halls'
                 ? 'text-burgundy-950 font-bold bg-burgundy-50'
                 : 'text-gray-600 hover:text-burgundy-900'
             }`}
           >
-            <Building2 className="w-5 h-5 mb-0.5" />
-            <span className="text-[10px] tracking-tight">Halls</span>
+            <Building2 className="w-4 h-4 mb-0.5" />
+            <span className="text-[10px] tracking-tight">Venue</span>
+          </Link>
+
+          <Link
+            to="/halls#sessions"
+            className={`flex flex-col items-center justify-center py-1 rounded-xl transition-colors ${
+              location.hash === '#sessions'
+                ? 'text-burgundy-950 font-bold bg-burgundy-50'
+                : 'text-gray-600 hover:text-burgundy-900'
+            }`}
+          >
+            <Calendar className="w-4 h-4 mb-0.5 text-amber-600" />
+            <span className="text-[10px] tracking-tight">Sessions</span>
           </Link>
 
           <Link
@@ -51,7 +63,7 @@ export const PublicLayout: React.FC = () => {
                 : 'text-gray-600 hover:text-burgundy-900'
             }`}
           >
-            <Calendar className="w-5 h-5 mb-0.5 text-gold-600" />
+            <Calendar className="w-4 h-4 mb-0.5 text-gold-600" />
             <span className="text-[10px] tracking-tight font-medium">Enquire</span>
           </Link>
 
@@ -59,7 +71,7 @@ export const PublicLayout: React.FC = () => {
             href={`tel:${VENUE_INFO.phones[0]}`}
             className="flex flex-col items-center justify-center py-1 rounded-xl text-gray-600 hover:text-burgundy-900 hover:bg-burgundy-50 transition-colors"
           >
-            <Phone className="w-5 h-5 mb-0.5 text-burgundy-700" />
+            <Phone className="w-4 h-4 mb-0.5 text-burgundy-700" />
             <span className="text-[10px] tracking-tight">Call</span>
           </a>
 
@@ -69,7 +81,7 @@ export const PublicLayout: React.FC = () => {
             rel="noreferrer"
             className="flex flex-col items-center justify-center py-1 rounded-xl text-emerald-700 hover:bg-emerald-50 transition-colors"
           >
-            <MessageCircle className="w-5 h-5 mb-0.5" />
+            <MessageCircle className="w-4 h-4 mb-0.5" />
             <span className="text-[10px] tracking-tight font-medium">WhatsApp</span>
           </a>
         </div>

@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import {
   sendEnquiryAcknowledgmentEmail,
   sendBookingConfirmedEmail,
+  sendQuotationEmail,
   getEmailLogs,
   clearEmailLogs,
 } from '../src/lib/emailService';
@@ -91,6 +92,47 @@ describe('Transactional Email Service - Resend & In-App Activity Drawer', () => 
     expect(log.htmlBody).toContain('TS-RCP-2026-303');
     expect(log.htmlBody).toContain('UTR987654321');
     expect(log.template).toBe('booking_confirmed');
+
+    const logs = getEmailLogs();
+    expect(logs).toHaveLength(1);
+  });
+
+  it('generates and records a quotation email with caution deposit and cleaning liability clause', async () => {
+    const sampleQuote = {
+      id: 'qte-404',
+      reference: 'TS-QTE-2026-404',
+      customerName: 'Anjali Menon',
+      customerEmail: 'anjali@example.com',
+      customerPhone: '9446112233',
+      hallName: 'Thekkanath Souparnika (Full Venue)',
+      eventDate: '2026-11-20',
+      items: [
+        {
+          id: 'item-1',
+          description: 'Auditorium Morning Session Rental',
+          quantity: 1,
+          unitPricePaise: 4500000,
+          totalPaise: 4500000,
+        },
+      ],
+      subtotalPaise: 4500000,
+      discountPaise: 0,
+      taxPaise: 0,
+      totalPaise: 4500000,
+      validUntil: '2026-11-01',
+      status: 'sent' as const,
+      createdAt: '2026-10-18T12:00:00Z',
+    };
+
+    const log = await sendQuotationEmail(sampleQuote, 1000000); // ₹10,000 caution deposit
+
+    expect(log.to).toBe('anjali@example.com');
+    expect(log.subject).toContain('Quotation');
+    expect(log.subject).toContain('TS-QTE-2026-404');
+    expect(log.htmlBody).toContain('TS-QTE-2026-404');
+    expect(log.htmlBody).toContain('Refundable Caution Deposit');
+    expect(log.htmlBody).toContain('catering');
+    expect(log.template).toBe('quotation_sent');
 
     const logs = getEmailLogs();
     expect(logs).toHaveLength(1);

@@ -6,6 +6,7 @@ export interface AccountStats {
   headroomPaise: number;
   percentUtilized: number;
   isNearCeiling: boolean;
+  isLocked: boolean;
 }
 
 /**
@@ -39,12 +40,14 @@ export function calculateDualAccountStats(
       headroomPaise: CEILING_TURNOVER_PAISE,
       percentUtilized: 0,
       isNearCeiling: false,
+      isLocked: false,
     },
     account_2: {
       totalTurnoverPaise: 0,
       headroomPaise: CEILING_TURNOVER_PAISE,
       percentUtilized: 0,
       isNearCeiling: false,
+      isLocked: false,
     },
   };
 
@@ -60,7 +63,8 @@ export function calculateDualAccountStats(
     const acc = result[key];
     acc.headroomPaise = Math.max(0, CEILING_TURNOVER_PAISE - acc.totalTurnoverPaise);
     acc.percentUtilized = Math.min(100, (acc.totalTurnoverPaise / CEILING_TURNOVER_PAISE) * 100);
-    acc.isNearCeiling = acc.percentUtilized >= 90;
+    acc.isLocked = acc.percentUtilized >= 98;
+    acc.isNearCeiling = acc.percentUtilized >= 90 && !acc.isLocked;
   }
 
   return result;

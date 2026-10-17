@@ -1,12 +1,13 @@
-import { Enquiry, Booking, PaymentReceipt } from '../types/models';
+import { Enquiry, Booking, PaymentReceipt, Quotation } from '../types/models';
 import { VENUE_INFO } from '../data/venueData';
 import { formatCurrencyPaise } from './formatters';
+import { CLEANING_LIABILITY_CLAUSE } from './documentGenerator';
 
 export interface EmailLogEntry {
   id: string;
   to: string;
   subject: string;
-  template: 'enquiry_ack' | 'booking_confirmed';
+  template: 'enquiry_ack' | 'booking_confirmed' | 'quotation_sent';
   htmlBody: string;
   status: 'sent' | 'simulated' | 'failed';
   error?: string;
@@ -210,6 +211,82 @@ export async function sendBookingConfirmedEmail(
     to: booking.customerEmail,
     subject: `Booking Confirmation [${booking.reference}] - ${VENUE_INFO.name}`,
     template: 'booking_confirmed',
+    htmlBody,
+    status: 'simulated',
+    sentAt: new Date().toISOString(),
+  };
+
+  saveEmailLog(logEntry);
+  return logEntry;
+}
+
+/**
+ * Sends or simulates a formal Quotation Email to prospective client
+ */
+export async function sendQuotationEmail(
+  quote: Quotation,
+  cautionDepositPaise: number
+): Promise<EmailLogEntry> {
+  const grandTotalPaise = quote.totalPaise + (cautionDepositPaise || 0);
+
+  const itemsList = quote.items
+    .map(
+      (it) => `
+    <div class="details-row">
+      <span class="details-label">${it.description} (x${it.quantity}):</span>
+      <span class="details-value">${formatCurrencyPaise(it.totalPaise)}</span>
+    </div>
+  `
+    )
+    .join('');
+
+  const bodyContent = `
+    <p>Dear <strong>${quote.customerName}</strong>,</p>
+    <p>Thank you for considering <strong>${VENUE_INFO.name}</strong> for your upcoming event. Below is the itemized formal quotation prepared for your review.</p>
+    
+    <div class="details-box">
+      <div class="details-row"><span class="details-label">Quotation Reference:</span><span class="details-value">${quote.reference}</span></div>
+      <div class="details-row"><span class="details-label">Event Date:</span><span class="details-value">${quote.eventDate}</span></div>
+      <div class="details-row"><span class="details-label">Reserved Hall:</span><span class="details-value">${quote.hallName}</span></div>
+      <div class="details-row"><span class="details-label">Valid Until:</span><span class="details-value">${quote.validUntil}</span></div>
+      
+      <div style="margin-top: 12px; padding-top: 8px; border-top: 1px solid #F2D6DC;">
+        <strong style="color: #5B1D27; font-size: 13px;">Itemized Breakdown:</strong>
+      </div>
+      ${itemsList}
+      
+      <div class="details-row" style="background-color: #FBF2F4; padding: 8px; border-radius: 4px; margin-top: 8px;">
+        <span class="details-label" style="color: #7C2538;">Refundable Caution Deposit / Cleaning Deposit:</span>
+        <span class="details-value" style="color: #7C2538;">${formatCurrencyPaise(cautionDepositPaise)}</span>
+      </div>
+
+      <div class="details-row" style="border-top: 2px solid #5B1D27; margin-top: 8px; padding-top: 8px; font-size: 16px;">
+        <span class="details-label" style="font-weight: 700; color: #5B1D27;">Total Estimate Payable:</span>
+        <span class="details-value" style="font-weight: 700; color: #5B1D27;">${formatCurrencyPaise(grandTotalPaise)}</span>
+      </div>
+    </div>
+
+    <div style="background-color: #FFF9FA; border-left: 4px solid #B84D64; padding: 14px 16px; margin: 18px 0; border-radius: 4px; font-size: 12px; color: #4A0E17; line-height: 1.5;">
+      <strong>Mandatory Cleanliness & Caution Notice:</strong><br />
+      ${CLEANING_LIABILITY_CLAUSE}
+    </div>
+
+    <p style="font-size: 13px; color: #5B1D27;">To confirm your dates or request adjustments, reply directly to this email or call our desk at <strong>${VENUE_INFO.displayPhones[0]}</strong>.</p>
+    
+    <p>Warm regards,<br><strong>Management Desk</strong><br>${VENUE_INFO.name}</p>
+  `;
+
+  const htmlBody = buildEmailWrapper(
+    `Quotation [${quote.reference}] - ${VENUE_INFO.name}`,
+    `Formal Event Quotation`,
+    bodyContent
+  );
+
+  const logEntry: EmailLogEntry = {
+    id: `email-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+    to: quote.customerEmail,
+    subject: `Event Quotation [${quote.reference}] - ${VENUE_INFO.name}`,
+    template: 'quotation_sent',
     htmlBody,
     status: 'simulated',
     sentAt: new Date().toISOString(),

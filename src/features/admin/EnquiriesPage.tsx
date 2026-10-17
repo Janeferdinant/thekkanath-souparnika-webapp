@@ -4,6 +4,7 @@ import {
   Search,
   BookmarkCheck,
   MessageCircle,
+  FileText,
 } from 'lucide-react';
 import { StorageService } from '../../lib/storage';
 import { Enquiry, EnquiryStatus } from '../../types/models';
@@ -12,6 +13,7 @@ import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 import { Modal } from '../../components/ui/Modal';
 import { useToast } from '../../context/ToastContext';
+import { QuotationModal } from '../../components/admin/QuotationModal';
 
 export const EnquiriesPage: React.FC = () => {
   const navigate = useNavigate();
@@ -20,6 +22,7 @@ export const EnquiriesPage: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedEnquiry, setSelectedEnquiry] = useState<Enquiry | null>(null);
+  const [quoteModalOpen, setQuoteModalOpen] = useState(false);
 
   // Note update state
   const [noteText, setNoteText] = useState('');
@@ -240,6 +243,14 @@ export const EnquiriesPage: React.FC = () => {
 
               <div className="flex items-center gap-1.5 flex-wrap">
                 <Button
+                  variant="gold"
+                  size="sm"
+                  onClick={() => setQuoteModalOpen(true)}
+                  leftIcon={<FileText className="w-3.5 h-3.5" />}
+                >
+                  Generate Quotation
+                </Button>
+                <Button
                   variant="outline"
                   size="sm"
                   onClick={() => handleStatusChange('contacted')}
@@ -359,6 +370,29 @@ export const EnquiriesPage: React.FC = () => {
             </div>
           </div>
         </Modal>
+      )}
+
+      {/* Client Quotation Suite Modal */}
+      {selectedEnquiry && (
+        <QuotationModal
+          isOpen={quoteModalOpen}
+          onClose={() => setQuoteModalOpen(false)}
+          initialData={{
+            customerName: selectedEnquiry.customerName,
+            customerPhone: selectedEnquiry.customerPhone,
+            customerEmail: selectedEnquiry.customerEmail,
+            hallName:
+              selectedEnquiry.preferredHallId === 'auditorium' ||
+              selectedEnquiry.preferredHallId === 'any'
+                ? 'Thekkanath Souparnika (Full Venue)'
+                : selectedEnquiry.preferredHallId,
+            eventDate: selectedEnquiry.preferredDate,
+            session: selectedEnquiry.session || 'morning',
+          }}
+          onQuoteSaved={() => {
+            handleStatusChange('quoted');
+          }}
+        />
       )}
     </div>
   );

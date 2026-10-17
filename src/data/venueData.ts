@@ -16,6 +16,9 @@ export const VENUE_INFO = {
   phones: ['8129764370', '9446143165'],
   displayPhones: ['+91 81297 64370', '+91 94461 43165'],
   email: 'thekkanathsouparnika@gmail.com',
+  emails: ['thekkanathsouparnika@gmail.com', 'nallengara@gmail.com'],
+  owner: 'Ferdinant Nallengara',
+  ownerTitle: 'Owner | Thekkanath Souparnika',
   accessNotes: 'On the PWD bus route, at Market Junction bus stop in Nellikunnu, with direct highway access.',
   capacityNotes:
     'Four halls accommodate up to 100 guests each; the venue is best suited to gatherings of up to 300 guests overall.',

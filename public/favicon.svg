@@ -1,5 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <circle cx="32" cy="32" r="30" fill="#234435" stroke="#c9a66a" stroke-width="2"/>
-  <circle cx="32" cy="32" r="26" fill="none" stroke="#c9a66a" stroke-width="0.8" stroke-dasharray="2 2"/>
-  <text x="32" y="39" font-family="Georgia, serif" font-size="20" font-weight="bold" fill="#c9a66a" text-anchor="middle">TS</text>
+  <defs>
+    <linearGradient id="burgundyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4A0E17"/>
+      <stop offset="100%" stop-color="#5B1D27"/>
+    </linearGradient>
+    <linearGradient id="roseGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F3E5AB"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#E5A99B"/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="30" fill="url(#burgundyGrad)" stroke="url(#roseGoldGrad)" stroke-width="2"/>
+  <circle cx="32" cy="32" r="26" fill="none" stroke="#E5A99B" stroke-width="0.8" stroke-dasharray="2 2" opacity="0.6"/>
+  <!-- Stylized Lotus Emblem -->
+  <path d="M32 14 C28 22 24 28 32 38 C40 28 36 22 32 14 Z" fill="url(#roseGoldGrad)"/>
+  <path d="M22 20 C22 28 26 34 32 38 C26 32 20 28 22 20 Z" fill="url(#roseGoldGrad)" opacity="0.9"/>
+  <path d="M42 20 C42 28 38 34 32 38 C38 32 44 28 42 20 Z" fill="url(#roseGoldGrad)" opacity="0.9"/>
+  <path d="M16 28 C20 34 26 38 32 40 C24 38 18 34 16 28 Z" fill="url(#roseGoldGrad)" opacity="0.8"/>
+  <path d="M48 28 C44 34 38 38 32 40 C40 38 46 34 48 28 Z" fill="url(#roseGoldGrad)" opacity="0.8"/>
+  <text x="32" y="52" font-family="'Cormorant Garamond', Georgia, serif" font-size="10" font-weight="bold" fill="#FDFBF7" text-anchor="middle" letter-spacing="1">TS</text>
 </svg>

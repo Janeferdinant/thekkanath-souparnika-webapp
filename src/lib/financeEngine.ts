@@ -11,6 +11,11 @@ export const CEILING_TURNOVER_PAISE = 20 * 100_000 * 100; // 200,000,000 paise =
 export const WARNING_THRESHOLD_PERCENT = 90;
 
 /**
+ * Critical lock alert threshold (98% = ₹19.6 Lakhs)
+ */
+export const LOCK_THRESHOLD_PERCENT = 98;
+
+/**
  * Smart allocation engine that routes bookings between Account 1 and Account 2
  * to ensure neither account exceeds ₹20 Lakhs while balancing load smoothly.
  */
@@ -49,18 +54,21 @@ export function calculateHeadroom(
   remainingPaise: number;
   percentageUsed: number;
   isWarning: boolean;
+  isLocked: boolean;
   isCapped: boolean;
 } {
   const remainingPaise = Math.max(0, ceilingPaise - turnoverPaise);
   const rawPercentage = (turnoverPaise / ceilingPaise) * 100;
   const percentageUsed = Math.min(100, Math.round(rawPercentage * 10) / 10);
-  const isWarning = percentageUsed >= WARNING_THRESHOLD_PERCENT && percentageUsed < 100;
+  const isLocked = percentageUsed >= LOCK_THRESHOLD_PERCENT;
+  const isWarning = percentageUsed >= WARNING_THRESHOLD_PERCENT && !isLocked;
   const isCapped = turnoverPaise >= ceilingPaise;
 
   return {
     remainingPaise,
     percentageUsed,
     isWarning,
+    isLocked,
     isCapped,
   };
 }

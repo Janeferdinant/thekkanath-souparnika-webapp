@@ -28,6 +28,7 @@ import {
   DEMO_REFERRALS,
 } from '../data/demoSeed';
 import { checkHallAvailability } from './bookingEngine';
+import { allocateBookingAccount } from './financeEngine';
 
 const STORAGE_KEYS = {
   CURRENT_USER: 'ts_current_user',
@@ -241,8 +242,24 @@ export const StorageService = {
       return { success: false, error: conflict.message };
     }
 
+    let assignedAccount = bookingData.allocatedAccount;
+    if (!assignedAccount) {
+      let t1 = 0;
+      let t2 = 0;
+      for (const b of bookings) {
+        if (b.status === 'cancelled') continue;
+        if (b.allocatedAccount === 'account_2') {
+          t2 += b.totalAgreedPaise || 0;
+        } else {
+          t1 += b.totalAgreedPaise || 0;
+        }
+      }
+      assignedAccount = allocateBookingAccount(bookingData.totalAgreedPaise || 0, t1, t2);
+    }
+
     const newBooking: Booking = {
       ...bookingData,
+      allocatedAccount: assignedAccount,
       id: `bkg-${Date.now()}`,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
