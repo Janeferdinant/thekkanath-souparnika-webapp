@@ -155,18 +155,18 @@ export const PublicHeader: React.FC = () => {
                 onClick={() => setMobileMenuOpen(false)}
                 className={`block px-4 py-2.5 rounded-xl text-base font-medium transition-colors ${
                   isActive(link.path)
-                    ? 'bg-forest-800 text-cream-50 font-bold'
-                    : 'text-ink-800 hover:bg-cream-200'
+                    ? 'bg-burgundy-900 text-white font-bold shadow-sm'
+                    : 'text-burgundy-950 hover:bg-rose-50'
                 }`}
               >
                 {link.label}
               </Link>
             ))}
-            <div className="pt-3 border-t border-cream-200 flex flex-col gap-2">
+            <div className="pt-3 border-t border-rose-100 flex flex-col gap-2">
               <Link
                 to="/enquire"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center px-4 py-3 rounded-full text-sm font-bold bg-forest-800 text-cream-50 shadow-sm"
+                className="w-full text-center px-4 py-3 rounded-full text-sm font-bold bg-gradient-to-r from-gold-400 via-gold-500 to-rose-400 text-burgundy-950 shadow-md"
               >
                 Check Date / Send Enquiry ↗
               </Link>

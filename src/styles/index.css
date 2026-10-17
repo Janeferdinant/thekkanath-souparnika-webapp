@@ -5,9 +5,11 @@
 
 @layer base {
   :root {
-    --forest-primary: #234435;
-    --gold-accent: #c9a66a;
-    --cream-bg: #fbf9f4;
+    --primary-burgundy: #4a0e17;
+    --primary-wine: #1a0510;
+    --accent-gold: #d4af37;
+    --accent-rose-gold: #e5a99b;
+    --cream-bg: #faf7f2;
   }
 
   html {

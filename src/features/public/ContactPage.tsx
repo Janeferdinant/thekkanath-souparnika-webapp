@@ -37,8 +37,8 @@ export const ContactPage: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
       {/* Title */}
       <div className="space-y-4 max-w-3xl">
-        <span className="text-xs font-bold uppercase tracking-wider text-gold-700">Find & Reach Us</span>
-        <h1 className="font-serif text-4xl sm:text-5xl font-bold text-forest-900 leading-tight">
+        <span className="text-xs font-bold uppercase tracking-[0.2em] text-rose-700">Find & Reach Us</span>
+        <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-burgundy-950 tracking-tight leading-tight">
           Visit Thekkanath Souparnika
         </h1>
         <p className="text-sm sm:text-base text-ink-700 leading-relaxed">
@@ -47,21 +47,21 @@ export const ContactPage: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-        {/* Contact Info Cards */}
+        {/* Contact Info Cards — Liquid Glass */}
         <div className="space-y-6">
-          <div className="p-8 rounded-3xl bg-cream-50 border border-cream-200 shadow-subtle space-y-6">
-            <h3 className="font-serif text-2xl font-bold text-forest-900 border-b border-cream-200 pb-3">
+          <div className="p-8 sm:p-10 rounded-3xl bg-white/80 backdrop-blur-xl border border-rose-200/80 shadow-luxury space-y-6">
+            <h3 className="font-serif text-2xl font-bold text-burgundy-950 border-b border-rose-100 pb-3">
               Venue Contact Details
             </h3>
 
             <div className="space-y-5 text-sm text-ink-800">
-              <div className="flex items-start gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-forest-900 text-gold-400 flex items-center justify-center shrink-0">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-burgundy-900 to-wine-950 text-gold-300 border border-gold-400/30 flex items-center justify-center shrink-0 shadow-md">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
-                  <strong className="block text-forest-950 font-bold">Address</strong>
-                  <p className="text-xs text-ink-600 mt-0.5 leading-relaxed">
+                  <strong className="block text-burgundy-950 font-bold">Address</strong>
+                  <p className="text-xs text-ink-600 mt-1 leading-relaxed">
                     Thekkanath Souparnika, Hall & Events Venue<br />
                     Opposite RGLP School, Market Junction<br />
                     Nellikunnu, Thrissur – 680005, Kerala, India
@@ -69,32 +69,32 @@ export const ContactPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex items-start gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-forest-900 text-gold-400 flex items-center justify-center shrink-0">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-burgundy-900 to-wine-950 text-gold-300 border border-gold-400/30 flex items-center justify-center shrink-0 shadow-md">
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
-                  <strong className="block text-forest-950 font-bold">Telephone</strong>
-                  <div className="flex flex-col gap-1 text-xs text-ink-700 mt-0.5">
-                    <a href={`tel:${VENUE_INFO.phones[0]}`} className="hover:text-forest-900 font-medium">
+                  <strong className="block text-burgundy-950 font-bold">Telephone</strong>
+                  <div className="flex flex-col gap-1 text-xs text-ink-700 mt-1">
+                    <a href={`tel:${VENUE_INFO.phones[0]}`} className="hover:text-burgundy-900 font-medium">
                       +91 {VENUE_INFO.phones[0]} (Primary)
                     </a>
-                    <a href={`tel:${VENUE_INFO.phones[1]}`} className="hover:text-forest-900 font-medium">
+                    <a href={`tel:${VENUE_INFO.phones[1]}`} className="hover:text-burgundy-900 font-medium">
                       +91 {VENUE_INFO.phones[1]} (Secondary)
                     </a>
                   </div>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-forest-900 text-gold-400 flex items-center justify-center shrink-0">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-burgundy-900 to-wine-950 text-gold-300 border border-gold-400/30 flex items-center justify-center shrink-0 shadow-md">
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
-                  <strong className="block text-forest-950 font-bold">Email</strong>
+                  <strong className="block text-burgundy-950 font-bold">Email</strong>
                   <a
                     href={`mailto:${VENUE_INFO.email}`}
-                    className="text-xs text-forest-800 hover:text-gold-700 font-medium block mt-0.5"
+                    className="text-xs text-burgundy-800 hover:text-rose-700 font-medium block mt-1"
                   >
                     {VENUE_INFO.email}
                   </a>
@@ -102,12 +102,12 @@ export const ContactPage: React.FC = () => {
               </div>
             </div>
 
-            <div className="pt-4 border-t border-cream-200 flex flex-wrap gap-3">
+            <div className="pt-4 border-t border-rose-100 flex flex-wrap gap-3">
               <a
                 href={VENUE_INFO.googleMapsUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold bg-forest-800 text-white hover:bg-forest-900 transition-colors shadow-sm"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-semibold bg-gradient-to-r from-burgundy-900 to-wine-900 text-white hover:from-burgundy-950 hover:to-wine-950 transition-all shadow-md hover:scale-[1.02]"
               >
                 <span>Open in Google Maps</span>
                 <ExternalLink className="w-3.5 h-3.5" />
@@ -117,7 +117,7 @@ export const ContactPage: React.FC = () => {
                 href={VENUE_INFO.whatsappUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold bg-gold-500 text-forest-950 hover:bg-gold-400 transition-colors shadow-sm"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-semibold bg-gradient-to-r from-gold-400 via-gold-500 to-rose-400 text-burgundy-950 hover:from-gold-300 hover:to-rose-300 transition-all shadow-md hover:scale-[1.02]"
               >
                 <MessageCircle className="w-3.5 h-3.5" />
                 <span>Chat on WhatsApp</span>
@@ -126,17 +126,17 @@ export const ContactPage: React.FC = () => {
           </div>
 
           {/* Access Note Card */}
-          <div className="p-6 rounded-2xl bg-cream-100 border border-cream-300 text-xs text-ink-700 space-y-2">
-            <h4 className="font-serif font-bold text-forest-950 text-base">Travel & Access Note</h4>
+          <div className="p-6 rounded-3xl bg-white/80 backdrop-blur-xl border border-rose-200/80 shadow-subtle text-xs text-ink-700 space-y-2">
+            <h4 className="font-serif font-bold text-burgundy-950 text-base">Travel & Access Note</h4>
             <p className="leading-relaxed">
               The venue is situated directly on the PWD bus route with a stop at Market Junction in Nellikunnu. Highway access connects smoothly to Thrissur town centre, Paliyekkara bypass, and National Highway 544.
             </p>
           </div>
         </div>
 
-        {/* Quick Message Form */}
-        <div className="p-8 rounded-3xl bg-cream-50 border border-cream-200 shadow-luxury space-y-6">
-          <h3 className="font-serif text-2xl font-bold text-forest-900 border-b border-cream-200 pb-3">
+        {/* Quick Message Form — Liquid Glass */}
+        <div className="p-8 sm:p-10 rounded-3xl bg-white/80 backdrop-blur-xl border border-rose-200/80 shadow-luxury space-y-6">
+          <h3 className="font-serif text-2xl font-bold text-burgundy-950 border-b border-rose-100 pb-3">
             Send a Quick Note
           </h3>
 
@@ -145,7 +145,7 @@ export const ContactPage: React.FC = () => {
               <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
               <h4 className="font-serif font-bold text-emerald-950 text-lg">Message Received</h4>
               <p className="text-xs text-emerald-800">
-                Thank you for contacting us. Our management team will call or message you back shortly.
+                Thank you for contacting us. Our management team will call or message you back promptly.
               </p>
               <Button variant="outline" size="sm" onClick={() => setSent(false)}>
                 Send Another Message
@@ -154,37 +154,37 @@ export const ContactPage: React.FC = () => {
           ) : (
             <form onSubmit={handleQuickContact} className="space-y-4">
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-ink-800">Your Name *</label>
+                <label className="text-xs font-bold text-burgundy-950">Your Name *</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Anand Menon"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-cream-300 bg-white text-xs text-ink-900 focus:outline-none focus:ring-2 focus:ring-forest-600"
+                  className="w-full px-4 py-2.5 rounded-xl border border-rose-200/80 bg-white/90 text-xs text-ink-900 focus:outline-none focus:ring-2 focus:ring-burgundy-500"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-ink-800">Phone Number *</label>
+                <label className="text-xs font-bold text-burgundy-950">Phone Number *</label>
                 <input
                   type="tel"
                   required
                   placeholder="e.g. 9847012345"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-cream-300 bg-white text-xs text-ink-900 focus:outline-none focus:ring-2 focus:ring-forest-600"
+                  className="w-full px-4 py-2.5 rounded-xl border border-rose-200/80 bg-white/90 text-xs text-ink-900 focus:outline-none focus:ring-2 focus:ring-burgundy-500"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-ink-800">Your Message or Question</label>
+                <label className="text-xs font-bold text-burgundy-950">Your Message or Question</label>
                 <textarea
                   rows={4}
                   placeholder="Tell us what you would like to know about our venue, dates, or facilities..."
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-cream-300 bg-white text-xs text-ink-900 focus:outline-none focus:ring-2 focus:ring-forest-600"
+                  className="w-full px-4 py-2.5 rounded-xl border border-rose-200/80 bg-white/90 text-xs text-ink-900 focus:outline-none focus:ring-2 focus:ring-burgundy-500"
                 />
               </div>
 
@@ -192,13 +192,13 @@ export const ContactPage: React.FC = () => {
                 variant="primary"
                 size="md"
                 type="submit"
-                className="w-full"
+                className="w-full shadow-md"
                 rightIcon={<Send className="w-4 h-4" />}
               >
                 Send Message to Management
               </Button>
 
-              <p className="text-[10px] text-ink-500 text-center leading-relaxed">
+              <p className="text-[11px] text-rose-900/70 text-center leading-relaxed">
                 By sending this note, you authorize our team to contact you via telephone or WhatsApp regarding your query.
               </p>
             </form>

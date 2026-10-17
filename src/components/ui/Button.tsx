@@ -39,17 +39,17 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variantStyles: Record<ButtonVariant, string> = {
       primary:
-        'bg-forest-800 text-cream-50 hover:bg-forest-900 border border-forest-700 focus:ring-forest-600 shadow-sm',
+        'bg-gradient-to-r from-burgundy-900 via-burgundy-800 to-wine-900 text-white hover:from-burgundy-950 hover:to-wine-950 border border-rose-400/30 shadow-md focus:ring-burgundy-500',
       secondary:
-        'bg-cream-100 text-ink-900 hover:bg-cream-200 border border-cream-300 focus:ring-cream-400',
+        'bg-cream-100/90 text-burgundy-950 hover:bg-cream-200 border border-rose-200/60 focus:ring-rose-300',
       gold:
-        'bg-gold-500 text-forest-950 hover:bg-gold-400 border border-gold-600 focus:ring-gold-500 font-semibold shadow-sm',
+        'bg-gradient-to-r from-gold-400 via-gold-500 to-rose-400 text-burgundy-950 hover:from-gold-300 hover:to-rose-300 border border-gold-400/50 font-semibold shadow-md focus:ring-gold-400',
       outline:
-        'bg-transparent text-ink-800 hover:bg-cream-100 border border-cream-300 focus:ring-forest-600',
+        'bg-transparent text-burgundy-950 hover:bg-burgundy-50 border border-burgundy-800/30 focus:ring-burgundy-500',
       danger:
-        'bg-rose-700 text-white hover:bg-rose-800 border border-rose-800 focus:ring-rose-600 shadow-sm',
+        'bg-rose-700 text-white hover:bg-rose-800 border border-rose-800 focus:ring-rose-500 shadow-sm',
       ghost:
-        'bg-transparent text-ink-700 hover:bg-cream-100 border border-transparent focus:ring-cream-400',
+        'bg-transparent text-burgundy-900 hover:bg-burgundy-50 border border-transparent focus:ring-burgundy-400',
     };
 
     return (

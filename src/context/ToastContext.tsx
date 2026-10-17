@@ -57,7 +57,7 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             key={t.id}
             className={`pointer-events-auto flex items-start gap-3 p-4 rounded-xl border shadow-luxury backdrop-blur-md transition-all duration-300 animate-in fade-in slide-in-from-bottom-3 ${
               t.type === 'success'
-                ? 'bg-forest-900/95 text-white border-forest-700'
+                ? 'bg-gradient-to-r from-burgundy-950 via-burgundy-900 to-wine-950 text-white border-rose-400/40 shadow-glass'
                 : t.type === 'error'
                 ? 'bg-red-950/95 text-white border-red-800'
                 : 'bg-ink-900/95 text-white border-ink-700'

@@ -41,14 +41,14 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ onSearch }) => {
         {/* Left: Brand / Studio Label */}
         <div className="flex items-center gap-3">
           <Link to="/admin" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-forest-800 text-gold-400 font-serif font-bold text-sm flex items-center justify-center border border-gold-500">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-burgundy-900 to-wine-950 text-gold-300 font-serif font-bold text-sm flex items-center justify-center border border-gold-400/50 shadow-sm">
               TS
             </div>
             <div className="hidden sm:block">
-              <span className="font-serif font-bold text-sm text-forest-950 block leading-none">
+              <span className="font-serif font-bold text-sm text-burgundy-950 block leading-none">
                 Souparnika Studio
               </span>
-              <span className="text-[9px] uppercase tracking-wider text-gold-700 font-bold block mt-0.5">
+              <span className="text-[9px] uppercase tracking-wider text-rose-700 font-bold block mt-0.5">
                 Venue Management {isDemoMode() && '· Demo'}
               </span>
             </div>

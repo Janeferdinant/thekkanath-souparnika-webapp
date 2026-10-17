@@ -156,7 +156,7 @@ export const AdminSidebar: React.FC = () => {
   ];
 
   return (
-    <aside className="w-64 bg-forest-950 text-cream-200 border-r border-forest-900 flex flex-col shrink-0 select-none">
+    <aside className="w-64 bg-wine-950 text-cream-200 border-r border-burgundy-900 flex flex-col shrink-0 select-none">
       <div className="flex-1 overflow-y-auto py-5 px-3 space-y-6">
         {sections.map((section, sIdx) => {
           const visibleItems = section.items.filter((item) => canAccess(item.allowedRoles));
@@ -164,7 +164,7 @@ export const AdminSidebar: React.FC = () => {
 
           return (
             <div key={sIdx} className="space-y-1">
-              <div className="px-3 text-[10px] uppercase font-bold tracking-widest text-gold-500/80 mb-2">
+              <div className="px-3 text-[10px] uppercase font-bold tracking-widest text-gold-400/80 mb-2">
                 {section.title}
               </div>
               {visibleItems.map((item) => (
@@ -175,8 +175,8 @@ export const AdminSidebar: React.FC = () => {
                   className={({ isActive }) =>
                     `flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition-all ${
                       isActive
-                        ? 'bg-gold-500 text-forest-950 font-bold shadow-sm'
-                        : 'text-cream-300 hover:text-white hover:bg-forest-900'
+                        ? 'bg-gradient-to-r from-gold-400 via-gold-500 to-rose-400 text-burgundy-950 font-bold shadow-sm'
+                        : 'text-cream-300 hover:text-white hover:bg-burgundy-900/80'
                     }`
                   }
                 >
@@ -190,7 +190,7 @@ export const AdminSidebar: React.FC = () => {
       </div>
 
       {/* Role Indicator Footer */}
-      <div className="p-3 border-t border-forest-900 bg-forest-950/80 text-[10px] text-cream-400">
+      <div className="p-3 border-t border-burgundy-900 bg-wine-950/90 text-[10px] text-cream-400">
         <div className="flex items-center justify-between">
           <span>Active Role:</span>
           <span className="font-bold text-gold-400 uppercase tracking-wider">

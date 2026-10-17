@@ -195,7 +195,7 @@ export const EnquirePage: React.FC = () => {
             <span className="text-xs font-bold uppercase tracking-wider text-gold-700">
               Enquiry Received
             </span>
-            <h1 className="font-serif text-3xl sm:text-4xl font-bold text-forest-950">
+            <h1 className="font-serif text-3xl sm:text-4xl font-bold text-burgundy-950">
               Thank You, {submittedEnquiry.customerName}
             </h1>
             <p className="text-xs sm:text-sm text-ink-600 max-w-md mx-auto leading-relaxed">
@@ -207,13 +207,13 @@ export const EnquirePage: React.FC = () => {
           <div className="p-5 rounded-2xl bg-cream-100 border border-cream-300 max-w-sm mx-auto flex items-center justify-between gap-4">
             <div className="text-left">
               <span className="text-[10px] uppercase font-bold text-ink-500">Enquiry Reference</span>
-              <div className="font-mono text-lg font-bold text-forest-900">
+              <div className="font-mono text-lg font-bold text-burgundy-950">
                 {submittedEnquiry.reference}
               </div>
             </div>
             <button
               onClick={copyRefToClipboard}
-              className="p-2.5 rounded-xl hover:bg-cream-200 text-forest-800 transition-colors"
+              className="p-2.5 rounded-xl hover:bg-cream-200 text-burgundy-900 transition-colors"
               title="Copy Reference"
             >
               {copied ? <Check className="w-5 h-5 text-emerald-600" /> : <Copy className="w-5 h-5" />}
@@ -221,7 +221,7 @@ export const EnquirePage: React.FC = () => {
           </div>
 
           {/* Next Steps Card */}
-          <div className="text-left bg-forest-900 text-cream-100 p-6 rounded-2xl space-y-3">
+          <div className="text-left bg-gradient-to-r from-burgundy-950 to-wine-950 text-cream-100 p-6 rounded-2xl space-y-3 border border-rose-300/30">
             <h4 className="font-serif text-base font-bold text-gold-300">What Happens Next?</h4>
             <ol className="list-decimal list-inside text-xs text-cream-200 space-y-1.5 leading-relaxed">
               <li>Our management team reviews your preferred date ({submittedEnquiry.preferredDate}) against existing bookings.</li>
@@ -260,7 +260,7 @@ export const EnquirePage: React.FC = () => {
           <Sparkles className="w-4 h-4" />
           <span>Plan Your Gathering</span>
         </div>
-        <h1 className="font-serif text-4xl sm:text-5xl font-bold text-forest-900">
+        <h1 className="font-serif text-4xl sm:text-5xl font-bold text-burgundy-950">
           Request a Booking Enquiry
         </h1>
         <p className="text-xs sm:text-sm text-ink-600 leading-relaxed">
@@ -273,7 +273,7 @@ export const EnquirePage: React.FC = () => {
         <div
           className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all ${
             step === 1
-              ? 'bg-forest-800 text-white border-forest-800 shadow-sm'
+              ? 'bg-gradient-to-r from-burgundy-900 to-wine-900 text-white border-burgundy-900 shadow-sm'
               : 'bg-cream-100 text-ink-600 border-cream-300'
           }`}
         >
@@ -286,7 +286,7 @@ export const EnquirePage: React.FC = () => {
         <div
           className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all ${
             step === 2
-              ? 'bg-forest-800 text-white border-forest-800 shadow-sm'
+              ? 'bg-gradient-to-r from-burgundy-900 to-wine-900 text-white border-burgundy-900 shadow-sm'
               : 'bg-cream-100 text-ink-600 border-cream-300'
           }`}
         >
@@ -299,7 +299,7 @@ export const EnquirePage: React.FC = () => {
         <div
           className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all ${
             step === 3
-              ? 'bg-forest-800 text-white border-forest-800 shadow-sm'
+              ? 'bg-gradient-to-r from-burgundy-900 to-wine-900 text-white border-burgundy-900 shadow-sm'
               : 'bg-cream-100 text-ink-600 border-cream-300'
           }`}
         >
