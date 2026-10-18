@@ -186,46 +186,46 @@ export const EnquirePage: React.FC = () => {
   if (submittedEnquiry) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-16">
-        <div className="p-8 sm:p-12 rounded-3xl bg-cream-50 border border-cream-200 shadow-luxury text-center space-y-6">
-          <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-800 mx-auto flex items-center justify-center">
+        <div className="glass-panel p-8 sm:p-12 rounded-3xl border border-[rgba(226,184,178,0.3)] shadow-luxury text-center space-y-6">
+          <div className="w-16 h-16 rounded-full bg-emerald-900/60 border border-emerald-500/40 text-emerald-300 mx-auto flex items-center justify-center">
             <CheckCircle2 className="w-8 h-8" />
           </div>
 
           <div className="space-y-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-gold-700">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#E7CFAF]">
               Enquiry Received
             </span>
-            <h1 className="font-serif text-3xl sm:text-4xl font-bold text-burgundy-950">
+            <h1 className="font-serif text-3xl sm:text-4xl font-light text-[#F7EFE7]">
               Thank You, {submittedEnquiry.customerName}
             </h1>
-            <p className="text-xs sm:text-sm text-ink-600 max-w-md mx-auto leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#CBB8B9] max-w-md mx-auto leading-relaxed">
               Your booking enquiry has been recorded in our system. Submitting an enquiry does not automatically reserve a date; management will check availability and follow up.
             </p>
           </div>
 
           {/* Reference Card */}
-          <div className="p-5 rounded-2xl bg-cream-100 border border-cream-300 max-w-sm mx-auto flex items-center justify-between gap-4">
+          <div className="glass-control p-5 rounded-2xl border border-[rgba(226,184,178,0.25)] max-w-sm mx-auto flex items-center justify-between gap-4">
             <div className="text-left">
-              <span className="text-[10px] uppercase font-bold text-ink-500">Enquiry Reference</span>
-              <div className="font-mono text-lg font-bold text-burgundy-950">
+              <span className="text-[10px] uppercase font-bold text-[#E7CFAF]">Enquiry Reference</span>
+              <div className="font-mono text-lg font-bold text-[#F7EFE7]">
                 {submittedEnquiry.reference}
               </div>
             </div>
             <button
               onClick={copyRefToClipboard}
-              className="p-2.5 rounded-xl hover:bg-cream-200 text-burgundy-900 transition-colors"
+              className="p-2.5 rounded-xl glass-control text-[#F7EFE7] hover:border-[rgba(226,184,178,0.4)] transition-colors"
               title="Copy Reference"
             >
-              {copied ? <Check className="w-5 h-5 text-emerald-600" /> : <Copy className="w-5 h-5" />}
+              {copied ? <Check className="w-5 h-5 text-emerald-400" /> : <Copy className="w-5 h-5 text-[#e8c7bc]" />}
             </button>
           </div>
 
           {/* Next Steps Card */}
-          <div className="text-left bg-gradient-to-r from-burgundy-950 to-wine-950 text-cream-100 p-6 rounded-2xl space-y-3 border border-rose-300/30">
-            <h4 className="font-serif text-base font-bold text-gold-300">What Happens Next?</h4>
-            <ol className="list-decimal list-inside text-xs text-cream-200 space-y-1.5 leading-relaxed">
+          <div className="glass-panel text-left text-[#F7EFE7] p-6 rounded-2xl space-y-3 border border-[rgba(226,184,178,0.22)]">
+            <h4 className="font-serif text-base font-light text-[#E7CFAF]">What Happens Next?</h4>
+            <ol className="list-decimal list-inside text-xs text-[#CBB8B9] space-y-1.5 leading-relaxed">
               <li>Our management team reviews your preferred date ({submittedEnquiry.preferredDate}) against existing bookings.</li>
-              <li>We will contact you via phone or WhatsApp at <strong>+91 {submittedEnquiry.customerPhone}</strong>.</li>
+              <li>We will contact you via phone or WhatsApp at <strong className="text-[#F7EFE7]">+91 {submittedEnquiry.customerPhone}</strong>.</li>
               <li>You can arrange a venue visit to inspect the halls in person.</li>
               <li>Upon agreement on dates and rental details, your booking will be confirmed.</li>
             </ol>
@@ -237,14 +237,14 @@ export const EnquirePage: React.FC = () => {
               target="_blank"
               rel="noreferrer"
             >
-              <Button variant="gold" size="md" leftIcon={<MessageCircle className="w-4 h-4" />}>
+              <Button variant="gold" size="md" className="glass-highlight" leftIcon={<MessageCircle className="w-4 h-4" />}>
                 Message on WhatsApp
               </Button>
             </a>
             <Link to="/">
-              <Button variant="outline" size="md">
+              <button className="px-5 py-2.5 rounded-full text-xs font-semibold glass-control text-[#F7EFE7] hover:border-[rgba(226,184,178,0.5)] transition-all">
                 Return to Home Page
-              </Button>
+              </button>
             </Link>
           </div>
         </div>
@@ -253,17 +253,17 @@ export const EnquirePage: React.FC = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-10">
       {/* Title */}
       <div className="text-center space-y-3 max-w-2xl mx-auto">
-        <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-gold-700">
-          <Sparkles className="w-4 h-4" />
+        <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.25em] text-[#E7CFAF]">
+          <Sparkles className="w-4 h-4 text-[#e8c7bc]" />
           <span>Plan Your Gathering</span>
         </div>
-        <h1 className="font-serif text-4xl sm:text-5xl font-bold text-burgundy-950">
+        <h1 className="font-serif text-4xl sm:text-5xl font-light text-[#F7EFE7]">
           Request a Booking Enquiry
         </h1>
-        <p className="text-xs sm:text-sm text-ink-600 leading-relaxed">
+        <p className="text-xs sm:text-sm text-[#CBB8B9] leading-relaxed">
           Tell us about your event. A booking request is not an instant confirmation; our team will verify hall schedules and follow up promptly.
         </p>
       </div>
@@ -273,37 +273,37 @@ export const EnquirePage: React.FC = () => {
         <div
           className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all ${
             step === 1
-              ? 'bg-gradient-to-r from-burgundy-900 to-wine-900 text-white border-burgundy-900 shadow-sm'
-              : 'bg-cream-100 text-ink-600 border-cream-300'
+              ? 'bg-gradient-to-r from-[#5A1B2E] to-[#451323] text-[#F7EFE7] border-[rgba(226,184,178,0.4)] shadow-md'
+              : 'glass-control text-[#CBB8B9] border-[rgba(226,184,178,0.2)]'
           }`}
         >
-          <span className="w-5 h-5 rounded-full bg-cream-50/20 text-center text-xs flex items-center justify-center font-bold">
+          <span className="w-5 h-5 rounded-full bg-white/10 text-center text-xs flex items-center justify-center font-bold">
             1
           </span>
           <span className="hidden sm:inline">Event Details</span>
         </div>
-        <span className="text-cream-400">→</span>
+        <span className="text-[#CBB8B9]/40">→</span>
         <div
           className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all ${
             step === 2
-              ? 'bg-gradient-to-r from-burgundy-900 to-wine-900 text-white border-burgundy-900 shadow-sm'
-              : 'bg-cream-100 text-ink-600 border-cream-300'
+              ? 'bg-gradient-to-r from-[#5A1B2E] to-[#451323] text-[#F7EFE7] border-[rgba(226,184,178,0.4)] shadow-md'
+              : 'glass-control text-[#CBB8B9] border-[rgba(226,184,178,0.2)]'
           }`}
         >
-          <span className="w-5 h-5 rounded-full bg-cream-50/20 text-center text-xs flex items-center justify-center font-bold">
+          <span className="w-5 h-5 rounded-full bg-white/10 text-center text-xs flex items-center justify-center font-bold">
             2
           </span>
           <span className="hidden sm:inline">Contact Information</span>
         </div>
-        <span className="text-cream-400">→</span>
+        <span className="text-[#CBB8B9]/40">→</span>
         <div
           className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all ${
             step === 3
-              ? 'bg-gradient-to-r from-burgundy-900 to-wine-900 text-white border-burgundy-900 shadow-sm'
-              : 'bg-cream-100 text-ink-600 border-cream-300'
+              ? 'bg-gradient-to-r from-[#5A1B2E] to-[#451323] text-[#F7EFE7] border-[rgba(226,184,178,0.4)] shadow-md'
+              : 'glass-control text-[#CBB8B9] border-[rgba(226,184,178,0.2)]'
           }`}
         >
-          <span className="w-5 h-5 rounded-full bg-cream-50/20 text-center text-xs flex items-center justify-center font-bold">
+          <span className="w-5 h-5 rounded-full bg-white/10 text-center text-xs flex items-center justify-center font-bold">
             3
           </span>
           <span className="hidden sm:inline">Review & Submit</span>
@@ -311,55 +311,55 @@ export const EnquirePage: React.FC = () => {
       </div>
 
       {/* Form Container */}
-      <div className="p-6 sm:p-10 rounded-3xl bg-cream-50 border border-cream-200 shadow-luxury">
+      <div className="glass-panel p-6 sm:p-10 rounded-3xl border border-[rgba(226,184,178,0.22)] shadow-luxury">
         {/* Step 1: Event Details */}
         {step === 1 && (
           <div className="space-y-6 animate-in fade-in duration-200">
-            <h2 className="font-serif text-2xl font-bold text-forest-900 border-b border-cream-200 pb-3">
+            <h2 className="font-serif text-2xl font-light text-[#F7EFE7] border-b border-[rgba(226,184,178,0.15)] pb-3">
               Step 1: Event Details & Schedule
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {/* Event Type */}
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-ink-800">Type of Event *</label>
+                <label className="text-xs font-bold text-[#E7CFAF]">Type of Event *</label>
                 <select
                   value={eventType}
                   onChange={(e) => setEventType(e.target.value as EventType)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-cream-300 bg-white text-xs text-ink-900 focus:outline-none focus:ring-2 focus:ring-forest-600"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[rgba(226,184,178,0.25)] bg-[#18070c]/90 text-xs text-[#F7EFE7] focus:outline-none focus:ring-2 focus:ring-[#e8c7bc]"
                 >
-                  <option value="Wedding & Reception">Wedding & Reception</option>
-                  <option value="Ceremony / Ritual">Ceremony / Ritual (Engagement, Naming, etc.)</option>
-                  <option value="Family Gathering">Family Gathering / Feast</option>
-                  <option value="Seminar / Conference">Seminar / Conference</option>
-                  <option value="Cultural Programme">Cultural Programme</option>
-                  <option value="Birthday / Anniversary">Birthday / Anniversary</option>
-                  <option value="Other">Other Event</option>
+                  <option value="Wedding & Reception" className="bg-[#240810] text-[#F7EFE7]">Wedding & Reception</option>
+                  <option value="Ceremony / Ritual" className="bg-[#240810] text-[#F7EFE7]">Ceremony / Ritual (Engagement, Naming, etc.)</option>
+                  <option value="Family Gathering" className="bg-[#240810] text-[#F7EFE7]">Family Gathering / Feast</option>
+                  <option value="Seminar / Conference" className="bg-[#240810] text-[#F7EFE7]">Seminar / Conference</option>
+                  <option value="Cultural Programme" className="bg-[#240810] text-[#F7EFE7]">Cultural Programme</option>
+                  <option value="Birthday / Anniversary" className="bg-[#240810] text-[#F7EFE7]">Birthday / Anniversary</option>
+                  <option value="Other" className="bg-[#240810] text-[#F7EFE7]">Other Event</option>
                 </select>
               </div>
 
               {/* Preferred Date */}
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-ink-800">Preferred Event Date *</label>
+                <label className="text-xs font-bold text-[#E7CFAF]">Preferred Event Date *</label>
                 <input
                   type="date"
                   min={new Date().toISOString().split('T')[0]}
                   value={preferredDate}
                   onChange={(e) => setPreferredDate(e.target.value)}
-                  className={`w-full px-3.5 py-2.5 rounded-xl border bg-white text-xs text-ink-900 focus:outline-none focus:ring-2 focus:ring-forest-600 ${
-                    errors.preferredDate ? 'border-red-500' : 'border-cream-300'
+                  className={`w-full px-3.5 py-2.5 rounded-xl border bg-[#18070c]/90 text-xs text-[#F7EFE7] focus:outline-none focus:ring-2 focus:ring-[#e8c7bc] ${
+                    errors.preferredDate ? 'border-red-400' : 'border-[rgba(226,184,178,0.25)]'
                   }`}
                 />
                 {errors.preferredDate && (
-                  <p className="text-[11px] text-red-600">{errors.preferredDate}</p>
+                  <p className="text-[11px] text-red-400">{errors.preferredDate}</p>
                 )}
               </div>
 
               {/* Bookable Sessions */}
               <div className="space-y-2 sm:col-span-2">
-                <label className="text-xs font-bold text-ink-800 flex items-center justify-between">
+                <label className="text-xs font-bold text-[#E7CFAF] flex items-center justify-between">
                   <span>Select Event Session *</span>
-                  <span className="text-[11px] font-normal text-burgundy-700">Two fixed daily sessions available</span>
+                  <span className="text-[11px] font-normal text-[#CBB8B9]">Two fixed daily sessions available</span>
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {/* Morning Session */}
@@ -368,20 +368,20 @@ export const EnquirePage: React.FC = () => {
                     onClick={() => handleSessionChange('morning')}
                     className={`p-4 rounded-2xl border text-left transition-all ${
                       session === 'morning'
-                        ? 'border-burgundy-700 bg-burgundy-50/60 shadow-sm ring-2 ring-burgundy-600/20'
-                        : 'border-cream-300 bg-white hover:border-burgundy-300'
+                        ? 'border-[#e8c7bc] bg-[#451323]/50 shadow-md ring-2 ring-[#e8c7bc]/30'
+                        : 'glass-control border-[rgba(226,184,178,0.2)] hover:border-[rgba(226,184,178,0.4)]'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center">
+                      <div className="w-8 h-8 rounded-lg bg-[#240810] text-[#e8c7bc] border border-[rgba(226,184,178,0.2)] flex items-center justify-center">
                         <Sun className="w-4 h-4" />
                       </div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-100/80 text-amber-900">
+                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#18070c] text-[#E7CFAF] border border-[rgba(226,184,178,0.2)]">
                         8 AM - 3 PM
                       </span>
                     </div>
-                    <div className="font-serif font-bold text-sm text-gray-900">Morning Session</div>
-                    <p className="text-[11px] text-gray-500 mt-0.5">
+                    <div className="font-serif font-light text-sm text-[#F7EFE7]">Morning Session</div>
+                    <p className="text-[11px] text-[#CBB8B9] mt-0.5">
                       Ideal for weddings, ritual ceremonies, & traditional sadhya
                     </p>
                   </button>
@@ -392,20 +392,20 @@ export const EnquirePage: React.FC = () => {
                     onClick={() => handleSessionChange('evening')}
                     className={`p-4 rounded-2xl border text-left transition-all ${
                       session === 'evening'
-                        ? 'border-burgundy-700 bg-burgundy-50/60 shadow-sm ring-2 ring-burgundy-600/20'
-                        : 'border-cream-300 bg-white hover:border-burgundy-300'
+                        ? 'border-[#e8c7bc] bg-[#451323]/50 shadow-md ring-2 ring-[#e8c7bc]/30'
+                        : 'glass-control border-[rgba(226,184,178,0.2)] hover:border-[rgba(226,184,178,0.4)]'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-700 flex items-center justify-center">
+                      <div className="w-8 h-8 rounded-lg bg-[#240810] text-[#e8c7bc] border border-[rgba(226,184,178,0.2)] flex items-center justify-center">
                         <Moon className="w-4 h-4" />
                       </div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-100/80 text-indigo-900">
+                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#18070c] text-[#E7CFAF] border border-[rgba(226,184,178,0.2)]">
                         5 PM - 10 PM
                       </span>
                     </div>
-                    <div className="font-serif font-bold text-sm text-gray-900">Evening Session</div>
-                    <p className="text-[11px] text-gray-500 mt-0.5">
+                    <div className="font-serif font-light text-sm text-[#F7EFE7]">Evening Session</div>
+                    <p className="text-[11px] text-[#CBB8B9] mt-0.5">
                       Ideal for receptions, cultural programmes, & banquets
                     </p>
                   </button>
@@ -416,20 +416,20 @@ export const EnquirePage: React.FC = () => {
                     onClick={() => handleSessionChange('full_day')}
                     className={`p-4 rounded-2xl border text-left transition-all ${
                       session === 'full_day'
-                        ? 'border-burgundy-700 bg-burgundy-50/60 shadow-sm ring-2 ring-burgundy-600/20'
-                        : 'border-cream-300 bg-white hover:border-burgundy-300'
+                        ? 'border-[#e8c7bc] bg-[#451323]/50 shadow-md ring-2 ring-[#e8c7bc]/30'
+                        : 'glass-control border-[rgba(226,184,178,0.2)] hover:border-[rgba(226,184,178,0.4)]'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <div className="w-8 h-8 rounded-lg bg-rose-50 text-rose-700 flex items-center justify-center">
+                      <div className="w-8 h-8 rounded-lg bg-[#240810] text-[#e8c7bc] border border-[rgba(226,184,178,0.2)] flex items-center justify-center">
                         <Calendar className="w-4 h-4" />
                       </div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-rose-100/80 text-rose-900">
+                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#18070c] text-[#E7CFAF] border border-[rgba(226,184,178,0.2)]">
                         8 AM - 10 PM
                       </span>
                     </div>
-                    <div className="font-serif font-bold text-sm text-gray-900">Full Day Access</div>
-                    <p className="text-[11px] text-gray-500 mt-0.5">
+                    <div className="font-serif font-light text-sm text-[#F7EFE7]">Full Day Access</div>
+                    <p className="text-[11px] text-[#CBB8B9] mt-0.5">
                       Morning & evening combined with 3-5 PM turnaround buffer
                     </p>
                   </button>
@@ -438,15 +438,15 @@ export const EnquirePage: React.FC = () => {
 
               {/* Preferred Hall */}
               <div className="space-y-1.5 sm:col-span-2">
-                <label className="text-xs font-bold text-ink-800">Booking Scope</label>
+                <label className="text-xs font-bold text-[#E7CFAF]">Booking Scope</label>
                 <select
                   value={preferredHallId}
                   onChange={(e) => setPreferredHallId(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-cream-300 bg-white text-xs text-ink-900 focus:outline-none focus:ring-2 focus:ring-forest-600"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[rgba(226,184,178,0.25)] bg-[#18070c]/90 text-xs text-[#F7EFE7] focus:outline-none focus:ring-2 focus:ring-[#e8c7bc]"
                 >
-                  <option value="auditorium">Thekkanath Souparnika (Full Venue Auditorium - All Halls Included)</option>
+                  <option value="auditorium" className="bg-[#240810] text-[#F7EFE7]">Thekkanath Souparnika (Full Venue Auditorium - All Halls Included)</option>
                   {HALLS.filter((h) => h.id !== 'auditorium').map((h) => (
-                    <option key={h.id} value={h.id}>
+                    <option key={h.id} value={h.id} className="bg-[#240810] text-[#F7EFE7]">
                       Individual Hall: {h.name} ({h.floor} · {h.airConditioned ? 'AC' : 'Non-AC'})
                     </option>
                   ))}
@@ -455,7 +455,7 @@ export const EnquirePage: React.FC = () => {
 
               {/* Expected Headcount */}
               <div className="space-y-1.5 sm:col-span-2">
-                <label className="text-xs font-bold text-ink-800">
+                <label className="text-xs font-bold text-[#E7CFAF]">
                   Estimated Guest Count (Max 300 recommended) *
                 </label>
                 <input
@@ -464,14 +464,14 @@ export const EnquirePage: React.FC = () => {
                   max="300"
                   value={estimatedGuests}
                   onChange={(e) => setEstimatedGuests(parseInt(e.target.value, 10) || 0)}
-                  className={`w-full px-3.5 py-2.5 rounded-xl border bg-white text-xs text-ink-900 focus:outline-none focus:ring-2 focus:ring-forest-600 ${
-                    errors.estimatedGuests ? 'border-red-500' : 'border-cream-300'
+                  className={`w-full px-3.5 py-2.5 rounded-xl border bg-[#18070c]/90 text-xs text-[#F7EFE7] focus:outline-none focus:ring-2 focus:ring-[#e8c7bc] ${
+                    errors.estimatedGuests ? 'border-red-400' : 'border-[rgba(226,184,178,0.25)]'
                   }`}
                 />
                 {errors.estimatedGuests ? (
-                  <p className="text-[11px] text-red-600">{errors.estimatedGuests}</p>
+                  <p className="text-[11px] text-red-400">{errors.estimatedGuests}</p>
                 ) : (
-                  <p className="text-[10px] text-ink-500">
+                  <p className="text-[10px] text-[#CBB8B9]">
                     The full venue comfortably hosts gatherings of up to 300 guests with 40-50 dedicated on-site parking spaces.
                   </p>
                 )}
@@ -485,8 +485,9 @@ export const EnquirePage: React.FC = () => {
 
             <div className="pt-4 flex justify-end">
               <Button
-                variant="primary"
+                variant="gold"
                 size="md"
+                className="glass-highlight"
                 onClick={() => {
                   if (validateStep1()) setStep(2);
                 }}
@@ -501,71 +502,71 @@ export const EnquirePage: React.FC = () => {
         {/* Step 2: Contact Details */}
         {step === 2 && (
           <div className="space-y-6 animate-in fade-in duration-200">
-            <h2 className="font-serif text-2xl font-bold text-forest-900 border-b border-cream-200 pb-3">
+            <h2 className="font-serif text-2xl font-light text-[#F7EFE7] border-b border-[rgba(226,184,178,0.15)] pb-3">
               Step 2: Contact Information & Special Requests
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-ink-800">Your Full Name *</label>
+                <label className="text-xs font-bold text-[#E7CFAF]">Your Full Name *</label>
                 <input
                   type="text"
                   placeholder="e.g. Ramesh Nair"
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
-                  className={`w-full px-3.5 py-2.5 rounded-xl border bg-white text-xs text-ink-900 focus:outline-none focus:ring-2 focus:ring-forest-600 ${
-                    errors.customerName ? 'border-red-500' : 'border-cream-300'
+                  className={`w-full px-3.5 py-2.5 rounded-xl border bg-[#18070c]/90 text-xs text-[#F7EFE7] placeholder-[#CBB8B9]/40 focus:outline-none focus:ring-2 focus:ring-[#e8c7bc] ${
+                    errors.customerName ? 'border-red-400' : 'border-[rgba(226,184,178,0.25)]'
                   }`}
                 />
                 {errors.customerName && (
-                  <p className="text-[11px] text-red-600">{errors.customerName}</p>
+                  <p className="text-[11px] text-red-400">{errors.customerName}</p>
                 )}
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-ink-800">Mobile Phone (WhatsApp Preferred) *</label>
+                <label className="text-xs font-bold text-[#E7CFAF]">Mobile Phone (WhatsApp Preferred) *</label>
                 <input
                   type="tel"
                   placeholder="e.g. 9847012345"
                   value={customerPhone}
                   onChange={(e) => setCustomerPhone(e.target.value)}
-                  className={`w-full px-3.5 py-2.5 rounded-xl border bg-white text-xs text-ink-900 focus:outline-none focus:ring-2 focus:ring-forest-600 ${
-                    errors.customerPhone ? 'border-red-500' : 'border-cream-300'
+                  className={`w-full px-3.5 py-2.5 rounded-xl border bg-[#18070c]/90 text-xs text-[#F7EFE7] placeholder-[#CBB8B9]/40 focus:outline-none focus:ring-2 focus:ring-[#e8c7bc] ${
+                    errors.customerPhone ? 'border-red-400' : 'border-[rgba(226,184,178,0.25)]'
                   }`}
                 />
                 {errors.customerPhone ? (
-                  <p className="text-[11px] text-red-600">{errors.customerPhone}</p>
+                  <p className="text-[11px] text-red-400">{errors.customerPhone}</p>
                 ) : (
-                  <p className="text-[10px] text-ink-500">10-digit Indian mobile number.</p>
+                  <p className="text-[10px] text-[#CBB8B9]">10-digit Indian mobile number.</p>
                 )}
               </div>
 
               <div className="space-y-1.5 sm:col-span-2">
-                <label className="text-xs font-bold text-ink-800">Email Address (Optional)</label>
+                <label className="text-xs font-bold text-[#E7CFAF]">Email Address (Optional)</label>
                 <input
                   type="email"
                   placeholder="e.g. ramesh@example.com"
                   value={customerEmail}
                   onChange={(e) => setCustomerEmail(e.target.value)}
-                  className={`w-full px-3.5 py-2.5 rounded-xl border bg-white text-xs text-ink-900 focus:outline-none focus:ring-2 focus:ring-forest-600 ${
-                    errors.customerEmail ? 'border-red-500' : 'border-cream-300'
+                  className={`w-full px-3.5 py-2.5 rounded-xl border bg-[#18070c]/90 text-xs text-[#F7EFE7] placeholder-[#CBB8B9]/40 focus:outline-none focus:ring-2 focus:ring-[#e8c7bc] ${
+                    errors.customerEmail ? 'border-red-400' : 'border-[rgba(226,184,178,0.25)]'
                   }`}
                 />
                 {errors.customerEmail && (
-                  <p className="text-[11px] text-red-600">{errors.customerEmail}</p>
+                  <p className="text-[11px] text-red-400">{errors.customerEmail}</p>
                 )}
               </div>
 
               {/* Referral Bonus Banner & Fields */}
-              <div className="sm:col-span-2 p-5 rounded-2xl bg-burgundy-50/50 border border-burgundy-200/80 space-y-3">
+              <div className="sm:col-span-2 glass-panel p-5 rounded-2xl border border-[rgba(226,184,178,0.25)] space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-burgundy-100 text-burgundy-900 flex items-center justify-center">
-                      <Gift className="w-4 h-4 text-burgundy-700" />
+                    <div className="w-8 h-8 rounded-lg bg-[#18070c] border border-[rgba(226,184,178,0.2)] text-[#e8c7bc] flex items-center justify-center">
+                      <Gift className="w-4 h-4" />
                     </div>
                     <div>
-                      <h4 className="text-xs font-bold text-gray-900">Were you referred by a friend, vendor, or guest?</h4>
-                      <p className="text-[11px] text-gray-500">
+                      <h4 className="text-xs font-bold text-[#F7EFE7]">Were you referred by a friend, vendor, or guest?</h4>
+                      <p className="text-[11px] text-[#CBB8B9]">
                         They are eligible for our venue referral appreciation incentive.
                       </p>
                     </div>
@@ -577,57 +578,57 @@ export const EnquirePage: React.FC = () => {
                       onChange={(e) => setHasReferrer(e.target.checked)}
                       className="sr-only peer"
                     />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-burgundy-700"></div>
+                    <div className="w-11 h-6 bg-[#18070c] border border-[rgba(226,184,178,0.3)] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-[#e8c7bc] after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#5A1B2E]"></div>
                   </label>
                 </div>
 
                 {hasReferrer && (
-                  <div className="pt-3 border-t border-burgundy-200/60 grid grid-cols-1 sm:grid-cols-3 gap-3 animate-in fade-in duration-200">
+                  <div className="pt-3 border-t border-[rgba(226,184,178,0.15)] grid grid-cols-1 sm:grid-cols-3 gap-3 animate-in fade-in duration-200">
                     <div className="space-y-1">
-                      <label className="text-[11px] font-bold text-gray-700">Referrer's Full Name *</label>
+                      <label className="text-[11px] font-bold text-[#E7CFAF]">Referrer's Full Name *</label>
                       <input
                         type="text"
                         placeholder="e.g. Rahul Varma"
                         value={referrerName}
                         onChange={(e) => setReferrerName(e.target.value)}
-                        className={`w-full px-3 py-2 rounded-xl border bg-white text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-burgundy-600 ${
-                          errors.referrerName ? 'border-red-500' : 'border-gray-300'
+                        className={`w-full px-3 py-2 rounded-xl border bg-[#18070c]/90 text-xs text-[#F7EFE7] placeholder-[#CBB8B9]/40 focus:outline-none focus:ring-2 focus:ring-[#e8c7bc] ${
+                          errors.referrerName ? 'border-red-400' : 'border-[rgba(226,184,178,0.25)]'
                         }`}
                       />
                       {errors.referrerName && (
-                        <p className="text-[10px] text-red-600">{errors.referrerName}</p>
+                        <p className="text-[10px] text-red-400">{errors.referrerName}</p>
                       )}
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-[11px] font-bold text-gray-700">Referrer's Mobile Phone *</label>
+                      <label className="text-[11px] font-bold text-[#E7CFAF]">Referrer's Mobile Phone *</label>
                       <input
                         type="tel"
                         placeholder="e.g. 9446123456"
                         value={referrerPhone}
                         onChange={(e) => setReferrerPhone(e.target.value)}
-                        className={`w-full px-3 py-2 rounded-xl border bg-white text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-burgundy-600 ${
-                          errors.referrerPhone ? 'border-red-500' : 'border-gray-300'
+                        className={`w-full px-3 py-2 rounded-xl border bg-[#18070c]/90 text-xs text-[#F7EFE7] placeholder-[#CBB8B9]/40 focus:outline-none focus:ring-2 focus:ring-[#e8c7bc] ${
+                          errors.referrerPhone ? 'border-red-400' : 'border-[rgba(226,184,178,0.25)]'
                         }`}
                       />
                       {errors.referrerPhone && (
-                        <p className="text-[10px] text-red-600">{errors.referrerPhone}</p>
+                        <p className="text-[10px] text-red-400">{errors.referrerPhone}</p>
                       )}
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-[11px] font-bold text-gray-700">Referrer's Email / UPI (Optional)</label>
+                      <label className="text-[11px] font-bold text-[#E7CFAF]">Referrer's Email / UPI (Optional)</label>
                       <input
                         type="text"
                         placeholder="e.g. rahul@example.com"
                         value={referrerEmail}
                         onChange={(e) => setReferrerEmail(e.target.value)}
-                        className={`w-full px-3 py-2 rounded-xl border bg-white text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-burgundy-600 ${
-                          errors.referrerEmail ? 'border-red-500' : 'border-gray-300'
+                        className={`w-full px-3 py-2 rounded-xl border bg-[#18070c]/90 text-xs text-[#F7EFE7] placeholder-[#CBB8B9]/40 focus:outline-none focus:ring-2 focus:ring-[#e8c7bc] ${
+                          errors.referrerEmail ? 'border-red-400' : 'border-[rgba(226,184,178,0.25)]'
                         }`}
                       />
                       {errors.referrerEmail && (
-                        <p className="text-[10px] text-red-600">{errors.referrerEmail}</p>
+                        <p className="text-[10px] text-red-400">{errors.referrerEmail}</p>
                       )}
                     </div>
 
@@ -637,8 +638,8 @@ export const EnquirePage: React.FC = () => {
                       const matches = query ? searchReferrers(query, DEFAULT_REFERRERS) : [];
                       if (matches.length === 0) return null;
                       return (
-                        <div className="sm:col-span-3 bg-white p-2.5 rounded-xl border border-burgundy-200 shadow-sm space-y-1">
-                          <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">
+                        <div className="sm:col-span-3 bg-[#18070c]/80 p-2.5 rounded-xl border border-[rgba(226,184,178,0.2)] shadow-sm space-y-1">
+                          <span className="text-[10px] font-semibold text-[#E7CFAF] uppercase tracking-wider">
                             Suggested repeat referrers:
                           </span>
                           <div className="flex flex-wrap gap-2">
@@ -651,10 +652,10 @@ export const EnquirePage: React.FC = () => {
                                   setReferrerPhone(ref.phone);
                                   if (ref.email) setReferrerEmail(ref.email);
                                 }}
-                                className="px-2.5 py-1 rounded-lg bg-burgundy-50 hover:bg-burgundy-100 text-burgundy-900 text-xs border border-burgundy-200 text-left transition-colors flex items-center gap-1.5"
+                                className="px-2.5 py-1 rounded-lg glass-control text-[#F7EFE7] text-xs border border-[rgba(226,184,178,0.25)] text-left transition-colors flex items-center gap-1.5 hover:border-[rgba(226,184,178,0.5)]"
                               >
                                 <span className="font-bold">{ref.name}</span>
-                                <span className="text-[11px] text-gray-500">({ref.phone})</span>
+                                <span className="text-[11px] text-[#CBB8B9]">({ref.phone})</span>
                               </button>
                             ))}
                           </div>
@@ -666,7 +667,7 @@ export const EnquirePage: React.FC = () => {
               </div>
 
               <div className="space-y-1.5 sm:col-span-2">
-                <label className="text-xs font-bold text-ink-800">
+                <label className="text-xs font-bold text-[#E7CFAF]">
                   Special Requests / Setup Details (Optional)
                 </label>
                 <textarea
@@ -674,23 +675,24 @@ export const EnquirePage: React.FC = () => {
                   placeholder="Tell us about stage setup, catering arrangements, dress-change room requests, etc. Note: requests require staff review and do not guarantee fulfillment."
                   value={specialRequests}
                   onChange={(e) => setSpecialRequests(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-cream-300 bg-white text-xs text-ink-900 focus:outline-none focus:ring-2 focus:ring-forest-600"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[rgba(226,184,178,0.25)] bg-[#18070c]/90 text-xs text-[#F7EFE7] placeholder-[#CBB8B9]/40 focus:outline-none focus:ring-2 focus:ring-[#e8c7bc]"
                 />
               </div>
             </div>
 
-            <div className="pt-4 flex items-center justify-between border-t border-cream-200">
-              <Button
-                variant="outline"
-                size="md"
+            <div className="pt-4 flex items-center justify-between border-t border-[rgba(226,184,178,0.15)]">
+              <button
+                type="button"
+                className="px-5 py-2.5 rounded-full text-xs font-semibold glass-control text-[#F7EFE7] hover:border-[rgba(226,184,178,0.5)] transition-all inline-flex items-center gap-2"
                 onClick={() => setStep(1)}
-                leftIcon={<ArrowLeft className="w-4 h-4" />}
               >
-                Back to Details
-              </Button>
+                <ArrowLeft className="w-4 h-4 text-[#e8c7bc]" />
+                <span>Back to Details</span>
+              </button>
               <Button
-                variant="primary"
+                variant="gold"
                 size="md"
+                className="glass-highlight"
                 onClick={() => {
                   if (validateStep2()) setStep(3);
                 }}
@@ -705,54 +707,54 @@ export const EnquirePage: React.FC = () => {
         {/* Step 3: Review & Submit */}
         {step === 3 && (
           <form onSubmit={handleSubmit} className="space-y-6 animate-in fade-in duration-200">
-            <h2 className="font-serif text-2xl font-bold text-forest-900 border-b border-cream-200 pb-3">
+            <h2 className="font-serif text-2xl font-light text-[#F7EFE7] border-b border-[rgba(226,184,178,0.15)] pb-3">
               Step 3: Review Your Enquiry
             </h2>
 
             {/* Summary Review Card */}
-            <div className="p-6 rounded-2xl bg-cream-100 border border-cream-300 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+            <div className="glass-panel p-6 rounded-2xl border border-[rgba(226,184,178,0.2)] grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
               <div>
-                <span className="text-ink-500">Event Type:</span>
-                <p className="font-bold text-forest-900 text-sm mt-0.5">{eventType}</p>
+                <span className="text-[#E7CFAF]">Event Type:</span>
+                <p className="font-medium text-[#F7EFE7] text-sm mt-0.5">{eventType}</p>
               </div>
               <div>
-                <span className="text-ink-500">Preferred Date & Slot:</span>
-                <p className="font-bold text-forest-900 text-sm mt-0.5">
+                <span className="text-[#E7CFAF]">Preferred Date & Slot:</span>
+                <p className="font-medium text-[#F7EFE7] text-sm mt-0.5">
                   {preferredDate} ({startTime} to {endTime})
                 </p>
               </div>
               <div>
-                <span className="text-ink-500">Selected Hall:</span>
-                <p className="font-bold text-forest-900 text-sm mt-0.5">
+                <span className="text-[#E7CFAF]">Selected Hall:</span>
+                <p className="font-medium text-[#F7EFE7] text-sm mt-0.5">
                   {preferredHallId === 'any'
                     ? 'Flexible / Management Recommendation'
                     : HALLS.find((h) => h.id === preferredHallId)?.name}
                 </p>
               </div>
               <div>
-                <span className="text-ink-500">Guest Headcount:</span>
-                <p className="font-bold text-forest-900 text-sm mt-0.5">{estimatedGuests} guests</p>
+                <span className="text-[#E7CFAF]">Guest Headcount:</span>
+                <p className="font-medium text-[#F7EFE7] text-sm mt-0.5">{estimatedGuests} guests</p>
               </div>
               <div>
-                <span className="text-ink-500">Customer Name:</span>
-                <p className="font-bold text-forest-900 text-sm mt-0.5">{customerName}</p>
+                <span className="text-[#E7CFAF]">Customer Name:</span>
+                <p className="font-medium text-[#F7EFE7] text-sm mt-0.5">{customerName}</p>
               </div>
               <div>
-                <span className="text-ink-500">Contact Number:</span>
-                <p className="font-bold text-forest-900 text-sm mt-0.5">+91 {customerPhone}</p>
+                <span className="text-[#E7CFAF]">Contact Number:</span>
+                <p className="font-medium text-[#F7EFE7] text-sm mt-0.5">+91 {customerPhone}</p>
               </div>
               {hasReferrer && referrerName && (
-                <div className="sm:col-span-2 border-t border-cream-300 pt-2">
-                  <span className="text-ink-500">Referred By:</span>
-                  <p className="font-bold text-burgundy-900 text-sm mt-0.5">
+                <div className="sm:col-span-2 border-t border-[rgba(226,184,178,0.15)] pt-2">
+                  <span className="text-[#E7CFAF]">Referred By:</span>
+                  <p className="font-medium text-[#F7EFE7] text-sm mt-0.5">
                     {referrerName} (+91 {referrerPhone}){referrerEmail ? ` · ${referrerEmail}` : ''}
                   </p>
                 </div>
               )}
               {specialRequests && (
-                <div className="sm:col-span-2 border-t border-cream-300 pt-2">
-                  <span className="text-ink-500">Special Notes / Requirements:</span>
-                  <p className="text-ink-800 mt-1">{specialRequests}</p>
+                <div className="sm:col-span-2 border-t border-[rgba(226,184,178,0.15)] pt-2">
+                  <span className="text-[#E7CFAF]">Special Notes / Requirements:</span>
+                  <p className="text-[#CBB8B9] mt-1">{specialRequests}</p>
                 </div>
               )}
             </div>
@@ -764,32 +766,32 @@ export const EnquirePage: React.FC = () => {
                   type="checkbox"
                   checked={consentGiven}
                   onChange={(e) => setConsentGiven(e.target.checked)}
-                  className="w-4 h-4 mt-0.5 rounded text-forest-800 focus:ring-forest-600 border-cream-300"
+                  className="w-4 h-4 mt-0.5 rounded text-[#5A1B2E] focus:ring-[#e8c7bc] border-[rgba(226,184,178,0.3)] bg-[#18070c]"
                 />
-                <span className="text-xs text-ink-700 leading-relaxed">
+                <span className="text-xs text-[#CBB8B9] leading-relaxed">
                   I give permission for the venue management of Thekkanath Souparnika to contact me via phone, WhatsApp, or email regarding date availability, hall tours, and quotations. I understand that submitting this enquiry does not reserve or lock the requested date. *
                 </span>
               </label>
-              {errors.consent && <p className="text-[11px] text-red-600">{errors.consent}</p>}
-              {errors.form && <p className="text-[11px] text-red-600">{errors.form}</p>}
+              {errors.consent && <p className="text-[11px] text-red-400">{errors.consent}</p>}
+              {errors.form && <p className="text-[11px] text-red-400">{errors.form}</p>}
             </div>
 
             {/* Actions */}
-            <div className="pt-4 flex items-center justify-between border-t border-cream-200">
-              <Button
-                variant="outline"
-                size="md"
+            <div className="pt-4 flex items-center justify-between border-t border-[rgba(226,184,178,0.15)]">
+              <button
                 type="button"
                 onClick={() => setStep(2)}
-                leftIcon={<ArrowLeft className="w-4 h-4" />}
                 disabled={isSubmitting}
+                className="px-5 py-2.5 rounded-full text-xs font-semibold glass-control text-[#F7EFE7] hover:border-[rgba(226,184,178,0.5)] transition-all inline-flex items-center gap-2"
               >
-                Back to Contact
-              </Button>
+                <ArrowLeft className="w-4 h-4 text-[#e8c7bc]" />
+                <span>Back to Contact</span>
+              </button>
               <Button
                 variant="gold"
                 size="lg"
                 type="submit"
+                className="glass-highlight"
                 isLoading={isSubmitting}
                 rightIcon={<CheckCircle2 className="w-4 h-4" />}
               >

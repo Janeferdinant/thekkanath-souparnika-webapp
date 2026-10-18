@@ -102,23 +102,23 @@ export const GalleryPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-10">
       {/* Header */}
       <div className="space-y-4 max-w-3xl">
-        <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-rose-700">
-          <ShieldCheck className="w-4 h-4 text-gold-500" />
+        <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.25em] text-[#E7CFAF]">
+          <ShieldCheck className="w-4 h-4 text-[#e8c7bc]" />
           <span>Real Venue Photographs</span>
         </div>
-        <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-burgundy-950 tracking-tight leading-tight">
+        <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-light text-[#F7EFE7] tracking-tight leading-tight">
           Visual Tour & Photo Gallery
         </h1>
-        <p className="text-sm sm:text-base text-ink-700 leading-relaxed">
-          Explore actual photographs of all four halls, the architectural grand staircase, dedicated wash area, and venue exterior. No stock imagery or artificial renders.
+        <p className="text-sm sm:text-base text-[#CBB8B9] leading-relaxed">
+          Explore actual photographs of all four halls, the architectural grand staircase, dedicated wash area, and venue exterior. Authentic photography without stock images or artificial renders.
         </p>
       </div>
 
-      {/* Category Tabs */}
-      <div className="flex flex-wrap items-center gap-2.5 border-b border-rose-100 pb-4">
+      {/* Category Tabs — Liquid Glass */}
+      <div className="flex flex-wrap items-center gap-2.5 border-b border-[rgba(226,184,178,0.15)] pb-4">
         {[
           { id: 'all', label: 'All Photos (7)' },
           { id: 'halls', label: 'Event Halls (4)' },
@@ -133,8 +133,8 @@ export const GalleryPage: React.FC = () => {
             }}
             className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${
               filter === tab.id
-                ? 'bg-gradient-to-r from-burgundy-900 to-wine-900 text-white shadow-md'
-                : 'bg-white/80 text-burgundy-950 hover:bg-rose-50 border border-rose-200/70'
+                ? 'bg-gradient-to-r from-[#5A1B2E] to-[#451323] text-[#F7EFE7] border border-[rgba(226,184,178,0.4)] shadow-md'
+                : 'glass-control text-[#CBB8B9] hover:text-[#F7EFE7] border border-[rgba(226,184,178,0.2)]'
             }`}
           >
             {tab.label}
@@ -142,55 +142,55 @@ export const GalleryPage: React.FC = () => {
         ))}
       </div>
 
-      {/* Gallery Grid — Liquid Glass Cards */}
+      {/* Gallery Grid — Liquid Glass Cards with Lens Hover */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         {filteredItems.map((item, idx) => (
           <div
             key={item.id}
             onClick={() => setActiveIdx(idx)}
-            className="group rounded-3xl overflow-hidden bg-white/80 backdrop-blur-xl border border-rose-200/70 shadow-subtle hover:shadow-luxury hover:border-gold-400/70 cursor-pointer transition-all duration-300 flex flex-col hover:-translate-y-1"
+            className="group glass-panel rounded-3xl overflow-hidden border border-[rgba(226,184,178,0.22)] hover:border-[rgba(226,184,178,0.45)] cursor-pointer transition-all duration-300 flex flex-col hover:-translate-y-1"
           >
-            <div className="relative h-64 overflow-hidden bg-wine-950">
+            <div className="lens-hover relative h-64 overflow-hidden bg-[#18070c]">
               <img
                 src={item.src}
                 alt={item.title}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute top-3 left-3 bg-wine-950/85 backdrop-blur-md text-gold-300 text-[11px] font-bold px-3 py-1 rounded-full border border-gold-400/30 shadow-md">
+              <div className="absolute top-3 left-3 glass-control text-[#E7CFAF] text-[11px] font-bold px-3 py-1 rounded-full border border-[rgba(226,184,178,0.3)] shadow-md">
                 {item.categoryLabel}
               </div>
-              <div className="absolute inset-0 bg-wine-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <span className="p-3.5 rounded-full bg-wine-900/90 text-gold-400 border border-gold-400/40 shadow-xl">
+              <div className="absolute inset-0 bg-[#18070c]/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span className="p-3.5 rounded-full glass-control text-[#e8c7bc] border border-[rgba(226,184,178,0.4)] shadow-xl">
                   <Eye className="w-5 h-5" />
                 </span>
               </div>
             </div>
 
             <div className="p-6 flex-1 flex flex-col justify-between space-y-2">
-              <h3 className="font-serif text-xl font-bold text-burgundy-950 group-hover:text-burgundy-800 transition-colors">
+              <h3 className="font-serif text-xl font-light text-[#F7EFE7] group-hover:text-[#E7CFAF] transition-colors">
                 {item.title}
               </h3>
-              <p className="text-xs text-ink-600 leading-relaxed">{item.description}</p>
+              <p className="text-xs text-[#CBB8B9] leading-relaxed">{item.description}</p>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Fullscreen Lightbox Modal — Wine & Gold */}
+      {/* Fullscreen Lightbox Modal — Wine Glass & Gold */}
       {activeIdx !== null && filteredItems[activeIdx] && (
         <div
-          className="fixed inset-0 z-50 bg-wine-950/95 backdrop-blur-xl flex flex-col items-center justify-between p-4 sm:p-8 animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 bg-[#18070c]/95 backdrop-blur-2xl flex flex-col items-center justify-between p-4 sm:p-8 animate-in fade-in duration-200"
           role="dialog"
           aria-modal="true"
         >
           {/* Top Bar */}
-          <div className="w-full flex items-center justify-between text-cream-100">
-            <div className="text-xs font-semibold text-gold-400">
+          <div className="w-full flex items-center justify-between text-[#F7EFE7]">
+            <div className="text-xs font-semibold text-[#E7CFAF]">
               Photo {activeIdx + 1} of {filteredItems.length}
             </div>
             <button
               onClick={() => setActiveIdx(null)}
-              className="p-2.5 rounded-full hover:bg-wine-900 text-cream-200 hover:text-white transition-colors"
+              className="p-2.5 rounded-full glass-control text-[#F7EFE7] hover:border-[rgba(226,184,178,0.5)] transition-colors"
               aria-label="Close photo viewer"
             >
               <X className="w-6 h-6" />
@@ -201,7 +201,7 @@ export const GalleryPage: React.FC = () => {
           <div className="relative flex-1 w-full max-w-5xl flex items-center justify-center my-4">
             <button
               onClick={prevPhoto}
-              className="absolute left-2 sm:left-4 z-10 p-3.5 rounded-full bg-wine-900/80 hover:bg-burgundy-900 text-cream-100 hover:text-gold-300 border border-rose-400/30 shadow-2xl transition-colors"
+              className="absolute left-2 sm:left-4 z-10 p-3.5 rounded-full glass-control text-[#F7EFE7] hover:text-[#E7CFAF] border border-[rgba(226,184,178,0.35)] shadow-2xl transition-all"
               aria-label="Previous photo"
             >
               <ChevronLeft className="w-6 h-6" />
@@ -210,12 +210,12 @@ export const GalleryPage: React.FC = () => {
             <img
               src={filteredItems[activeIdx].src}
               alt={filteredItems[activeIdx].title}
-              className="max-h-[70vh] max-w-full object-contain rounded-2xl shadow-2xl border border-rose-300/30"
+              className="max-h-[70vh] max-w-full object-contain rounded-2xl shadow-2xl border border-[rgba(226,184,178,0.25)]"
             />
 
             <button
               onClick={nextPhoto}
-              className="absolute right-2 sm:right-4 z-10 p-3.5 rounded-full bg-wine-900/80 hover:bg-burgundy-900 text-cream-100 hover:text-gold-300 border border-rose-400/30 shadow-2xl transition-colors"
+              className="absolute right-2 sm:right-4 z-10 p-3.5 rounded-full glass-control text-[#F7EFE7] hover:text-[#E7CFAF] border border-[rgba(226,184,178,0.35)] shadow-2xl transition-all"
               aria-label="Next photo"
             >
               <ChevronRight className="w-6 h-6" />
@@ -223,11 +223,11 @@ export const GalleryPage: React.FC = () => {
           </div>
 
           {/* Bottom Caption */}
-          <div className="text-center max-w-xl space-y-1 text-cream-100 pb-2">
-            <h4 className="font-serif text-xl font-bold text-gold-300">
+          <div className="text-center max-w-xl space-y-1 text-[#F7EFE7] pb-2">
+            <h4 className="font-serif text-xl sm:text-2xl font-light text-[#E7CFAF]">
               {filteredItems[activeIdx].title}
             </h4>
-            <p className="text-xs text-cream-200/90 leading-relaxed">
+            <p className="text-xs text-[#CBB8B9] leading-relaxed">
               {filteredItems[activeIdx].description}
             </p>
           </div>

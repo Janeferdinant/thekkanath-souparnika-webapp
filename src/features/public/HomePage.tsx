@@ -14,10 +14,10 @@ import {
   MapPin,
   ChevronRight,
   HelpCircle,
+  Compass,
 } from 'lucide-react';
 import { VENUE_INFO, HALLS, FACILITIES, FAQS } from '../../data/venueData';
 import { Modal } from '../../components/ui/Modal';
-import { Button } from '../../components/ui/Button';
 import { AmbientParticles } from '../../components/public/AmbientParticles';
 
 export const HomePage: React.FC = () => {
@@ -48,138 +48,172 @@ export const HomePage: React.FC = () => {
 
   return (
     <div className="space-y-16 sm:space-y-24 pb-20">
-      {/* 1. Hero Section — Burgundy & Rose Gold with Liquid Glass & Ambient Particles */}
+      {/* 1. Hero Section — Dark Burgundy + Rose Gold Editorial Experience */}
       <section className="pt-4 sm:pt-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="relative rounded-3xl sm:rounded-[2.5rem] overflow-hidden min-h-[580px] sm:min-h-[640px] flex items-end shadow-luxury border border-rose-300/30 bg-gradient-to-br from-wine-950 via-burgundy-950 to-plum-950 text-white">
+        <div className="relative rounded-3xl sm:rounded-[2rem] overflow-hidden min-h-[580px] sm:min-h-[640px] flex items-end shadow-luxury border border-[rgba(226,184,178,0.22)] bg-gradient-to-br from-[#260811] via-[#431320] to-[#1c070c] text-[#f7efe7]">
           {/* Hero background image with luxury luminescence */}
           <img
             src="/assets/venue/venue-006.jpg"
             alt="Thekkanath Souparnika building entrance and facade in Thrissur"
-            className="absolute inset-0 w-full h-full object-cover opacity-35 mix-blend-luminosity scale-105 transition-transform duration-1000 hover:scale-100 pointer-events-none"
+            className="absolute inset-0 w-full h-full object-cover opacity-45 mix-blend-luminosity scale-105 transition-transform duration-1000 hover:scale-100 pointer-events-none"
+            fetchPriority="high"
           />
 
-          {/* Opulent burgundy gradients over image */}
-          <div className="absolute inset-0 bg-gradient-to-t from-wine-950 via-wine-950/80 to-transparent pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-r from-wine-950/95 via-burgundy-950/70 to-transparent pointer-events-none" />
+          {/* Graded dark wine overlays for optimal editorial contrast */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#18070c]/95 via-[#240810]/85 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#18070c] via-[#240810]/70 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_25%,rgba(226,184,178,0.15),transparent_35%)] pointer-events-none" />
 
-          {/* Ambient Particles floating in Hero */}
-          <AmbientParticles variant="hero" count={35} className="z-0 opacity-75" />
+          {/* Ambient Particles in Hero (Sparse, 28 desktop / 12 mobile, gentle bokeh) */}
+          <AmbientParticles variant="hero" className="z-0 opacity-80" />
 
           {/* Hero Content */}
           <div className="relative z-10 p-6 sm:p-12 lg:p-16 max-w-3xl space-y-6 sm:space-y-7">
-            {/* Top luxury badge */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/10 backdrop-blur-xl border border-rose-300/40 text-gold-300 text-xs font-semibold tracking-wider uppercase shadow-glass">
-              <span className="w-2 h-2 rounded-full bg-gold-400 animate-pulse" />
-              <Sparkles className="w-3.5 h-3.5 text-gold-300" />
-              <span>A Gracious Gathering Place in Thrissur</span>
+            {/* Editorial Eyebrow */}
+            <div className="inline-flex items-center gap-2.5 text-[10px] sm:text-xs uppercase tracking-[0.2em] font-semibold text-[#e2b8b2]">
+              <span className="w-6 h-[1px] bg-[#c58e91]" />
+              <span>An elegant setting for life's occasions</span>
             </div>
 
-            {/* Cormorant Garamond luxury headline */}
-            <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-cream-50 leading-[1.06]">
-              Make room for <br />
-              <span className="italic font-normal bg-gradient-to-r from-gold-300 via-rose-300 to-gold-400 bg-clip-text text-transparent">
-                what matters most.
-              </span>
+            {/* Cormorant Garamond Editorial Display Headline */}
+            <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-[#f7efe7] leading-[1.02]">
+              Celebrations for life’s <br />
+              <em className="text-[#e2b8b2] not-italic font-normal">
+                special moments.
+              </em>
             </h1>
 
-            <p className="text-sm sm:text-base text-cream-200 leading-relaxed max-w-xl font-normal">
-              Thoughtful spaces for wedding ceremonies, receptions, family feasts, seminars, and cultural gatherings — situated at Nellikunnu Market Junction on the PWD bus route.
+            <p className="text-sm sm:text-base text-[#e4d2d0] leading-relaxed max-w-xl font-normal">
+              Thekkanath Souparnika Hall & Events Venue — a welcoming place for wedding ceremonies, receptions, family feasts, seminars, and cultural gatherings at Nellikunnu Market Junction, Thrissur.
             </p>
 
-            {/* Action buttons with mobile-first responsiveness */}
+            {/* Responsive Actions with Specular Highlight Sheen */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
-              <Link to="/enquire" className="w-full sm:w-auto">
-                <Button
-                  variant="gold"
-                  size="lg"
-                  className="w-full sm:w-auto shadow-luxury hover:scale-[1.02]"
-                  leftIcon={<Calendar className="w-4 h-4" />}
-                >
-                  Check Date / Send Enquiry
-                </Button>
+              <Link
+                to="/halls"
+                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-6 py-3 rounded-full text-xs uppercase tracking-wider font-semibold text-[#2c0c15] bg-gradient-to-r from-[#e8c7bc] via-[#d8aba2] to-[#c58e91] hover:from-[#f3ded8] hover:to-[#d4a098] shadow-luxury border border-[#e9c6b9] transition-all hover:scale-[1.02] glass-highlight"
+              >
+                <span>Explore Our Halls</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </Link>
-              <Link to="/halls" className="w-full sm:w-auto">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="w-full sm:w-auto border-rose-200/40 text-cream-100 hover:bg-white/10 backdrop-blur-md"
-                >
-                  Explore The Four Halls
-                </Button>
+              <Link
+                to="/enquire"
+                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-6 py-3 rounded-full text-xs uppercase tracking-wider font-semibold text-[#f7efe7] bg-[#2c0812]/50 hover:bg-[#2c0812]/80 border border-[rgba(226,184,178,0.35)] backdrop-blur-md transition-all glass-control"
+              >
+                <Calendar className="w-3.5 h-3.5 text-[#e7cfaf]" />
+                <span>Check Date / Enquire</span>
               </Link>
             </div>
 
-            {/* Bottom info strip inside hero */}
-            <div className="pt-6 border-t border-rose-300/20 flex flex-wrap items-center gap-4 sm:gap-6 text-xs text-cream-200">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-gold-400" />
-                <span>Four coordinated halls (Up to 100 guests per hall)</span>
+            {/* Key Venue Location Note */}
+            <div className="pt-6 border-t border-[rgba(226,184,178,0.18)] flex flex-wrap items-center gap-4 sm:gap-6 text-xs text-[rgba(203,184,185,0.85)]">
+              <div className="flex items-center gap-2 border-l border-[#8f4b58] pl-3">
+                <MapPin className="w-3.5 h-3.5 text-[#e7cfaf]" />
+                <span>Nellikunnu Market Junction</span>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-rose-400" />
+              <div className="flex items-center gap-2 border-l border-[#8f4b58] pl-3">
+                <span>Thrissur, Kerala</span>
+              </div>
+              <div className="flex items-center gap-2 border-l border-[#8f4b58] pl-3">
                 <span>Best suited for gatherings up to 300</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-gold-400" />
-                <span>Nellikunnu Market Junction, Thrissur</span>
               </div>
             </div>
           </div>
 
-          {/* Quick Info Floating Liquid Glass Card */}
-          <div className="hidden xl:block absolute right-12 top-12 max-w-xs p-6 rounded-3xl bg-wine-950/70 backdrop-blur-xl border border-rose-300/30 shadow-[0_12px_40px_0_rgba(26,5,16,0.6)] space-y-3 z-10">
+          {/* Floating Liquid Glass Info Panel */}
+          <div className="hidden xl:block absolute right-12 top-12 max-w-xs p-6 rounded-3xl glass-panel text-[#f7efe7] space-y-3 z-10 border border-[rgba(226,184,178,0.24)]">
             <div className="flex items-center justify-between">
-              <div className="font-serif text-3xl font-bold bg-gradient-to-r from-gold-300 to-rose-300 bg-clip-text text-transparent">
+              <div className="font-serif text-3xl font-medium text-[#e7cfaf]">
                 4 Spaces
               </div>
               <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
             </div>
-            <p className="text-xs text-cream-200 leading-relaxed">
+            <p className="text-xs text-[rgba(203,184,185,0.9)] leading-relaxed">
               Stage Hall, Welcome Hall, and Dining Hall are air-conditioned; Open Hall features polished marble flooring with exhaust airflow.
             </p>
-            <div className="text-[11px] text-rose-200/80 flex items-center gap-1.5 pt-1 border-t border-rose-300/20">
-              <ShieldCheck className="w-4 h-4 text-gold-400" />
+            <div className="text-[11px] text-[#e2b8b2] flex items-center gap-1.5 pt-1 border-t border-[rgba(226,184,178,0.2)]">
+              <ShieldCheck className="w-4 h-4 text-[#e7cfaf]" />
               <span>Full Auditorium or Coordinated Halls</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. Trust Badges Row — Liquid Glass Cards with Refraction Borders */}
+      {/* 2. Key Details Row — 4 Refined Editorial Metric Tiles */}
+      <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-[1px] bg-[rgba(226,184,178,0.22)] border border-[rgba(226,184,178,0.22)] rounded-3xl overflow-hidden shadow-luxury">
+          <div className="bg-[#240810]/85 p-6 sm:p-8 text-center space-y-1">
+            <strong className="block font-serif text-2xl sm:text-3xl font-medium text-[#e2b8b2]">
+              4 Halls
+            </strong>
+            <span className="text-xs text-[rgba(203,184,185,0.85)]">
+              Stage, Welcome, Dining & Open
+            </span>
+          </div>
+          <div className="bg-[#240810]/85 p-6 sm:p-8 text-center space-y-1">
+            <strong className="block font-serif text-2xl sm:text-3xl font-medium text-[#e7cfaf]">
+              Up to 300
+            </strong>
+            <span className="text-xs text-[rgba(203,184,185,0.85)]">
+              Best suited celebration size
+            </span>
+          </div>
+          <div className="bg-[#240810]/85 p-6 sm:p-8 text-center space-y-1">
+            <strong className="block font-serif text-2xl sm:text-3xl font-medium text-[#e2b8b2]">
+              40–50 Cars
+            </strong>
+            <span className="text-xs text-[rgba(203,184,185,0.85)]">
+              Dedicated compound parking
+            </span>
+          </div>
+          <div className="bg-[#240810]/85 p-6 sm:p-8 text-center space-y-1">
+            <strong className="block font-serif text-2xl sm:text-3xl font-medium text-[#e7cfaf]">
+              Solar Hybrid
+            </strong>
+            <span className="text-xs text-[rgba(203,184,185,0.85)]">
+              Uninterrupted battery backup
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Trust Badges Row — Translucent Liquid Glass Cards */}
       <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {trustBadges.map((badge, idx) => (
             <div
               key={idx}
-              className="p-6 rounded-3xl bg-white/80 backdrop-blur-xl border border-rose-200/70 shadow-[0_8px_30px_rgb(74,14,23,0.06)] hover:shadow-[0_16px_40px_rgb(74,14,23,0.14)] hover:border-gold-400/80 transition-all duration-300 hover:-translate-y-1 flex items-start gap-4"
+              className="p-6 rounded-3xl glass-panel border border-[rgba(226,184,178,0.22)] shadow-subtle hover:border-[rgba(226,184,178,0.45)] transition-all duration-300 hover:-translate-y-1 flex items-start gap-4"
             >
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-burgundy-900 to-wine-950 text-gold-300 border border-gold-400/30 flex items-center justify-center shrink-0 shadow-md">
-                <badge.icon className="w-6 h-6" />
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#451323] to-[#2f0b16] text-[#e7cfaf] border border-[rgba(226,184,178,0.3)] flex items-center justify-center shrink-0 shadow-md">
+                <badge.icon className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="text-base font-semibold text-burgundy-950 font-serif leading-tight">
+                <h4 className="text-base font-serif font-medium text-[#f7efe7] leading-tight">
                   {badge.title}
                 </h4>
-                <p className="text-xs text-ink-600 mt-1.5 leading-relaxed">{badge.desc}</p>
+                <p className="text-xs text-[rgba(203,184,185,0.85)] mt-1.5 leading-relaxed">
+                  {badge.desc}
+                </p>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* 3. The Four Halls Showcase — Liquid Glass Cards with Cormorant Garamond */}
+      {/* 4. The Four Halls Showcase — Editorial Glass Cards with Lens Effect */}
       <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-rose-100 pb-5">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[rgba(226,184,178,0.2)] pb-5">
           <div className="space-y-1">
-            <div className="text-xs font-bold uppercase tracking-[0.2em] text-rose-700 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-gold-500" />
+            <div className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-[#e2b8b2] flex items-center gap-2">
+              <span className="w-4 h-[1px] bg-[#c58e91]" />
               <span>Explore Spaces</span>
             </div>
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-burgundy-950 tracking-tight">
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#f7efe7] tracking-tight">
               Four Distinct Halls for Your Gathering
             </h2>
           </div>
-          <p className="text-xs sm:text-sm text-ink-600 max-w-md leading-relaxed">
+          <p className="text-xs sm:text-sm text-[rgba(203,184,185,0.85)] max-w-md leading-relaxed">
             Every hall is thoughtfully curated for up to 100 guests, with the venue best suited for gatherings of up to 300 overall.
           </p>
         </div>
@@ -188,19 +222,20 @@ export const HomePage: React.FC = () => {
           {HALLS.map((hall) => (
             <div
               key={hall.id}
-              className="group bg-white/80 backdrop-blur-xl rounded-3xl border border-rose-200/60 overflow-hidden shadow-[0_8px_30px_rgb(74,14,23,0.06)] hover:shadow-[0_20px_50px_rgb(74,14,23,0.16)] hover:border-gold-400/70 transition-all duration-300 flex flex-col hover:-translate-y-1"
+              className="group glass-panel rounded-3xl border border-[rgba(226,184,178,0.22)] overflow-hidden shadow-subtle hover:border-[rgba(226,184,178,0.5)] transition-all duration-300 flex flex-col hover:-translate-y-1"
             >
-              {/* Hall Image */}
-              <div className="relative h-52 overflow-hidden bg-wine-950">
+              {/* Hall Image with Lens Hover Effect */}
+              <div className="relative h-52 overflow-hidden bg-[#240810] lens-hover">
                 <img
                   src={hall.coverImage}
                   alt={hall.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
                 />
-                <div className="absolute top-3 left-3 bg-wine-950/85 backdrop-blur-md text-gold-300 text-[11px] font-bold px-3 py-1 rounded-full border border-gold-400/30 shadow-md">
+                <div className="absolute top-3 left-3 bg-[#18070c]/85 backdrop-blur-md text-[#e7cfaf] text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border border-[rgba(226,184,178,0.3)] shadow-md">
                   {hall.floor}
                 </div>
-                <div className="absolute bottom-3 right-3 bg-white/95 backdrop-blur-sm text-burgundy-950 text-[11px] font-bold px-3 py-1 rounded-full shadow-md border border-rose-100">
+                <div className="absolute bottom-3 right-3 bg-[#2f0b16]/90 backdrop-blur-sm text-[#f7efe7] text-[10px] font-medium px-2.5 py-1 rounded-full shadow-md border border-[rgba(226,184,178,0.2)]">
                   {hall.airConditioned ? 'Air-Conditioned' : 'Natural Airflow'}
                 </div>
               </div>
@@ -208,20 +243,20 @@ export const HomePage: React.FC = () => {
               {/* Hall Info */}
               <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                 <div>
-                  <h3 className="font-serif text-2xl font-bold text-burgundy-950 group-hover:text-burgundy-800 transition-colors">
+                  <h3 className="font-serif text-2xl font-normal text-[#f7efe7] group-hover:text-[#e7cfaf] transition-colors">
                     {hall.name}
                   </h3>
-                  <p className="text-xs text-ink-600 mt-2 line-clamp-3 leading-relaxed">
+                  <p className="text-xs text-[rgba(203,184,185,0.85)] mt-2 line-clamp-3 leading-relaxed">
                     {hall.description}
                   </p>
                 </div>
 
-                <div className="space-y-3 pt-3 border-t border-rose-100">
+                <div className="space-y-3 pt-3 border-t border-[rgba(226,184,178,0.18)]">
                   <div className="flex flex-wrap gap-1.5">
                     {hall.features.slice(0, 2).map((feat, fIdx) => (
                       <span
                         key={fIdx}
-                        className="text-[11px] bg-rose-50 text-burgundy-900 border border-rose-200/60 px-2.5 py-0.5 rounded-full font-medium"
+                        className="text-[10px] bg-white/5 text-[#e2b8b2] border border-[rgba(226,184,178,0.22)] px-2.5 py-0.5 rounded-full font-medium"
                       >
                         {feat}
                       </span>
@@ -230,7 +265,7 @@ export const HomePage: React.FC = () => {
 
                   <Link
                     to={`/halls/${hall.slug}`}
-                    className="w-full inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-full text-xs font-semibold text-burgundy-900 bg-rose-50 hover:bg-gradient-to-r hover:from-burgundy-900 hover:to-wine-900 hover:text-white transition-all border border-rose-200/80 group-hover:border-burgundy-900 shadow-sm"
+                    className="w-full inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-full text-xs font-semibold text-[#f7efe7] bg-white/5 hover:bg-gradient-to-r hover:from-[#e8c7bc] hover:to-[#c58e91] hover:text-[#2c0c15] transition-all border border-[rgba(226,184,178,0.24)] shadow-sm"
                   >
                     <span>View Hall Details</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -242,22 +277,18 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. Facilities Highlights — Opulent Deep Wine & Liquid Glass */}
-      <section className="bg-gradient-to-b from-burgundy-950 via-wine-950 to-plum-950 text-white py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        {/* Ambient subtle glow effect */}
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-rose-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-gold-500/10 rounded-full blur-3xl pointer-events-none" />
-
+      {/* 5. Facilities Highlights — Cinematic Dark Wine & Glass */}
+      <section className="bg-gradient-to-b from-[#240810] via-[#1c070c] to-[#18070c] text-[#f7efe7] py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden border-y border-[rgba(226,184,178,0.18)]">
         <div className="max-w-7xl mx-auto space-y-12 relative z-10">
           <div className="text-center max-w-2xl mx-auto space-y-3">
-            <span className="text-xs uppercase tracking-[0.2em] text-gold-400 font-semibold flex items-center justify-center gap-2">
-              <Sparkles className="w-3.5 h-3.5" />
+            <span className="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-[#e2b8b2] font-semibold flex items-center justify-center gap-2">
+              <Sparkles className="w-3.5 h-3.5 text-[#e7cfaf]" />
               <span>Practical Amenities</span>
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-cream-50 tracking-tight">
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#f7efe7] tracking-tight">
               The Essentials Behind Smooth Events
             </h2>
-            <p className="text-xs sm:text-sm text-cream-200 leading-relaxed">
+            <p className="text-xs sm:text-sm text-[rgba(203,184,185,0.85)] leading-relaxed">
               Every amenity is engineered for guest comfort, safety, and effortless hospitality.
             </p>
           </div>
@@ -266,42 +297,92 @@ export const HomePage: React.FC = () => {
             {FACILITIES.slice(0, 4).map((fac) => (
               <div
                 key={fac.id}
-                className="bg-white/10 backdrop-blur-xl p-6 rounded-3xl border border-rose-300/20 hover:border-gold-400/50 space-y-3 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] transition-all duration-300 hover:-translate-y-1"
+                className="glass-panel p-6 rounded-3xl border border-[rgba(226,184,178,0.22)] hover:border-[rgba(226,184,178,0.45)] space-y-3 shadow-luxury transition-all duration-300 hover:-translate-y-1"
               >
-                <div className="text-gold-400 font-semibold text-xs tracking-wider uppercase">
+                <div className="text-[#e7cfaf] font-semibold text-xs tracking-wider uppercase">
                   {fac.badge || fac.category}
                 </div>
-                <h3 className="font-serif text-xl font-bold text-cream-50">{fac.title}</h3>
-                <p className="text-xs text-cream-200 leading-relaxed">{fac.description}</p>
+                <h3 className="font-serif text-xl font-medium text-[#f7efe7]">{fac.title}</h3>
+                <p className="text-xs text-[rgba(203,184,185,0.85)] leading-relaxed">{fac.description}</p>
               </div>
             ))}
           </div>
 
           <div className="text-center pt-2">
-            <Link to="/facilities">
-              <Button variant="gold" size="md" rightIcon={<ChevronRight className="w-4 h-4" />}>
-                Explore All Facilities
-              </Button>
+            <Link
+              to="/facilities"
+              className="inline-flex items-center justify-center gap-2 min-h-[44px] px-6 py-3 rounded-full text-xs uppercase tracking-wider font-semibold text-[#f7efe7] bg-white/5 hover:bg-white/10 border border-[rgba(226,184,178,0.35)] backdrop-blur-md transition-all glass-control"
+            >
+              <span>Explore All Facilities</span>
+              <ChevronRight className="w-4 h-4 text-[#e7cfaf]" />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* 5. Guided Photo Tour Preview */}
+      {/* 6. Virtual Tour Entry Point */}
+      <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center p-8 sm:p-12 rounded-3xl glass-panel border border-[rgba(226,184,178,0.22)] shadow-luxury">
+          <div className="space-y-4">
+            <div className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-[#e2b8b2] flex items-center gap-2">
+              <Compass className="w-4 h-4 text-[#e7cfaf]" />
+              <span>Immersive Walkthrough</span>
+            </div>
+            <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#f7efe7] leading-tight">
+              Experience The Venue Before You Visit
+            </h2>
+            <p className="text-xs sm:text-sm text-[rgba(203,184,185,0.85)] leading-relaxed">
+              Explore our stage, dining area, and welcoming spaces from anywhere. Guided site visits are also gladly scheduled by appointment with our management team.
+            </p>
+            <div className="pt-2 flex flex-wrap gap-3">
+              <Link
+                to="/gallery"
+                className="inline-flex items-center gap-2 min-h-[44px] px-6 py-3 rounded-full text-xs uppercase tracking-wider font-semibold text-[#2c0c15] bg-gradient-to-r from-[#e8c7bc] via-[#d8aba2] to-[#c58e91] hover:from-[#f3ded8] hover:to-[#d4a098] shadow-md transition-all glass-highlight"
+              >
+                <span>View Full Photo Tour</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-2 min-h-[44px] px-6 py-3 rounded-full text-xs uppercase tracking-wider font-semibold text-[#f7efe7] bg-white/5 hover:bg-white/10 border border-[rgba(226,184,178,0.24)] transition-all glass-control"
+              >
+                <span>Schedule In-Person Visit</span>
+              </Link>
+            </div>
+          </div>
+
+          <div className="relative h-64 sm:h-80 rounded-2xl overflow-hidden bg-[#240810] border border-[rgba(226,184,178,0.2)] lens-hover">
+            <img
+              src="/assets/venue/venue-000.jpg"
+              alt="Stage Hall raised stage and cushioned seating"
+              className="w-full h-full object-cover opacity-80"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#18070c]/90 via-transparent to-transparent flex items-end p-6">
+              <div className="flex items-center justify-between w-full text-xs text-[#f7efe7]">
+                <span>Stage Hall — Ground Floor Air-Conditioned</span>
+                <span className="text-[10px] uppercase tracking-wider text-[#e7cfaf] font-bold">Featured Space</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. Guided Photo Tour Preview */}
       <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-rose-100 pb-5">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[rgba(226,184,178,0.2)] pb-5">
           <div className="space-y-1">
-            <div className="text-xs font-bold uppercase tracking-[0.2em] text-rose-700 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-gold-500" />
+            <div className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-[#e2b8b2] flex items-center gap-2">
+              <span className="w-4 h-[1px] bg-[#c58e91]" />
               <span>Photo Gallery</span>
             </div>
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-burgundy-950 tracking-tight">
+            <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#f7efe7] tracking-tight">
               Real Photographs of the Venue
             </h2>
           </div>
           <Link
             to="/gallery"
-            className="text-xs font-semibold text-burgundy-900 hover:text-gold-700 inline-flex items-center gap-1.5 transition-colors"
+            className="text-xs font-semibold text-[#e2b8b2] hover:text-[#e7cfaf] inline-flex items-center gap-1.5 transition-colors"
           >
             <span>View Full Gallery (All 7 Spaces)</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -321,17 +402,18 @@ export const HomePage: React.FC = () => {
             <div
               key={idx}
               onClick={() => setSelectedImage(photo.img)}
-              className="group relative h-52 rounded-2xl overflow-hidden cursor-pointer shadow-subtle border border-rose-200/80 bg-wine-950"
+              className="group relative h-52 rounded-2xl overflow-hidden cursor-pointer shadow-subtle border border-[rgba(226,184,178,0.22)] bg-[#240810] lens-hover"
             >
               <img
                 src={photo.img}
                 alt={photo.title}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-wine-950/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                <div className="text-white text-xs font-medium flex items-center justify-between w-full">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#18070c]/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                <div className="text-[#f7efe7] text-xs font-medium flex items-center justify-between w-full">
                   <span className="truncate">{photo.title}</span>
-                  <Eye className="w-4 h-4 text-gold-400 shrink-0 ml-1.5" />
+                  <Eye className="w-4 h-4 text-[#e7cfaf] shrink-0 ml-1.5" />
                 </div>
               </div>
             </div>
@@ -339,32 +421,32 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 6. Location & Directions Section — Liquid Glass Container */}
+      {/* 8. Location & Directions Section */}
       <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="rounded-3xl sm:rounded-[2.5rem] p-8 sm:p-12 bg-white/80 backdrop-blur-xl border border-rose-200/80 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center shadow-luxury">
+        <div className="rounded-3xl sm:rounded-[2rem] p-8 sm:p-12 glass-panel border border-[rgba(226,184,178,0.22)] grid grid-cols-1 lg:grid-cols-2 gap-8 items-center shadow-luxury">
           <div className="space-y-5">
-            <div className="inline-flex items-center gap-2 text-rose-700 text-xs font-bold uppercase tracking-wider">
-              <MapPin className="w-4 h-4" />
+            <div className="inline-flex items-center gap-2 text-[#e2b8b2] text-[10px] sm:text-xs font-semibold uppercase tracking-wider">
+              <MapPin className="w-4 h-4 text-[#e7cfaf]" />
               <span>Easy to Locate in Thrissur</span>
             </div>
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-burgundy-950 tracking-tight leading-tight">
+            <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#f7efe7] tracking-tight leading-tight">
               Opposite RGLP School, Market Junction, Nellikunnu
             </h2>
-            <p className="text-xs sm:text-sm text-ink-700 leading-relaxed">
+            <p className="text-xs sm:text-sm text-[rgba(203,184,185,0.85)] leading-relaxed">
               Situated right at the Market Junction bus stop along the main PWD bus route, with direct highway connectivity for easy arrival from Thrissur town and surrounding districts.
             </p>
 
-            <div className="space-y-2.5 text-xs text-ink-800 pt-2">
+            <div className="space-y-2.5 text-xs text-[rgba(203,184,185,0.9)] pt-2">
               <div className="flex items-center gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-burgundy-700" />
+                <CheckCircle2 className="w-4 h-4 text-[#c58e91]" />
                 <span>On-site compound parking for 40 to 50 cars</span>
               </div>
               <div className="flex items-center gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-burgundy-700" />
+                <CheckCircle2 className="w-4 h-4 text-[#c58e91]" />
                 <span>Immediate PWD bus route stop connectivity</span>
               </div>
               <div className="flex items-center gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-burgundy-700" />
+                <CheckCircle2 className="w-4 h-4 text-[#c58e91]" />
                 <span>Thrissur – 680005, Kerala, India</span>
               </div>
             </div>
@@ -374,49 +456,50 @@ export const HomePage: React.FC = () => {
                 href={VENUE_INFO.googleMapsUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-semibold bg-gradient-to-r from-burgundy-900 to-wine-900 text-white hover:from-burgundy-950 hover:to-wine-950 shadow-md transition-all hover:scale-[1.02]"
+                className="inline-flex items-center gap-2 min-h-[44px] px-6 py-3 rounded-full text-xs uppercase tracking-wider font-semibold bg-gradient-to-r from-[#e8c7bc] via-[#d8aba2] to-[#c58e91] text-[#2c0c15] shadow-md transition-all hover:scale-[1.02] glass-highlight"
               >
                 <span>Open in Google Maps</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </a>
-              <Link to="/contact">
-                <Button variant="outline" size="sm">
-                  View Full Address & Contacts
-                </Button>
+              <Link
+                to="/contact"
+                className="inline-flex items-center justify-center min-h-[44px] px-5 py-2.5 rounded-full text-xs font-medium text-[#f7efe7] bg-white/5 hover:bg-white/10 border border-[rgba(226,184,178,0.24)] glass-control"
+              >
+                <span>View Full Contacts</span>
               </Link>
             </div>
           </div>
 
-          <div className="h-64 sm:h-80 rounded-3xl overflow-hidden bg-rose-50/70 border border-rose-200/80 relative flex items-center justify-center p-6 text-center shadow-inner">
+          <div className="h-64 sm:h-80 rounded-2xl overflow-hidden bg-[#240810]/80 border border-[rgba(226,184,178,0.22)] relative flex items-center justify-center p-6 text-center shadow-inner">
             <div className="space-y-3">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-burgundy-900 to-wine-950 text-gold-300 mx-auto flex items-center justify-center shadow-md">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#451323] to-[#2f0b16] text-[#e7cfaf] border border-[rgba(226,184,178,0.3)] mx-auto flex items-center justify-center shadow-md">
                 <MapPin className="w-7 h-7" />
               </div>
-              <h3 className="font-serif font-bold text-xl text-burgundy-950">Market Junction, Nellikunnu</h3>
-              <p className="text-xs text-ink-600 max-w-xs">
+              <h3 className="font-serif font-medium text-xl text-[#f7efe7]">Market Junction, Nellikunnu</h3>
+              <p className="text-xs text-[rgba(203,184,185,0.85)] max-w-xs">
                 Opposite RGLP School · PWD Bus Route · Thrissur – 680005
               </p>
               <a
                 href={VENUE_INFO.googleMapsUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-block text-xs font-semibold text-rose-700 hover:text-burgundy-950 hover:underline"
+                className="inline-block text-xs font-semibold text-[#e2b8b2] hover:text-[#e7cfaf] hover:underline"
               >
-                Click for Interactive Navigation Map ↗
+                Click for Navigation Map ↗
               </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 7. Frequently Asked Questions Preview */}
+      {/* 9. Frequently Asked Questions Preview */}
       <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-6">
         <div className="text-center max-w-xl mx-auto space-y-2">
-          <div className="text-xs font-bold uppercase tracking-wider text-rose-700 flex items-center justify-center gap-1.5">
-            <HelpCircle className="w-4 h-4" />
+          <div className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-[#e2b8b2] flex items-center justify-center gap-1.5">
+            <HelpCircle className="w-4 h-4 text-[#e7cfaf]" />
             <span>Helpful Information</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-burgundy-950">
+          <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#f7efe7]">
             Frequently Asked Questions
           </h2>
         </div>
@@ -425,12 +508,12 @@ export const HomePage: React.FC = () => {
           {FAQS.slice(0, 4).map((faq, idx) => (
             <div
               key={idx}
-              className="p-6 rounded-3xl bg-white/80 backdrop-blur-xl border border-rose-200/70 space-y-2 shadow-subtle hover:border-gold-400/60 transition-colors"
+              className="p-6 rounded-3xl glass-panel border border-[rgba(226,184,178,0.22)] space-y-2 shadow-subtle hover:border-[rgba(226,184,178,0.45)] transition-colors"
             >
-              <h4 className="font-serif text-lg font-bold text-burgundy-950 leading-snug">
+              <h4 className="font-serif text-lg font-medium text-[#f7efe7] leading-snug">
                 {faq.question}
               </h4>
-              <p className="text-xs text-ink-600 leading-relaxed">{faq.answer}</p>
+              <p className="text-xs text-[rgba(203,184,185,0.85)] leading-relaxed">{faq.answer}</p>
             </div>
           ))}
         </div>
@@ -438,51 +521,43 @@ export const HomePage: React.FC = () => {
         <div className="text-center pt-2">
           <Link
             to="/faq"
-            className="text-xs font-semibold text-burgundy-900 hover:text-rose-700 underline transition-colors"
+            className="text-xs font-semibold text-[#e2b8b2] hover:text-[#e7cfaf] underline transition-colors"
           >
             View All Frequently Asked Questions ↗
           </Link>
         </div>
       </section>
 
-      {/* 8. Call to Action Banner — Burgundy & Rose Gold Luxury */}
+      {/* 10. Call to Action Banner */}
       <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="rounded-3xl sm:rounded-[2.5rem] p-8 sm:p-14 bg-gradient-to-r from-burgundy-950 via-burgundy-900 to-wine-950 text-white flex flex-col md:flex-row items-center justify-between gap-8 shadow-luxury border border-rose-300/30">
+        <div className="rounded-3xl sm:rounded-[2rem] p-8 sm:p-14 bg-gradient-to-r from-[#2f0b16] via-[#451323] to-[#240810] text-[#f7efe7] flex flex-col md:flex-row items-center justify-between gap-8 shadow-luxury border border-[rgba(226,184,178,0.24)]">
           <div className="space-y-2 text-center md:text-left">
-            <span className="text-xs uppercase tracking-widest font-bold text-gold-400">
+            <span className="text-[10px] sm:text-xs uppercase tracking-widest font-semibold text-[#e7cfaf]">
               Ready to Plan Your Event?
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold leading-tight text-white">
+            <h2 className="font-serif text-3xl sm:text-4xl font-normal leading-tight text-[#f7efe7]">
               Share your event date and requirements.
             </h2>
-            <p className="text-xs sm:text-sm text-cream-200/90 max-w-lg leading-relaxed">
+            <p className="text-xs sm:text-sm text-[rgba(203,184,185,0.85)] max-w-lg leading-relaxed">
               Our venue management team will verify availability, recommend suitable halls, and follow up promptly with formal terms.
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3.5 shrink-0 w-full sm:w-auto">
-            <Link to="/enquire" className="w-full sm:w-auto">
-              <Button
-                variant="gold"
-                size="lg"
-                className="w-full sm:w-auto shadow-luxury hover:scale-[1.02]"
-              >
-                Check Date / Enquire Now
-              </Button>
+            <Link
+              to="/enquire"
+              className="inline-flex items-center justify-center gap-2 min-h-[44px] px-6 py-3 rounded-full text-xs uppercase tracking-wider font-semibold text-[#2c0c15] bg-gradient-to-r from-[#e8c7bc] via-[#d8aba2] to-[#c58e91] hover:from-[#f3ded8] hover:to-[#d4a098] shadow-luxury transition-all hover:scale-[1.02] glass-highlight text-center"
+            >
+              <Calendar className="w-3.5 h-3.5" />
+              <span>Check Date / Enquire Now</span>
             </Link>
             <a
               href={VENUE_INFO.whatsappUrl}
               target="_blank"
               rel="noreferrer"
-              className="w-full sm:w-auto"
+              className="inline-flex items-center justify-center gap-2 min-h-[44px] px-6 py-3 rounded-full text-xs uppercase tracking-wider font-semibold text-[#f7efe7] bg-white/5 hover:bg-white/10 border border-[rgba(226,184,178,0.24)] transition-all glass-control text-center"
             >
-              <Button
-                variant="secondary"
-                size="lg"
-                className="w-full sm:w-auto bg-white/90 text-burgundy-950 hover:bg-white"
-              >
-                Chat on WhatsApp
-              </Button>
+              <span>Chat on WhatsApp</span>
             </a>
           </div>
         </div>
@@ -500,9 +575,9 @@ export const HomePage: React.FC = () => {
             <img
               src={selectedImage}
               alt="Thekkanath Souparnika venue view"
-              className="w-full max-h-[70vh] object-contain rounded-2xl bg-wine-950 shadow-md"
+              className="w-full max-h-[70vh] object-contain rounded-2xl bg-[#18070c] shadow-md"
             />
-            <p className="text-xs text-rose-900/80 text-center font-medium">
+            <p className="text-xs text-[rgba(203,184,185,0.85)] text-center font-medium">
               Venue celebration gallery at Thekkanath Souparnika.
             </p>
           </div>

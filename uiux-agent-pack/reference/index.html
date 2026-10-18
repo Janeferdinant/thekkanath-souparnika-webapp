@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#18070c">
+  <title>Thekkanath Souparnika — Luxury UI/UX Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./luxury-theme.css">
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: var(--font-body); background: var(--color-ink); color: var(--color-ivory); }
+    .shell { width: min(1200px, calc(100% - 40px)); margin: 0 auto; }
+    .topline { padding: 10px 0; color: var(--color-muted); background: rgba(12,3,6,.6); border-bottom: 1px solid var(--color-border); font-size: 11px; letter-spacing: .04em; }
+    .navbar { position: sticky; top: 0; z-index: 20; margin: 0; padding: 12px 0; background: rgba(24,7,12,.72); border-bottom: 1px solid var(--color-border); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
+    .navrow { display:flex; align-items:center; justify-content:space-between; gap: 22px; }
+    .brand { display:flex; align-items:center; gap:12px; min-width:220px; }
+    .mark { width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--color-rose-500);border-radius:50%;color:var(--color-champagne);font-size:21px; }
+    .brand-name { font: 500 25px/.9 var(--font-display); letter-spacing:.025em; }
+    .brand-sub { margin-top:7px; color:var(--color-rose-300); font-size:9px; letter-spacing:.18em; text-transform:uppercase; }
+    nav.links { display:flex;gap:22px;align-items:center; font-size:12px;color:var(--color-muted); }
+    a { color: inherit;text-decoration:none; }
+    a:hover { color:var(--color-champagne); }
+    .btn { display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:12px 20px;border-radius:999px;border:1px solid rgba(226,184,178,.5);font-size:12px;font-weight:600;transition:transform .25s ease,background .25s ease,border-color .25s ease; }
+    .btn:hover { transform:translateY(-2px); }
+    .btn-primary { color:#2c0c15;background:linear-gradient(120deg,#e8c7bc,#c58e91);border-color:#e9c6b9;box-shadow:0 8px 28px rgba(197,142,145,.18); }
+    .btn-ghost { color:var(--color-ivory);background:rgba(44,8,18,.45); }
+    .hero { position:relative;isolation:isolate;min-height:560px;display:grid;align-items:end;overflow:hidden;margin:28px auto 70px;border:1px solid var(--color-border);border-radius:var(--radius-hero);box-shadow:var(--shadow-luxury);background:linear-gradient(120deg,#260811,#431320 55%,#1c070c); }
+    .hero-photo { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;filter:saturate(.86);z-index:-3; }
+    .hero::before { content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(24,7,12,.94) 0%,rgba(36,8,16,.8) 42%,rgba(36,8,16,.15) 100%),linear-gradient(0deg,rgba(24,7,12,.82),transparent 58%); }
+    .hero-glow { position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle at 70% 25%,rgba(226,184,178,.17),transparent 30%); }
+    .hero-copy { padding:clamp(28px,6vw,76px);max-width:760px; }
+    .eyebrow { text-transform:uppercase;letter-spacing:.18em;color:var(--color-rose-300);font-size:10px;font-weight:600;display:flex;align-items:center;gap:10px; }
+    .eyebrow::before { content:"";width:24px;height:1px;background:var(--color-rose-500); }
+    h1,h2,h3 { font-family:var(--font-display);font-weight:400;margin:0; }
+    h1 { font-size:clamp(48px,7vw,88px);line-height:.94;letter-spacing:-.025em;max-width:740px;margin:20px 0; }
+    h1 em { color:var(--color-rose-300);font-weight:400; }
+    .hero p { max-width:480px;color:#e4d2d0;line-height:1.8;font-size:14px; }
+    .actions { display:flex;flex-wrap:wrap;gap:12px;margin-top:28px; }
+    .hero-note { margin-top:42px;display:flex;gap:18px;flex-wrap:wrap;color:var(--color-muted);font-size:11px; }
+    .hero-note span { border-left:1px solid var(--color-rose-700);padding-left:12px; }
+    section { padding:0 0 76px; }
+    .section-head { display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:25px; }
+    .section-head h2 { font-size:clamp(34px,4vw,48px); }
+    .section-head p { margin:8px 0 0;color:var(--color-muted);font-size:12px;line-height:1.7;max-width:480px; }
+    .small-link { color:var(--color-rose-300);font-size:12px;white-space:nowrap; }
+    .grid { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px; }
+    .card { overflow:hidden;border-radius:var(--radius-card);border:1px solid var(--color-border);background:linear-gradient(145deg,rgba(85,25,44,.48),rgba(33,8,15,.84));box-shadow:0 14px 38px rgba(0,0,0,.14); }
+    .card-image { height:210px;overflow:hidden;position:relative;background:#451323; }
+    .card-image img { width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease-luxury); }
+    .card:hover .card-image img { transform:scale(1.035); }
+    .card-body { padding:20px; }
+    .card h3 { font-size:28px; }
+    .card p { color:var(--color-muted);font-size:12px;line-height:1.7;min-height:42px; }
+    .placeholder { display:inline-block;font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--color-champagne);border:1px solid rgba(231,207,175,.28);padding:5px 8px;border-radius:999px;margin-bottom:10px; }
+    .details { display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--color-border);border:1px solid var(--color-border);border-radius:20px;overflow:hidden;margin:0 0 76px; }
+    .detail { background:rgba(57,15,29,.72);text-align:center;padding:24px 16px; }
+    .detail strong { display:block;font:500 25px var(--font-display);color:var(--color-rose-300); }
+    .detail span { font-size:11px;color:var(--color-muted); }
+    .split { display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center; }
+    .feature-image { min-height:340px;position:relative;overflow:hidden;border-radius:var(--radius-card);border:1px solid var(--color-border); }
+    .feature-image img { width:100%;height:100%;position:absolute;inset:0;object-fit:cover; }
+    .feature-image .glass-chip { position:absolute;left:18px;bottom:18px;padding:15px 18px;max-width:260px; }
+    .prose h2 { font-size:clamp(36px,5vw,56px);line-height:1.02;margin:14px 0; }
+    .prose p { color:var(--color-muted);font-size:13px;line-height:1.9;max-width:490px; }
+    .facilities { display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px; }
+    .facility { padding:22px;border-radius:18px;background:rgba(69,19,35,.34);border:1px solid var(--color-border); }
+    .facility .icon { color:var(--color-rose-300);font-size:21px; }
+    .facility h3 { font-size:22px;margin-top:12px; }
+    .facility p { margin-bottom:0;color:var(--color-muted);font-size:11px;line-height:1.6; }
+    .tour { display:grid;grid-template-columns:1.05fr .95fr;gap:24px;padding:26px;border-radius:var(--radius-hero);background:linear-gradient(125deg,rgba(88,25,46,.65),rgba(36,8,16,.75));border:1px solid var(--color-border); }
+    .tour h2 { font-size:42px; }
+    .tour p { color:var(--color-muted);font-size:13px;line-height:1.7;max-width:410px; }
+    .tour-image { min-height:210px;overflow:hidden;border-radius:18px;position:relative;background:#3a101e; }
+    .tour-image img { width:100%;height:100%;position:absolute;object-fit:cover;inset:0;opacity:.74; }
+    .tour-image span { position:absolute;inset:0;display:grid;place-items:center;font-size:42px;text-shadow:0 3px 22px #000; }
+    .contact { display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:30px;border-radius:var(--radius-hero);background:rgba(47,11,22,.72);border:1px solid var(--color-border); }
+    .contact h2 { font-size:40px;margin:10px 0; }
+    .contact p,.contact address { color:var(--color-muted);font-size:13px;line-height:1.8;font-style:normal; }
+    .contact-list { display:grid;gap:12px;margin:20px 0; }
+    .contact-line { padding:15px;border:1px solid var(--color-border);border-radius:14px;background:rgba(24,7,12,.5);font-size:12px;overflow-wrap:anywhere; }
+    .contact-form { display:grid;gap:12px; }
+    .contact-form input,.contact-form select,.contact-form textarea { width:100%;border:1px solid rgba(226,184,178,.3);border-radius:12px;background:rgba(24,7,12,.74);color:var(--color-ivory);padding:13px 14px;font:inherit;font-size:12px; }
+    .contact-form label { display:block;font-size:11px;color:var(--color-rose-300);margin-bottom:6px; }
+    .contact-form input:focus-visible,.contact-form select:focus-visible,.contact-form textarea:focus-visible { outline:2px solid var(--color-champagne);outline-offset:2px; }
+    .footer { border-top:1px solid var(--color-border);padding:26px 0 34px;color:var(--color-muted);font-size:11px; }
+    .footer-row { display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap; }
+    .note { font-size:10px;color:#d0aeb0;line-height:1.7; }
+    .mobile-bar { display:none; }
+    @media(max-width:850px) {
+      nav.links { display:none; }
+      .brand-name { font-size:22px; }
+      .hero { min-height:560px; }
+      .grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .facilities { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .split,.tour,.contact { grid-template-columns:1fr; }
+      .details { grid-template-columns:repeat(2,1fr); }
+    }
+    @media(max-width:560px) {
+      .shell { width:min(100% - 28px,1200px); }
+      .topline { font-size:10px; }
+      .topline .desktop-only { display:none; }
+      .brand { min-width:0;gap:9px; }
+      .mark { width:36px;height:36px;font-size:18px; }
+      .brand-name { font-size:20px; }
+      .brand-sub { font-size:7px;letter-spacing:.1em; }
+      .navrow .btn-primary { padding:10px 12px;font-size:10px;min-height:40px; }
+      .hero { min-height:600px;margin:14px auto 52px;border-radius:22px; }
+      .hero::before { background:linear-gradient(90deg,rgba(24,7,12,.83),rgba(24,7,12,.2)),linear-gradient(0deg,rgba(24,7,12,.9),transparent 80%); }
+      .hero-copy { padding:26px 22px 30px; }
+      h1 { font-size:clamp(47px,14vw,66px); }
+      .hero p { font-size:13px; }
+      .actions .btn { flex:1; }
+      .hero-note { margin-top:28px;gap:10px; }
+      section { padding-bottom:52px; }
+      .section-head { align-items:start;flex-direction:column;gap:12px; }
+      .grid { grid-template-columns:1fr; }
+      .card-image { height:215px; }
+      .details { margin-bottom:52px; }
+      .detail { padding:19px 9px; }
+      .detail strong { font-size:22px; }
+      .feature-image { min-height:270px; }
+      .tour { padding:20px; }
+      .tour h2,.contact h2 { font-size:36px; }
+      .contact { padding:20px; }
+      .mobile-bar { display:flex;position:fixed;bottom:8px;left:8px;right:8px;z-index:30;gap:8px;padding:8px;border-radius:999px;background:rgba(24,7,12,.88);backdrop-filter:blur(18px);border:1px solid var(--color-border); }
+      .mobile-bar .btn { flex:1;padding:10px 12px; }
+      body { padding-bottom:76px; }
+    }
+    @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+  </style>
+</head>
+<body>
+  <div class="topline"><div class="shell">Nellikunnu Market Junction, Thrissur <span class="desktop-only"> · An elegant venue for your special gatherings</span></div></div>
+  <header class="navbar glass-nav">
+    <div class="shell navrow">
+      <a class="brand" href="#">
+        <span class="mark" aria-hidden="true">✿</span>
+        <span><span class="brand-name">Thekkanath Souparnika</span><span class="brand-sub">Hall & Events Venue · Thrissur</span></span>
+      </a>
+      <nav class="links" aria-label="Main navigation"><a href="#spaces">Our Halls</a><a href="#facilities">Facilities</a><a href="#gallery">Gallery</a><a href="#tour">Virtual Tour</a><a href="#contact">Contact</a></nav>
+      <a class="btn btn-primary glass-highlight" href="#contact">Enquire Now <span>↗</span></a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero shell">
+      <!-- Replace this remote reference with verified local venue imagery before production. -->
+      <img class="hero-photo" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=2000&q=85" alt="" fetchpriority="high">
+      <div class="hero-glow"></div>
+      <div class="hero-copy">
+        <div class="eyebrow">An elegant setting for life's occasions</div>
+        <h1>Celebrations for life’s <em>special moments.</em></h1>
+        <p>Thekkanath Souparnika Hall & Events Venue — a welcoming place for gatherings in Nellikunnu, Thrissur.</p>
+        <div class="actions"><a class="btn btn-primary glass-highlight" href="#spaces">Explore Our Halls ↗</a><a class="btn btn-ghost glass-control" href="#tour">▷ Virtual Tour</a></div>
+        <div class="hero-note"><span>Nellikunnu Market Junction</span><span>Thrissur, Kerala</span></div>
+      </div>
+    </section>
+
+    <div class="shell details" aria-label="Event categories">
+      <div class="detail"><strong>01</strong><span>Weddings & Receptions*</span></div>
+      <div class="detail"><strong>02</strong><span>Family Gatherings*</span></div>
+      <div class="detail"><strong>03</strong><span>Cultural Events*</span></div>
+      <div class="detail"><strong>04</strong><span>Meetings & Functions*</span></div>
+    </div>
+    <p class="shell note" style="margin-top:-58px;margin-bottom:72px">*Event categories are illustrative UI copy. Confirm that each category is offered before publishing.</p>
+
+    <section class="shell" id="spaces">
+      <div class="section-head"><div><div class="eyebrow">Discover the spaces</div><h2>Find your setting.</h2><p>Explore venue spaces and ask the team which option is right for your event.</p></div><a class="small-link" href="#contact">Ask about a date ↗</a></div>
+      <div class="grid">
+        <article class="card">
+          <div class="card-image"><img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=900&q=80" loading="lazy" alt="Illustrative wedding reception venue photograph"></div>
+          <div class="card-body"><span class="placeholder">Placeholder image / details</span><h3>Main Hall</h3><p>Replace this title, image and summary with venue-confirmed information before production.</p><a href="#contact" class="small-link">Enquire about this space ↗</a></div>
+        </article>
+        <article class="card">
+          <div class="card-image"><img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=900&q=80" loading="lazy" alt="Illustrative decorated event hall photograph"></div>
+          <div class="card-body"><span class="placeholder">Placeholder image / details</span><h3>Gathering Space</h3><p>Hall name, capacity, amenities and availability have not been confirmed in this mockup.</p><a href="#contact" class="small-link">Ask for details ↗</a></div>
+        </article>
+        <article class="card">
+          <div class="card-image"><img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=900&q=80" loading="lazy" alt="Illustrative banquet table arrangement"></div>
+          <div class="card-body"><span class="placeholder">Placeholder image / details</span><h3>Dining / Event Area</h3><p>Use the real venue gallery and the current verified hall data for all final copy.</p><a href="#contact" class="small-link">Enquire ↗</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell split" id="gallery">
+      <div class="feature-image lens-hover"><img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80" loading="lazy" alt="Illustrative event space interior"><div class="glass-chip glass-panel"><div class="eyebrow">Gallery</div><strong style="font:500 26px var(--font-display)">Every detail matters.</strong><div class="note">Replace images with approved venue photography.</div></div></div>
+      <div class="prose"><div class="eyebrow">A closer look</div><h2>Designed to frame your memories.</h2><p>Use large photographs, comfortable spacing and elegant captions. Every public gallery image should show the actual venue or be clearly marked as a placeholder during development.</p><a class="btn btn-ghost glass-control" href="#contact">Request real venue photos ↗</a></div>
+    </section>
+
+    <section class="shell" id="facilities">
+      <div class="section-head"><div><div class="eyebrow">The details</div><h2>Facilities & features.</h2><p>Show only facilities that have been confirmed in the current brochure or approved venue data.</p></div></div>
+      <div class="facilities">
+        <article class="facility"><div class="icon">✧</div><h3>Guest Comfort</h3><p>Replace with verified comfort features.</p></article>
+        <article class="facility"><div class="icon">⌂</div><h3>Venue Access</h3><p>Display confirmed location/access information.</p></article>
+        <article class="facility"><div class="icon">◈</div><h3>Event Setup</h3><p>Include only confirmed setup options.</p></article>
+        <article class="facility"><div class="icon">❋</div><h3>Additional Services</h3><p>Include only verified services.</p></article>
+      </div>
+      <p class="note" style="margin-top:12px">This is a visual wireframe. Facility labels and details are placeholders pending verification.</p>
+    </section>
+
+    <section class="shell" id="tour">
+      <div class="tour">
+        <div><div class="eyebrow">Explore before you visit</div><h2>A virtual tour, at your pace.</h2><p>Connect a real 360° photosphere or hosted tour when approved panoramic assets are available. Do not present a non-functional tour preview as live.</p><a class="btn btn-primary glass-highlight" href="#contact">Ask about a venue tour ↗</a></div>
+        <div class="tour-image"><img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1000&q=80" alt="" loading="lazy"><span aria-hidden="true">▷</span></div>
+      </div>
+      <p class="note" style="margin-top:10px">Virtual-tour image is illustrative; no actual 360° interaction is implemented in this static reference.</p>
+    </section>
+
+    <section class="shell" id="contact">
+      <div class="contact">
+        <div><div class="eyebrow">Start a conversation</div><h2>Tell us about your occasion.</h2><p>Use this visual concept to guide the existing app's real enquiry form. The sample form here is static and does not submit or store data.</p>
+          <div class="contact-list">
+            <div class="contact-line"><strong>Location</strong><br>Opposite RGLP School, Market Junction, Nellikunnu, Thrissur - 680005</div>
+            <div class="contact-line"><strong>Phone</strong><br><a href="tel:8129764370">8129764370</a> · <a href="tel:9446143165">9446143165</a></div>
+            <div class="contact-line"><strong>Email</strong><br><a href="mailto:thekkanathsouparnika@gmail.com">thekkanathsouparnika@gmail.com</a><br><a href="mailto:nallengara@gmail.com">nallengara@gmail.com</a></div>
+          </div>
+          <p class="note">Contact information reproduced from the supplied business details; the coding agent should cross-check repository data before changing production content.</p>
+        </div>
+        <form class="contact-form" onsubmit="event.preventDefault(); document.getElementById('form-note').textContent='Static design reference only — connect this UI to the existing enquiry workflow.'">
+          <div><label for="name">Your name</label><input id="name" placeholder="Full name"></div>
+          <div><label for="event">Event type</label><select id="event"><option>Select event type</option><option>Wedding / Reception (confirm)</option><option>Family gathering (confirm)</option><option>Other event</option></select></div>
+          <div><label for="date">Preferred date</label><input id="date" type="date"></div>
+          <div><label for="phone">Phone number</label><input id="phone" type="tel" placeholder="Best contact number"></div>
+          <div><label for="message">Tell us more</label><textarea id="message" rows="3" placeholder="Share your requirements"></textarea></div>
+          <button class="btn btn-primary glass-highlight" type="submit">Send enquiry concept ↗</button>
+          <p id="form-note" class="note">Demo only. The production app must retain its existing validation and persistence logic.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="shell footer-row"><span>Thekkanath Souparnika · Hall & Events Venue</span><span>Nellikunnu Market Junction, Thrissur</span><span>Design reference — not the production website</span></div></footer>
+  <div class="mobile-bar"><a class="btn btn-primary" href="#contact">Enquire Now</a><a class="btn btn-ghost glass-control" href="tel:8129764370">Call Now</a></div>
+</body>
+</html>

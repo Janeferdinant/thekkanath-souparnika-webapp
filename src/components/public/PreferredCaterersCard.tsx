@@ -35,22 +35,22 @@ export const PREFERRED_CATERERS: CatererPartner[] = [
 
 export const PreferredCaterersCard: React.FC = () => {
   return (
-    <div className="bg-white rounded-2xl p-6 border border-rose-200/60 shadow-subtle hover:border-burgundy-300 transition-all">
-      <div className="flex items-center gap-3 mb-4 pb-3 border-b border-rose-100">
-        <div className="w-10 h-10 rounded-xl bg-burgundy-50 flex items-center justify-center text-burgundy-700">
+    <div className="glass-panel rounded-2xl p-6 border border-[rgba(226,184,178,0.22)] shadow-subtle transition-all">
+      <div className="flex items-center gap-3 mb-4 pb-3 border-b border-[rgba(226,184,178,0.15)]">
+        <div className="w-10 h-10 rounded-xl bg-[#18070c] border border-[rgba(226,184,178,0.25)] flex items-center justify-center text-[#e8c7bc]">
           <Utensils className="w-5 h-5" />
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <h3 className="font-serif text-lg font-bold text-burgundy-900">
+            <h3 className="font-serif text-lg font-light text-[#F7EFE7]">
               Preferred Catering Partners
             </h3>
-            <span className="inline-flex items-center gap-1 text-[11px] font-semibold tracking-wider uppercase px-2 py-0.5 rounded-full bg-gold-100 text-gold-900 border border-gold-300">
-              <Award className="w-3 h-3 text-gold-700" />
+            <span className="inline-flex items-center gap-1 text-[11px] font-semibold tracking-wider uppercase px-2 py-0.5 rounded-full glass-control text-[#E7CFAF] border border-[rgba(226,184,178,0.3)]">
+              <Award className="w-3 h-3 text-[#e8c7bc]" />
               Verified
             </span>
           </div>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-[#CBB8B9]">
             Trusted catering partners familiar with our banquet dining layout and kitchen protocols
           </p>
         </div>
@@ -60,19 +60,19 @@ export const PreferredCaterersCard: React.FC = () => {
         {PREFERRED_CATERERS.map((caterer, idx) => (
           <div
             key={idx}
-            className="flex flex-col justify-between p-4 rounded-xl bg-ivory-50 border border-rose-100/80 hover:bg-white hover:shadow-sm transition"
+            className="flex flex-col justify-between p-4 rounded-xl bg-[#18070c]/60 border border-[rgba(226,184,178,0.2)] hover:border-[rgba(226,184,178,0.4)] transition"
           >
             <div>
-              <div className="text-xs font-bold uppercase tracking-wider text-burgundy-700 mb-1">
+              <div className="text-xs font-bold uppercase tracking-wider text-[#E7CFAF] mb-1">
                 {caterer.specialty}
               </div>
-              <h4 className="font-serif font-bold text-base text-gray-900 mb-1.5">{caterer.name}</h4>
-              <p className="text-xs text-gray-600 mb-3 line-clamp-2">{caterer.description}</p>
+              <h4 className="font-serif font-light text-base text-[#F7EFE7] mb-1.5">{caterer.name}</h4>
+              <p className="text-xs text-[#CBB8B9] mb-3 line-clamp-2">{caterer.description}</p>
               <div className="flex flex-wrap gap-1.5 mb-4">
                 {caterer.highlights.map((h, i) => (
                   <span
                     key={i}
-                    className="text-[10px] font-medium bg-white px-2 py-0.5 rounded-md border border-gray-200 text-gray-700"
+                    className="text-[10px] font-medium bg-[#240810]/80 px-2 py-0.5 rounded-md border border-[rgba(226,184,178,0.2)] text-[#F7EFE7]"
                   >
                     {h}
                   </span>
@@ -80,24 +80,24 @@ export const PreferredCaterersCard: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex items-center gap-2 pt-3 border-t border-rose-100/60">
+            <div className="flex items-center gap-2 pt-3 border-t border-[rgba(226,184,178,0.15)]">
               <a
                 href={`https://wa.me/91${caterer.phone}?text=Hello%20${encodeURIComponent(
                   caterer.name
                 )}%2C%20I%20am%20planning%20an%20event%20at%20Thekkanath%20Souparnika%20and%20would%20like%20to%20discuss%20catering.`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 inline-flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white transition"
+                className="flex-1 inline-flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-xs font-semibold bg-emerald-700 hover:bg-emerald-600 text-white transition shadow-sm"
               >
                 <MessageCircle className="w-3.5 h-3.5" />
                 WhatsApp
               </a>
               <a
                 href={`tel:+91${caterer.phone}`}
-                className="inline-flex items-center justify-center p-2 rounded-lg text-xs font-semibold bg-white border border-gray-300 text-gray-700 hover:border-burgundy-600 hover:text-burgundy-700 transition"
+                className="inline-flex items-center justify-center p-2 rounded-lg text-xs font-semibold glass-control text-[#F7EFE7] border border-[rgba(226,184,178,0.25)] hover:border-[rgba(226,184,178,0.5)] transition"
                 title={`Call ${caterer.name}`}
               >
-                <Phone className="w-3.5 h-3.5" />
+                <Phone className="w-3.5 h-3.5 text-[#e8c7bc]" />
               </a>
             </div>
           </div>
