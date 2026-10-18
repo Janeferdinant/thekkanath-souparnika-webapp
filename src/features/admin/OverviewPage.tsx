@@ -161,7 +161,7 @@ export const OverviewPage: React.FC = () => {
                   <div className="space-y-1">
                     <div className="font-bold text-forest-950">{e.customerName}</div>
                     <div className="text-ink-600">
-                      {e.eventType} · {e.preferredDate} · {e.estimatedGuests} guests
+                      {e.eventType} · {e.preferredDate || 'Date not specified'} · {e.estimatedGuests > 0 ? `${e.estimatedGuests} guests` : 'Guests not specified'}
                     </div>
                     <div className="text-[11px] text-ink-500 font-mono">+91 {e.customerPhone}</div>
                   </div>

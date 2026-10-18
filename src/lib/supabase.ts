@@ -23,7 +23,7 @@ export function getSupabaseConfigStatus(): SupabaseConfigStatus {
     url: isConfigured ? supabaseUrl : undefined,
     hasAnonKey: Boolean(supabaseAnonKey),
     message: isConfigured
-      ? 'Connected to live Supabase backend'
+      ? 'Supabase client configured; application records are still stored in this browser.'
       : 'Supabase credentials not configured in .env. Running in interactive Local Demo Mode with persistent browser storage.',
   };
 }

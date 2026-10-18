@@ -58,7 +58,9 @@ export function isSupabaseConfigured(): boolean {
 }
 
 export function isDemoMode(): boolean {
-  return !isSupabaseConfigured();
+  // The current StorageService reads and writes browser storage in every
+  // configuration. Supabase credentials alone do not enable shared data.
+  return true;
 }
 
 /**

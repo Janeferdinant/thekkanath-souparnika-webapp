@@ -12,7 +12,7 @@ export const FAQPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+    <div className="lux-legacy max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
       {/* Title */}
       <div className="space-y-4 text-center max-w-2xl mx-auto">
         <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-rose-700">
@@ -38,6 +38,7 @@ export const FAQPage: React.FC = () => {
             >
               <button
                 onClick={() => toggle(idx)}
+                aria-expanded={isOpen}
                 className="w-full p-6 text-left flex items-center justify-between gap-4 hover:bg-rose-50/60 transition-colors focus:outline-none"
               >
                 <h3 className="font-serif text-lg sm:text-xl font-bold text-burgundy-950">

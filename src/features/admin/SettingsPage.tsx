@@ -124,9 +124,9 @@ export const SettingsPage: React.FC = () => {
 
               <div className="shrink-0">
                 {item.configured ? (
-                  <Badge variant="success">Configured & Active</Badge>
+                  <Badge variant="info">Environment key present</Badge>
                 ) : (
-                  <Badge variant="default">Not Configured (Safe Fallback)</Badge>
+                  <Badge variant="default">Environment key missing</Badge>
                 )}
               </div>
             </div>

@@ -185,7 +185,7 @@ export const EnquirePage: React.FC = () => {
 
   if (submittedEnquiry) {
     return (
-      <div className="max-w-3xl mx-auto px-4 py-16">
+      <div className="lux-legacy max-w-3xl mx-auto px-4 py-16">
         <div className="p-8 sm:p-12 rounded-3xl bg-cream-50 border border-cream-200 shadow-luxury text-center space-y-6">
           <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-800 mx-auto flex items-center justify-center">
             <CheckCircle2 className="w-8 h-8" />
@@ -193,13 +193,13 @@ export const EnquirePage: React.FC = () => {
 
           <div className="space-y-2">
             <span className="text-xs font-bold uppercase tracking-wider text-gold-700">
-              Enquiry Received
+              Enquiry Saved
             </span>
             <h1 className="font-serif text-3xl sm:text-4xl font-bold text-burgundy-950">
               Thank You, {submittedEnquiry.customerName}
             </h1>
             <p className="text-xs sm:text-sm text-ink-600 max-w-md mx-auto leading-relaxed">
-              Your booking enquiry has been recorded in our system. Submitting an enquiry does not automatically reserve a date; management will check availability and follow up.
+              Your enquiry is saved in this browser. Send the reference to the venue team by WhatsApp or call them directly so they can review your request. No date is reserved by this form.
             </p>
           </div>
 
@@ -224,8 +224,8 @@ export const EnquirePage: React.FC = () => {
           <div className="text-left bg-gradient-to-r from-burgundy-950 to-wine-950 text-cream-100 p-6 rounded-2xl space-y-3 border border-rose-300/30">
             <h4 className="font-serif text-base font-bold text-gold-300">What Happens Next?</h4>
             <ol className="list-decimal list-inside text-xs text-cream-200 space-y-1.5 leading-relaxed">
-              <li>Our management team reviews your preferred date ({submittedEnquiry.preferredDate}) against existing bookings.</li>
-              <li>We will contact you via phone or WhatsApp at <strong>+91 {submittedEnquiry.customerPhone}</strong>.</li>
+              <li>Send this enquiry reference and your preferred date ({submittedEnquiry.preferredDate}) to the venue team.</li>
+              <li>The team can discuss availability and event details with you by phone or WhatsApp.</li>
               <li>You can arrange a venue visit to inspect the halls in person.</li>
               <li>Upon agreement on dates and rental details, your booking will be confirmed.</li>
             </ol>
@@ -253,7 +253,7 @@ export const EnquirePage: React.FC = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+    <div className="lux-legacy max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
       {/* Title */}
       <div className="text-center space-y-3 max-w-2xl mx-auto">
         <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-gold-700">
@@ -264,7 +264,7 @@ export const EnquirePage: React.FC = () => {
           Request a Booking Enquiry
         </h1>
         <p className="text-xs sm:text-sm text-ink-600 leading-relaxed">
-          Tell us about your event. A booking request is not an instant confirmation; our team will verify hall schedules and follow up promptly.
+          Tell us about your event. This form saves your details in this browser; share the reference with the venue team to discuss hall schedules and availability.
         </p>
       </div>
 
@@ -324,6 +324,7 @@ export const EnquirePage: React.FC = () => {
               <div className="space-y-1.5">
                 <label className="text-xs font-bold text-ink-800">Type of Event *</label>
                 <select
+                  aria-label="Type of event"
                   value={eventType}
                   onChange={(e) => setEventType(e.target.value as EventType)}
                   className="w-full px-3.5 py-2.5 rounded-xl border border-cream-300 bg-white text-xs text-ink-900 focus:outline-none focus:ring-2 focus:ring-forest-600"
@@ -343,6 +344,7 @@ export const EnquirePage: React.FC = () => {
                 <label className="text-xs font-bold text-ink-800">Preferred Event Date *</label>
                 <input
                   type="date"
+                  aria-label="Preferred event date"
                   min={new Date().toISOString().split('T')[0]}
                   value={preferredDate}
                   onChange={(e) => setPreferredDate(e.target.value)}
@@ -366,6 +368,7 @@ export const EnquirePage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleSessionChange('morning')}
+                    aria-pressed={session === 'morning'}
                     className={`p-4 rounded-2xl border text-left transition-all ${
                       session === 'morning'
                         ? 'border-burgundy-700 bg-burgundy-50/60 shadow-sm ring-2 ring-burgundy-600/20'
@@ -390,6 +393,7 @@ export const EnquirePage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleSessionChange('evening')}
+                    aria-pressed={session === 'evening'}
                     className={`p-4 rounded-2xl border text-left transition-all ${
                       session === 'evening'
                         ? 'border-burgundy-700 bg-burgundy-50/60 shadow-sm ring-2 ring-burgundy-600/20'
@@ -414,6 +418,7 @@ export const EnquirePage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleSessionChange('full_day')}
+                    aria-pressed={session === 'full_day'}
                     className={`p-4 rounded-2xl border text-left transition-all ${
                       session === 'full_day'
                         ? 'border-burgundy-700 bg-burgundy-50/60 shadow-sm ring-2 ring-burgundy-600/20'
@@ -440,6 +445,7 @@ export const EnquirePage: React.FC = () => {
               <div className="space-y-1.5 sm:col-span-2">
                 <label className="text-xs font-bold text-ink-800">Booking Scope</label>
                 <select
+                  aria-label="Booking scope"
                   value={preferredHallId}
                   onChange={(e) => setPreferredHallId(e.target.value)}
                   className="w-full px-3.5 py-2.5 rounded-xl border border-cream-300 bg-white text-xs text-ink-900 focus:outline-none focus:ring-2 focus:ring-forest-600"
@@ -460,6 +466,7 @@ export const EnquirePage: React.FC = () => {
                 </label>
                 <input
                   type="number"
+                  aria-label="Estimated guest count"
                   min="10"
                   max="300"
                   value={estimatedGuests}
@@ -510,6 +517,7 @@ export const EnquirePage: React.FC = () => {
                 <label className="text-xs font-bold text-ink-800">Your Full Name *</label>
                 <input
                   type="text"
+                  aria-label="Your full name"
                   placeholder="e.g. Ramesh Nair"
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
@@ -526,6 +534,7 @@ export const EnquirePage: React.FC = () => {
                 <label className="text-xs font-bold text-ink-800">Mobile Phone (WhatsApp Preferred) *</label>
                 <input
                   type="tel"
+                  aria-label="Mobile phone number"
                   placeholder="e.g. 9847012345"
                   value={customerPhone}
                   onChange={(e) => setCustomerPhone(e.target.value)}
@@ -544,6 +553,7 @@ export const EnquirePage: React.FC = () => {
                 <label className="text-xs font-bold text-ink-800">Email Address (Optional)</label>
                 <input
                   type="email"
+                  aria-label="Email address, optional"
                   placeholder="e.g. ramesh@example.com"
                   value={customerEmail}
                   onChange={(e) => setCustomerEmail(e.target.value)}
@@ -587,6 +597,7 @@ export const EnquirePage: React.FC = () => {
                       <label className="text-[11px] font-bold text-gray-700">Referrer's Full Name *</label>
                       <input
                         type="text"
+                        aria-label="Referrer's full name"
                         placeholder="e.g. Rahul Varma"
                         value={referrerName}
                         onChange={(e) => setReferrerName(e.target.value)}
@@ -603,6 +614,7 @@ export const EnquirePage: React.FC = () => {
                       <label className="text-[11px] font-bold text-gray-700">Referrer's Mobile Phone *</label>
                       <input
                         type="tel"
+                        aria-label="Referrer's mobile phone"
                         placeholder="e.g. 9446123456"
                         value={referrerPhone}
                         onChange={(e) => setReferrerPhone(e.target.value)}
@@ -619,6 +631,7 @@ export const EnquirePage: React.FC = () => {
                       <label className="text-[11px] font-bold text-gray-700">Referrer's Email / UPI (Optional)</label>
                       <input
                         type="text"
+                        aria-label="Referrer's email or UPI, optional"
                         placeholder="e.g. rahul@example.com"
                         value={referrerEmail}
                         onChange={(e) => setReferrerEmail(e.target.value)}
@@ -670,6 +683,7 @@ export const EnquirePage: React.FC = () => {
                   Special Requests / Setup Details (Optional)
                 </label>
                 <textarea
+                  aria-label="Special requests or setup details, optional"
                   rows={3}
                   placeholder="Tell us about stage setup, catering arrangements, dress-change room requests, etc. Note: requests require staff review and do not guarantee fulfillment."
                   value={specialRequests}

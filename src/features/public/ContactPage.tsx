@@ -4,29 +4,38 @@ import { VENUE_INFO } from '../../data/venueData';
 import { StorageService } from '../../lib/storage';
 import { generateReference } from '../../lib/formatters';
 import { Button } from '../../components/ui/Button';
+import { isValidIndianPhone, normalizeIndianPhone } from '../../lib/formatters';
+import { VenueImage } from '../../components/public/VenueImage';
+import { VENUE_MEDIA } from '../../data/venueMedia';
 
 export const ContactPage: React.FC = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
+  const [preferredDate, setPreferredDate] = useState('');
+  const [estimatedGuests, setEstimatedGuests] = useState('');
+  const [consentGiven, setConsentGiven] = useState(false);
+  const [error, setError] = useState('');
   const [sent, setSent] = useState(false);
 
   const handleQuickContact = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !phone) return;
+    if (!name.trim() || !isValidIndianPhone(phone) || !message.trim() || (estimatedGuests !== '' && (Number(estimatedGuests) < 1 || Number(estimatedGuests) > 300)) || !consentGiven) {
+      setError('Please add your name, a valid 10-digit phone, a message, and contact consent. If you enter a guest count, use 1–300.');
+      return;
+    }
+    setError('');
 
     StorageService.createEnquiry({
       reference: generateReference('TS-ENQ'),
       customerName: name.trim(),
-      customerPhone: phone.trim(),
-      customerEmail: 'contact-form@thekkanath.com',
+      customerPhone: normalizeIndianPhone(phone),
+      customerEmail: '',
       eventType: 'Other',
-      preferredDate: new Date(Date.now() + 86400000 * 7).toISOString().split('T')[0],
-      startTime: '10:00',
-      endTime: '14:00',
-      estimatedGuests: 50,
+      preferredDate,
+      estimatedGuests: estimatedGuests === '' ? 0 : Number(estimatedGuests),
       specialRequests: message.trim(),
-      consentGiven: true,
+      consentGiven,
       status: 'new',
     });
 
@@ -34,7 +43,7 @@ export const ContactPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+    <div className="lux-legacy max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
       {/* Title */}
       <div className="space-y-4 max-w-3xl">
         <span className="text-xs font-bold uppercase tracking-[0.2em] text-rose-700">Find & Reach Us</span>
@@ -45,6 +54,8 @@ export const ContactPage: React.FC = () => {
           Conveniently located at Market Junction in Nellikunnu, Thrissur. We welcome site inspections and in-person discussions by appointment.
         </p>
       </div>
+
+      <figure className="lux-contact-banner"><VenueImage photo={VENUE_MEDIA[6]} /><figcaption>Building frontage · Thekkanath Souparnika, Nellikunnu</figcaption></figure>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
         {/* Contact Info Cards — Liquid Glass */}
@@ -143,10 +154,14 @@ export const ContactPage: React.FC = () => {
           {sent ? (
             <div className="p-6 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-3">
               <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
-              <h4 className="font-serif font-bold text-emerald-950 text-lg">Message Received</h4>
+              <h4 className="font-serif font-bold text-emerald-950 text-lg">Message Saved</h4>
               <p className="text-xs text-emerald-800">
-                Thank you for contacting us. Our management team will call or message you back promptly.
+                Your message is saved in this browser. Send it to the venue team using one of the links below.
               </p>
+              <div className="flex flex-wrap justify-center gap-3">
+                <a className="lux-button lux-button-primary" href={`mailto:${VENUE_INFO.email}?subject=${encodeURIComponent('Venue question from ' + name)}&body=${encodeURIComponent(`${message.trim()}\n\n${name.trim()}\n${normalizeIndianPhone(phone)}`)}`}>Send by email</a>
+                <a className="lux-button lux-button-outline" href={`${VENUE_INFO.whatsappUrl.split('?')[0]}?text=${encodeURIComponent(`${message.trim()}\n\n${name.trim()}\n${normalizeIndianPhone(phone)}`)}`} target="_blank" rel="noreferrer">Send by WhatsApp</a>
+              </div>
               <Button variant="outline" size="sm" onClick={() => setSent(false)}>
                 Send Another Message
               </Button>
@@ -157,6 +172,7 @@ export const ContactPage: React.FC = () => {
                 <label className="text-xs font-bold text-burgundy-950">Your Name *</label>
                 <input
                   type="text"
+                  aria-label="Your name"
                   required
                   placeholder="e.g. Anand Menon"
                   value={name}
@@ -169,6 +185,7 @@ export const ContactPage: React.FC = () => {
                 <label className="text-xs font-bold text-burgundy-950">Phone Number *</label>
                 <input
                   type="tel"
+                  aria-label="Phone number"
                   required
                   placeholder="e.g. 9847012345"
                   value={phone}
@@ -178,8 +195,10 @@ export const ContactPage: React.FC = () => {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-burgundy-950">Your Message or Question</label>
+                <label className="text-xs font-bold text-burgundy-950">Your Message or Question *</label>
                 <textarea
+                  aria-label="Your message or question"
+                  required
                   rows={4}
                   placeholder="Tell us what you would like to know about our venue, dates, or facilities..."
                   value={message}
@@ -187,6 +206,13 @@ export const ContactPage: React.FC = () => {
                   className="w-full px-4 py-2.5 rounded-xl border border-rose-200/80 bg-white/90 text-xs text-ink-900 focus:outline-none focus:ring-2 focus:ring-burgundy-500"
                 />
               </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5"><label htmlFor="quick-date" className="text-xs font-bold text-burgundy-950">Preferred Event Date (optional)</label><input id="quick-date" type="date" min={new Date().toISOString().split('T')[0]} value={preferredDate} onChange={e => setPreferredDate(e.target.value)} className="w-full px-4 py-2.5 rounded-xl border border-rose-200/80" /></div>
+                <div className="space-y-1.5"><label htmlFor="quick-guests" className="text-xs font-bold text-burgundy-950">Estimated Guests (optional)</label><input id="quick-guests" type="number" min="1" max="300" value={estimatedGuests} onChange={e => setEstimatedGuests(e.target.value)} className="w-full px-4 py-2.5 rounded-xl border border-rose-200/80" /></div>
+              </div>
+              <label className="flex items-start gap-3 text-xs text-ink-700"><input type="checkbox" checked={consentGiven} onChange={e => setConsentGiven(e.target.checked)} required className="mt-0.5" /><span>I agree to be contacted by the venue team about this enquiry.</span></label>
+              {error && <p role="alert" className="text-xs text-rose-300">{error}</p>}
 
               <Button
                 variant="primary"
@@ -198,9 +224,7 @@ export const ContactPage: React.FC = () => {
                 Send Message to Management
               </Button>
 
-              <p className="text-[11px] text-rose-900/70 text-center leading-relaxed">
-                By sending this note, you authorize our team to contact you via telephone or WhatsApp regarding your query.
-              </p>
+              <p className="text-[11px] text-rose-900/70 text-center leading-relaxed">This form saves a record in this browser. Please contact the venue directly to send your message. No date is reserved by this form.</p>
             </form>
           )}
         </div>

@@ -179,7 +179,7 @@ export const EnquiriesPage: React.FC = () => {
                     <td className="px-5 py-4">
                       <div className="font-semibold text-ink-900">{e.eventType}</div>
                       <div className="text-[11px] text-ink-500 mt-0.5">
-                        {e.estimatedGuests} guests
+                        {e.estimatedGuests > 0 ? `${e.estimatedGuests} guests` : 'Guests not specified'}
                       </div>
                       <div className="text-[11px] text-gold-700 font-medium mt-0.5">
                         {e.preferredHallId === 'any' ? 'Any Hall' : e.preferredHallId}
@@ -187,7 +187,7 @@ export const EnquiriesPage: React.FC = () => {
                     </td>
 
                     <td className="px-5 py-4">
-                      <div className="font-medium text-ink-900">{formatDate(e.preferredDate)}</div>
+                      <div className="font-medium text-ink-900">{e.preferredDate ? formatDate(e.preferredDate) : 'Date not specified'}</div>
                       <div className="text-[11px] text-ink-500 mt-0.5">
                         {formatTime12h(e.startTime || '')} - {formatTime12h(e.endTime || '')}
                       </div>
@@ -295,13 +295,13 @@ export const EnquiriesPage: React.FC = () => {
               <div>
                 <span className="text-ink-500">Estimated Guests:</span>
                 <p className="font-semibold text-ink-900 mt-0.5">
-                  {selectedEnquiry.estimatedGuests} guests
+                  {selectedEnquiry.estimatedGuests > 0 ? `${selectedEnquiry.estimatedGuests} guests` : 'Not specified'}
                 </p>
               </div>
               <div>
                 <span className="text-ink-500">Requested Date:</span>
                 <p className="font-semibold text-ink-900 mt-0.5">
-                  {formatDate(selectedEnquiry.preferredDate)}
+                  {selectedEnquiry.preferredDate ? formatDate(selectedEnquiry.preferredDate) : 'Not specified'}
                 </p>
               </div>
               <div>

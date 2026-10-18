@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import { Modal } from '../../components/ui/Modal';
+import { venuePhotoForPath } from '../../data/venueMedia';
 
 export const HallDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -24,7 +25,7 @@ export const HallDetailPage: React.FC = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+    <div className="lux-legacy max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
       {/* Back button */}
       <div>
         <Link
@@ -79,22 +80,25 @@ export const HallDetailPage: React.FC = () => {
         </div>
 
         {/* Featured Main Photo */}
-        <div
+        <button
+          type="button"
           onClick={() => setSelectedPhoto(hall.coverImage)}
-          className="relative h-80 sm:h-96 rounded-3xl overflow-hidden cursor-pointer shadow-luxury border border-rose-200/80 group bg-wine-950"
+          className="relative h-80 sm:h-96 rounded-3xl overflow-hidden cursor-pointer shadow-luxury border border-rose-200/80 group bg-wine-950 text-left w-full"
+          aria-label={`View full photograph: ${venuePhotoForPath(hall.coverImage)?.title ?? 'Venue view'}`}
         >
           <img
             src={hall.coverImage}
-            alt={hall.name}
+            alt={venuePhotoForPath(hall.coverImage)?.alt ?? 'Venue photograph'}
+            loading="eager"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-wine-950/80 via-transparent to-transparent flex items-end p-6">
             <div className="text-white text-xs font-medium flex items-center justify-between w-full">
-              <span>Click to view photo in high resolution</span>
+              <span>View actual venue photograph</span>
               <Eye className="w-4 h-4 text-gold-400" />
             </div>
           </div>
-        </div>
+        </button>
       </div>
 
       {/* Gallery strip for this hall */}
@@ -102,18 +106,21 @@ export const HallDetailPage: React.FC = () => {
         <h3 className="font-serif text-2xl font-bold text-burgundy-950">Venue Photographs</h3>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6">
           {hall.galleryImages.map((img, idx) => (
-            <div
+            <button
               key={idx}
+              type="button"
               onClick={() => setSelectedPhoto(img)}
-              className="relative h-48 rounded-2xl overflow-hidden cursor-pointer shadow-subtle border border-rose-200/80 group bg-wine-950"
+              className="relative h-48 rounded-2xl overflow-hidden cursor-pointer shadow-subtle border border-rose-200/80 group bg-wine-950 text-left"
+              aria-label={`View full photograph: ${venuePhotoForPath(img)?.title ?? 'Venue view'}`}
             >
               <img
                 src={img}
-                alt={`${hall.name} view ${idx + 1}`}
+                alt={venuePhotoForPath(img)?.alt ?? 'Venue photograph'}
+                loading="lazy"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-wine-950/20 group-hover:bg-transparent transition-colors" />
-            </div>
+            </button>
           ))}
         </div>
       </div>
@@ -169,17 +176,17 @@ export const HallDetailPage: React.FC = () => {
         <Modal
           isOpen={Boolean(selectedPhoto)}
           onClose={() => setSelectedPhoto(null)}
-          title={`${hall.name} — Photograph`}
+          title="Actual venue photograph"
           maxWidth="2xl"
         >
           <div className="space-y-4">
             <img
               src={selectedPhoto}
-              alt={hall.name}
+              alt={venuePhotoForPath(selectedPhoto)?.alt ?? 'Venue photograph'}
               className="w-full max-h-[70vh] object-contain rounded-2xl bg-wine-950 shadow-md"
             />
             <p className="text-xs text-rose-900/80 text-center font-medium">
-              Interior view of {hall.name} at Thekkanath Souparnika.
+              {venuePhotoForPath(selectedPhoto)?.title ?? 'Venue view'} at Thekkanath Souparnika. Photos may show other areas of the venue.
             </p>
           </div>
         </Modal>

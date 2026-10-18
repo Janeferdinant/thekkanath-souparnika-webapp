@@ -76,7 +76,7 @@ export const AICopilotPage: React.FC = () => {
       } else if (lower.includes('enquir') || lower.includes('follow-up') || lower.includes('lead')) {
         const pending = enquiries.filter((e) => e.status === 'new' || e.status === 'contacted');
         reply = `You have **${pending.length} pending enquiries** in the pipeline:\n\n` +
-          pending.map((e) => `• **${e.customerName}** (${e.reference}): Prefers ${e.preferredDate} for ${e.eventType} (${e.estimatedGuests} guests). Contact: +91 ${e.customerPhone}`).join('\n\n') +
+          pending.map((e) => `• **${e.customerName}** (${e.reference}): ${e.preferredDate ? `Prefers ${e.preferredDate}` : 'Date not specified'} for ${e.eventType} (${e.estimatedGuests > 0 ? `${e.estimatedGuests} guests` : 'guests not specified'}). Contact: +91 ${e.customerPhone}`).join('\n\n') +
           `\n\nRecommendation: Prioritize ${pending[0]?.customerName || 'earliest inquiry'} who submitted recently.`;
         grounding = ['Source: enquiries table', 'Filter: status IN (new, contacted)', 'Total active records: ' + enquiries.length];
       } else if (lower.includes('cash') || lower.includes('inflow') || lower.includes('expense') || lower.includes('financ')) {

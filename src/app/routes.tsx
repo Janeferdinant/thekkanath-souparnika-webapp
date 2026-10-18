@@ -11,6 +11,7 @@ import { GalleryPage } from '../features/public/GalleryPage';
 import { EnquirePage } from '../features/public/EnquirePage';
 import { ContactPage } from '../features/public/ContactPage';
 import { FAQPage } from '../features/public/FAQPage';
+import { TourPage } from '../features/public/TourPage';
 
 // Admin Pages
 import { OverviewPage } from '../features/admin/OverviewPage';
@@ -41,7 +42,7 @@ export const router = createBrowserRouter([
       { path: 'halls/:slug', element: <HallDetailPage /> },
       { path: 'facilities', element: <FacilitiesPage /> },
       { path: 'gallery', element: <GalleryPage /> },
-      { path: 'tour', element: <Navigate to="/gallery" replace /> },
+      { path: 'tour', element: <TourPage /> },
       { path: 'enquire', element: <EnquirePage /> },
       { path: 'contact', element: <ContactPage /> },
       { path: 'faq', element: <FAQPage /> },

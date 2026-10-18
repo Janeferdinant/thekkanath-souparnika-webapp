@@ -1,15 +1,4 @@
-import React, { useEffect, useRef } from 'react';
-
-interface Particle {
-  x: number;
-  y: number;
-  radius: number;
-  vx: number;
-  vy: number;
-  alpha: number;
-  alphaSpeed: number;
-  color: string;
-}
+import { useEffect, useRef } from 'react';
 
 interface AmbientParticlesProps {
   className?: string;
@@ -17,121 +6,62 @@ interface AmbientParticlesProps {
   variant?: 'global' | 'hero';
 }
 
-export const AmbientParticles: React.FC<AmbientParticlesProps> = ({
-  className = 'pointer-events-none z-0',
-  count,
-  variant = 'global',
-}) => {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+type Particle = { x: number; y: number; r: number; speed: number; alpha: number; phase: number };
+
+/** Decorative hero dust. It never covers or changes the source photograph. */
+export function AmbientParticles({ className = '', count, variant = 'hero' }: AmbientParticlesProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    // 1. Check for reduced motion preference
-    const prefersReducedMotion =
-      typeof window !== 'undefined' &&
-      window.matchMedia &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (prefersReducedMotion) {
-      return; // Respect accessibility preference
-    }
-
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const host = canvas?.parentElement;
+    const ctx = canvas?.getContext('2d');
+    if (!canvas || !host || !ctx) return;
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mobile = window.matchMedia('(max-width: 650px)');
+    let width = 0, height = 0, frame = 0, last = 0;
+    let particles: Particle[] = [];
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let animationFrameId: number;
-    let width = (canvas.width = canvas.parentElement?.clientWidth || window.innerWidth);
-    let height = (canvas.height = canvas.parentElement?.clientHeight || window.innerHeight);
-
-    const handleResize = () => {
-      if (!canvas) return;
-      width = canvas.width = canvas.parentElement?.clientWidth || window.innerWidth;
-      height = canvas.height = canvas.parentElement?.clientHeight || window.innerHeight;
+    const resize = () => {
+      const bounds = host.getBoundingClientRect();
+      width = bounds.width;
+      height = bounds.height;
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      canvas.width = Math.max(1, Math.floor(width * dpr));
+      canvas.height = Math.max(1, Math.floor(height * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const amount = Math.min(count ?? (mobile.matches ? 12 : 28), mobile.matches ? 12 : 28);
+      particles = Array.from({ length: variant === 'hero' ? amount : Math.min(amount, 12) }, () => ({
+        x: Math.random() * width, y: Math.random() * height, r: .5 + Math.random() * 1.4,
+        speed: .05 + Math.random() * .11, alpha: .12 + Math.random() * .28, phase: Math.random() * 10,
+      }));
     };
-
-    window.addEventListener('resize', handleResize);
-
-    // Luxury Palette Particles: Champagne Gold, Rose Gold, Warm Amber, Soft Blush
-    const particleColors = [
-      '#F3E5AB', // Champagne
-      '#D4AF37', // Antique Gold
-      '#E5A99B', // Rose Gold
-      '#F0C2B8', // Soft Rose
-      '#FAF7F2', // Warm Ivory
-    ];
-
-    const defaultCount =
-      variant === 'hero'
-        ? Math.min(45, Math.max(20, Math.floor((width * height) / 22000)))
-        : Math.min(35, Math.max(15, Math.floor((width * height) / 35000)));
-
-    const particleCount = count || defaultCount;
-    const particles: Particle[] = [];
-
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        radius: Math.random() * 2.2 + 0.8,
-        vx: (Math.random() - 0.5) * 0.25,
-        vy: -Math.random() * 0.45 - 0.12, // Gently drifting upward
-        alpha: Math.random() * 0.5 + 0.25,
-        alphaSpeed: (Math.random() - 0.5) * 0.006,
-        color: particleColors[Math.floor(Math.random() * particleColors.length)],
-      });
-    }
-
-    const render = () => {
+    const tick = (time: number) => {
+      frame = requestAnimationFrame(tick);
+      if (time - last < 28) return;
+      const delta = Math.min(time - last || 28, 50);
+      last = time;
       ctx.clearRect(0, 0, width, height);
-
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-
-        p.x += p.vx;
-        p.y += p.vy;
-        p.alpha += p.alphaSpeed;
-
-        if (p.alpha <= 0.15 || p.alpha >= 0.75) {
-          p.alphaSpeed = -p.alphaSpeed;
-        }
-
-        // Wrap around boundaries
-        if (p.y < -10) {
-          p.y = height + 10;
-          p.x = Math.random() * width;
-        }
-        if (p.x < -10) p.x = width + 10;
-        if (p.x > width + 10) p.x = -10;
-
-        ctx.save();
+      for (const dot of particles) {
+        dot.y -= dot.speed * delta;
+        if (dot.y < 0) { dot.y = height; dot.x = Math.random() * width; }
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.globalAlpha = p.alpha;
-        ctx.shadowBlur = p.radius * 3.5;
-        ctx.shadowColor = p.color;
+        ctx.fillStyle = `rgba(255,207,168,${dot.alpha * (.8 + .2 * Math.sin(time * .0007 + dot.phase))})`;
+        ctx.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
         ctx.fill();
-        ctx.restore();
       }
-
-      animationFrameId = requestAnimationFrame(render);
     };
-
-    render();
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animationFrameId);
-    };
+    const stop = () => { cancelAnimationFrame(frame); frame = 0; ctx.clearRect(0, 0, width, height); };
+    const start = () => { if (frame || document.hidden || motion.matches) return; last = performance.now(); frame = requestAnimationFrame(tick); };
+    const onVisibility = () => document.hidden ? stop() : start();
+    const onMotion = () => motion.matches ? stop() : start();
+    const onResize = () => { resize(); };
+    resize(); start();
+    window.addEventListener('resize', onResize, { passive: true });
+    document.addEventListener('visibilitychange', onVisibility);
+    motion.addEventListener('change', onMotion);
+    return () => { stop(); window.removeEventListener('resize', onResize); document.removeEventListener('visibilitychange', onVisibility); motion.removeEventListener('change', onMotion); };
   }, [count, variant]);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className={`absolute inset-0 pointer-events-none ${className}`}
-      aria-hidden="true"
-    />
-  );
-};
+  return <canvas ref={canvasRef} className={`absolute inset-0 pointer-events-none ${className}`} aria-hidden="true" />;
+}
