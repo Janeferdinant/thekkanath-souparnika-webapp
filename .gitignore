@@ -34,3 +34,6 @@ dist-ssr/
 # Scratch and temporary previews
 scratch/
 
+
+.vercel
+.env*
