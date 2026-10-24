@@ -59,15 +59,22 @@ export const HallDetailPage: React.FC = () => {
             <div className="text-xs">
               <strong className="text-[#F7EFE7] font-semibold block">{hall.capacityText}</strong>
               <span className="text-[#CBB8B9]">
-                Venue is best suited to gatherings of up to 300 guests across the property.
+                Available for booking for any number of guests; ideal for gatherings of 250 to 300 guests (accommodating up to 400).
               </span>
             </div>
           </div>
 
+          <div className="p-4 rounded-2xl glass-control border border-[rgba(226,184,178,0.25)] bg-[#18070c]/80 text-xs text-[#F7EFE7] space-y-1">
+            <span className="font-semibold text-[#E7CFAF]">Single Unified Hall Venue:</span>
+            <p className="text-[11px] text-[#CBB8B9] leading-relaxed">
+              No separate halls for rental — Souparnika is booked exclusively as a single hall. Your reservation includes coordinated private access across all spaces (Stage, Welcome, Dining, and Open halls).
+            </p>
+          </div>
+
           <div className="flex flex-col sm:flex-row gap-3.5 pt-2">
-            <Link to={`/enquire?hall=${hall.id}`} className="w-full sm:w-auto">
+            <Link to="/enquire" className="w-full sm:w-auto">
               <Button variant="gold" size="lg" className="w-full sm:w-auto glass-highlight" leftIcon={<Calendar className="w-4 h-4" />}>
-                Check Date for {hall.name}
+                Check Date / Book Hall
               </Button>
             </Link>
             <a href={VENUE_INFO.whatsappUrl} target="_blank" rel="noreferrer" className="w-full sm:w-auto">

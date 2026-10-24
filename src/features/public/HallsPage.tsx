@@ -8,7 +8,7 @@ export const HallsPage: React.FC = () => {
   const [acFilter, setAcFilter] = useState<'all' | 'ac' | 'non_ac'>('all');
   const [floorFilter, setFloorFilter] = useState<'all' | 'ground' | 'first'>('all');
 
-  const filteredHalls = HALLS.filter((hall) => {
+  const filteredHalls = HALLS.filter((h) => h.id !== 'auditorium').filter((hall) => {
     if (acFilter === 'ac' && !hall.airConditioned) return false;
     if (acFilter === 'non_ac' && hall.airConditioned) return false;
     if (floorFilter === 'ground' && !hall.floor.toLowerCase().includes('ground')) return false;
@@ -22,14 +22,25 @@ export const HallsPage: React.FC = () => {
       <div className="space-y-4 max-w-3xl">
         <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.25em] text-[#E7CFAF]">
           <ShieldCheck className="w-4 h-4 text-[#e8c7bc]" />
-          <span>Event Hall Spaces</span>
+          <span>Unified Venue Spaces</span>
         </div>
         <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-light text-[#F7EFE7] tracking-tight leading-tight">
-          Our Four Distinct Event Halls
+          Elegant Hall for Weddings, Receptions & Celebrations
         </h1>
         <p className="text-sm sm:text-base text-[#CBB8B9] leading-relaxed">
-          Thekkanath Souparnika offers four distinct event spaces, each accommodating up to 100 guests. The entire venue is ideally suited for celebrations of up to 300 guests across coordinated halls.
+          Elegant halls, three of them air-conditioned, for weddings, receptions, seminars and family gatherings. Ideal for 250 to 300 guests. On the PWD bus route, right at the Market Junction bus stop in Nellikunnu, Thrissur.
         </p>
+
+        {/* Single Hall Venue Policy Banner */}
+        <div className="p-4 sm:p-5 rounded-2xl glass-control border border-[rgba(226,184,178,0.25)] bg-[#18070c]/80 text-xs text-[#F7EFE7] space-y-1.5">
+          <div className="flex items-center gap-2 text-[#E7CFAF] font-serif text-base">
+            <ShieldCheck className="w-4 h-4 text-[#e8c7bc]" />
+            <span>Single Hall Venue Policy</span>
+          </div>
+          <p className="text-[11px] text-[#CBB8B9] leading-relaxed">
+            There are no separate halls for rental. Thekkanath Souparnika is booked exclusively as a single unified hall for your event — ideal for gatherings of 250 to 300 guests (accommodating up to 400). All four coordinated spaces below are included for your private celebration.
+          </p>
+        </div>
       </div>
 
       {/* Filter Strip — Liquid Glass */}
@@ -145,6 +156,14 @@ export const HallsPage: React.FC = () => {
                   </div>
                 </div>
 
+                {hall.id === 'dining-hall' && (
+                  <div>
+                    <span className="text-[11px] bg-[#451323] text-[#F3E5AB] border border-[#D4AF37]/40 px-2.5 py-0.5 rounded-full font-semibold">
+                      Recommended for Feast / Sadhya
+                    </span>
+                  </div>
+                )}
+
                 <p className="text-xs sm:text-sm text-[#CBB8B9] leading-relaxed">{hall.description}</p>
 
                 {hall.soundproofingNotes && (
@@ -185,14 +204,14 @@ export const HallsPage: React.FC = () => {
               <div className="pt-4 border-t border-[rgba(226,184,178,0.15)] flex flex-wrap items-center justify-between gap-3">
                 <Link to={`/halls/${hall.slug}`}>
                   <button className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-semibold glass-control text-[#F7EFE7] hover:border-[rgba(226,184,178,0.5)] transition-all">
-                    <span>Hall Details & Gallery</span>
+                    <span>Space Details & Photos</span>
                     <ArrowRight className="w-3.5 h-3.5 text-[#e8c7bc]" />
                   </button>
                 </Link>
 
-                <Link to={`/enquire?hall=${hall.id}`}>
+                <Link to="/enquire">
                   <Button variant="gold" size="sm" className="glass-highlight">
-                    Enquire for this Hall
+                    Enquire for Booking
                   </Button>
                 </Link>
               </div>
@@ -201,13 +220,13 @@ export const HallsPage: React.FC = () => {
         ))}
       </div>
 
-      {/* Capacity Clarity Callout — Liquid Glass */}
-      <div className="glass-panel p-8 sm:p-10 rounded-3xl border border-[rgba(226,184,178,0.25)] space-y-2">
+      {/* Capacity & Booking Availability Callout — Liquid Glass */}
+      <div className="glass-panel p-8 sm:p-10 rounded-3xl border border-[rgba(226,184,178,0.25)] space-y-3">
         <h3 className="font-serif text-xl sm:text-2xl font-light text-[#E7CFAF]">
-          Capacity & Nuance Commitment
+          Booking Availability & Seating Capacity
         </h3>
         <p className="text-xs sm:text-sm text-[#CBB8B9] leading-relaxed max-w-4xl">
-          The four halls are individual spaces accommodating up to 100 guests each. The venue is best suited for gatherings of up to 300 guests overall. Management does not market or combine all halls for a 400-guest single function, preserving safety, comfort, and service standards.
+          Our hall is available for booking for any number of guests. It is ideally arranged for gatherings of 250 to 300 people, accommodating functions of up to 400 guests across its coordinated areas. No separate halls are rented to outside parties during your event. For each hall, 100 seats are arranged, and our air-conditioned First Floor Dining Hall provides 100 seats in one sitting, making it ideal for smooth multi-batch traditional sadhyas and festive banquets.
         </p>
       </div>
     </div>

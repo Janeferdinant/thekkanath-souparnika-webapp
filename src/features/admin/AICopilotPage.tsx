@@ -71,8 +71,8 @@ export const AICopilotPage: React.FC = () => {
         const diningCount = bookings.filter((b) => b.hallId === 'dining-hall' && b.status === 'confirmed').length;
         const openCount = bookings.filter((b) => b.hallId === 'open-hall' && b.status === 'confirmed').length;
 
-        reply = `Based on your ${bookings.length} recorded booking records:\n\n• **Stage Hall**: ${stageCount} confirmed event(s)\n• **Dining Hall**: ${diningCount} confirmed event(s)\n• **Welcome Hall**: ${welcomeCount} confirmed event(s)\n• **Open Hall**: ${openCount} confirmed event(s)\n\nStage Hall and Dining Hall currently lead in utilization. Note: Each hall is rated for up to 100 guests.`;
-        grounding = ['Source: bookings table', 'Filter: status = confirmed', 'Stated capacity: up to 100/hall'];
+        reply = `Based on your ${bookings.length} recorded booking records:\n\n• **Stage Hall**: ${stageCount} confirmed event(s)\n• **Dining Hall**: ${diningCount} confirmed event(s)\n• **Welcome Hall**: ${welcomeCount} confirmed event(s)\n• **Open Hall**: ${openCount} confirmed event(s)\n\nStage Hall and Dining Hall currently lead in utilization. Note: Each hall has 100 seats arranged (Dining Hall has 100 seats in one sitting); ideal for 250 to 300 guests (up to 400).`;
+        grounding = ['Source: bookings table', 'Filter: status = confirmed', 'Seating: 100 seats arranged per space; Dining 100 seats in one sitting'];
       } else if (lower.includes('enquir') || lower.includes('follow-up') || lower.includes('lead')) {
         const pending = enquiries.filter((e) => e.status === 'new' || e.status === 'contacted');
         reply = `You have **${pending.length} pending enquiries** in the pipeline:\n\n` +
@@ -84,8 +84,8 @@ export const AICopilotPage: React.FC = () => {
         reply = `Here is your current financial ledger reconciliation:\n\n• **Total Collections Received**: ${formatINR(totalReceiptsPaise)}\n• **Total Operating Expenses**: ${formatINR(totalExpensesPaise)}\n• **Net Operating Balance**: ${formatINR(netCashPaise)}\n\nCalculated from ${payments.length} payment receipts and ${expenses.length} expense records.`;
         grounding = [`Collections sum: ${formatINR(totalReceiptsPaise)}`, `Expenses sum: ${formatINR(totalExpensesPaise)}`, 'Method: Integer paise arithmetic'];
       } else if (lower.includes('capacity') || lower.includes('ac') || lower.includes('spec') || lower.includes('brochure')) {
-        reply = `Venue Hall Specifications:\n\n• **Stage Hall**: Ground floor, Air-conditioned, Raised carpeted stage, Cushioned seating (Up to 100 guests)\n• **Welcome Hall**: Ground floor, Air-conditioned, Glass-door entrance, Side seating (Up to 100 guests)\n• **Dining Hall**: First floor, Air-conditioned, Long banquet tables, Large windows (Up to 100 guests)\n• **Open Hall**: Marble-finish flooring, Ceiling fans & 3 exhaust fans, Non-AC (Up to 100 guests). Notice: Sound can pass through exhaust fans.\n\n*Overall venue capacity is best suited to gatherings of up to 300 guests across coordinated halls.*`;
-        grounding = ['Hall capacity specifications', 'Acoustic notes'];
+        reply = `Venue Hall Specifications:\n\n• **Stage Hall**: Ground floor, Air-conditioned, Raised carpeted stage, Cushioned seating (100 seats arranged)\n• **Welcome Hall**: Ground floor, Air-conditioned, Glass-door entrance, Side seating (100 seats arranged)\n• **Dining Hall**: First floor, Air-conditioned, Long banquet tables, Large windows (In one sitting 100 seats — Recommended for Feast/Sadhya)\n• **Open Hall**: Marble-finish flooring, Ceiling fans & 3 exhaust fans, Naturally Ventilated (100 seats arranged). Notice: Sound can pass through exhaust fans.\n\n*The venue is booked as a single unified hall, ideal for 250 to 300 guests (accommodating up to 400 guests).*`;
+        grounding = ['Hall capacity specifications', 'Seating: 100 arranged/hall; Dining: 100 in one sitting', 'Acoustic notes'];
       } else {
         reply = `I have analyzed your query against the venue records. You can ask me to summarize hall bookings, inspect pending enquiries, reconcile financial collections, or review hall specifications.`;
         grounding = ['Database engine active'];

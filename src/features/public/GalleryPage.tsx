@@ -17,7 +17,7 @@ const GALLERY_ITEMS: GalleryItem[] = [
     title: 'Stage Hall — Raised Carpeted Stage & Cushioned Seating',
     category: 'halls',
     categoryLabel: 'Event Halls',
-    description: 'Ground floor air-conditioned hall with soft lighting, dedicated stage, and cushioned seating.',
+    description: 'Ground floor air-conditioned hall with 100 cushioned seats arranged, dedicated stage, and soft lighting.',
   },
   {
     id: 'welcome-hall',
@@ -25,7 +25,7 @@ const GALLERY_ITEMS: GalleryItem[] = [
     title: 'Welcome Hall — Front Glass Entrance & Side Seating',
     category: 'halls',
     categoryLabel: 'Event Halls',
-    description: 'Front hall on the ground floor with glass doors and comfortable seating on both sides.',
+    description: 'Front hall on the ground floor with glass doors, air conditioning, and 100 cushioned seats arranged on both sides.',
   },
   {
     id: 'dining-hall',
@@ -33,7 +33,7 @@ const GALLERY_ITEMS: GalleryItem[] = [
     title: 'Dining Hall — Banquet Tables & Tree Outlook',
     category: 'halls',
     categoryLabel: 'Event Halls',
-    description: 'First floor air-conditioned dining area with long tables, cushioned chairs, and natural light.',
+    description: 'First floor air-conditioned dining area with 100 seats in one sitting, ideal for traditional Kerala Sadhya and wedding feasts.',
   },
   {
     id: 'open-hall',
@@ -41,7 +41,7 @@ const GALLERY_ITEMS: GalleryItem[] = [
     title: 'Open Hall — Polished Marble Flooring & Airflow Fans',
     category: 'halls',
     categoryLabel: 'Event Halls',
-    description: 'Bright open hall with polished marble-finish flooring, ceiling fans, and three exhaust fans.',
+    description: 'Bright open hall with 100 seats arranged, polished marble-finish flooring, ceiling fans, and three exhaust fans.',
   },
   {
     id: 'wash-area',

@@ -24,7 +24,7 @@ export interface Hall {
   name: string;
   floor: string;
   capacityText: string;
-  capacityNumber: number; // Stated max 100
+  capacityNumber: number; // Stated seats arranged (100) / overall capacity
   airConditioned: boolean;
   coverImage: string;
   galleryImages: string[];

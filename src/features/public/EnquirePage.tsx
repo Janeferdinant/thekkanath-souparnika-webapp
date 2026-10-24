@@ -13,7 +13,6 @@ import {
   Calendar,
   Gift,
 } from 'lucide-react';
-import { HALLS } from '../../data/venueData';
 import { EventType, Enquiry, BookingSession } from '../../types/models';
 import { StorageService } from '../../lib/storage';
 import { generateReference, isValidIndianPhone, normalizeIndianPhone } from '../../lib/formatters';
@@ -25,7 +24,6 @@ import { DEFAULT_REFERRERS, searchReferrers } from '../../lib/referralEngine';
 
 export const EnquirePage: React.FC = () => {
   const [searchParams] = useSearchParams();
-  const preselectedHall = searchParams.get('hall') || 'auditorium';
 
   // Step state: 1: Event Details, 2: Contact Details, 3: Review & Submit
   const [step, setStep] = useState<1 | 2 | 3>(1);
@@ -39,8 +37,8 @@ export const EnquirePage: React.FC = () => {
   const [session, setSession] = useState<BookingSession>('morning');
   const [startTime, setStartTime] = useState(SESSION_TIMES.morning.startTime);
   const [endTime, setEndTime] = useState(SESSION_TIMES.morning.endTime);
-  const [preferredHallId, setPreferredHallId] = useState(preselectedHall);
-  const [estimatedGuests, setEstimatedGuests] = useState(150);
+  const preferredHallId = 'auditorium';
+  const [estimatedGuests, setEstimatedGuests] = useState(250);
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
@@ -82,10 +80,10 @@ export const EnquirePage: React.FC = () => {
     } else if (startTime >= endTime) {
       errs.time = 'Start time must be strictly before end time.';
     }
-    if (!estimatedGuests || estimatedGuests < 10) {
-      errs.estimatedGuests = 'Please specify at least 10 guests.';
-    } else if (estimatedGuests > 300) {
-      errs.estimatedGuests = 'The venue is best suited for gatherings up to 300 guests.';
+    if (!estimatedGuests || estimatedGuests < 1) {
+      errs.estimatedGuests = 'Please specify your expected number of guests.';
+    } else if (estimatedGuests > 400) {
+      errs.estimatedGuests = 'For gatherings exceeding 400 guests, please contact venue management directly.';
     }
 
     setErrors(errs);
@@ -436,43 +434,28 @@ export const EnquirePage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Preferred Hall */}
-              <div className="space-y-1.5 sm:col-span-2">
-                <label className="text-xs font-bold text-[#E7CFAF]">Booking Scope</label>
-                <select
-                  value={preferredHallId}
-                  onChange={(e) => setPreferredHallId(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[rgba(226,184,178,0.25)] bg-[#18070c]/90 text-xs text-[#F7EFE7] focus:outline-none focus:ring-2 focus:ring-[#e8c7bc]"
-                >
-                  <option value="auditorium" className="bg-[#240810] text-[#F7EFE7]">Thekkanath Souparnika (Full Venue Auditorium - All Halls Included)</option>
-                  {HALLS.filter((h) => h.id !== 'auditorium').map((h) => (
-                    <option key={h.id} value={h.id} className="bg-[#240810] text-[#F7EFE7]">
-                      Individual Hall: {h.name} ({h.floor} · {h.airConditioned ? 'AC' : 'Non-AC'})
-                    </option>
-                  ))}
-                </select>
-              </div>
 
               {/* Expected Headcount */}
               <div className="space-y-1.5 sm:col-span-2">
                 <label className="text-xs font-bold text-[#E7CFAF]">
-                  Estimated Guest Count (Max 300 recommended) *
+                  Expected Guests * (Ideal for 250 to 300 guests; capacity up to 400)
                 </label>
                 <input
                   type="number"
-                  min="10"
-                  max="300"
+                  min="1"
+                  max="400"
                   value={estimatedGuests}
                   onChange={(e) => setEstimatedGuests(parseInt(e.target.value, 10) || 0)}
                   className={`w-full px-3.5 py-2.5 rounded-xl border bg-[#18070c]/90 text-xs text-[#F7EFE7] focus:outline-none focus:ring-2 focus:ring-[#e8c7bc] ${
                     errors.estimatedGuests ? 'border-red-400' : 'border-[rgba(226,184,178,0.25)]'
                   }`}
+                  placeholder="e.g. 250"
                 />
                 {errors.estimatedGuests ? (
                   <p className="text-[11px] text-red-400">{errors.estimatedGuests}</p>
                 ) : (
                   <p className="text-[10px] text-[#CBB8B9]">
-                    The full venue comfortably hosts gatherings of up to 300 guests with 40-50 dedicated on-site parking spaces.
+                    Our hall is available for booking for any number of guests. It is ideally arranged for gatherings of 250 to 300 people, accommodating up to 400 guests with 40–50 dedicated on-site parking spaces.
                   </p>
                 )}
               </div>
@@ -721,14 +704,6 @@ export const EnquirePage: React.FC = () => {
                 <span className="text-[#E7CFAF]">Preferred Date & Slot:</span>
                 <p className="font-medium text-[#F7EFE7] text-sm mt-0.5">
                   {preferredDate} ({startTime} to {endTime})
-                </p>
-              </div>
-              <div>
-                <span className="text-[#E7CFAF]">Selected Hall:</span>
-                <p className="font-medium text-[#F7EFE7] text-sm mt-0.5">
-                  {preferredHallId === 'any'
-                    ? 'Flexible / Management Recommendation'
-                    : HALLS.find((h) => h.id === preferredHallId)?.name}
                 </p>
               </div>
               <div>

@@ -21,7 +21,7 @@ export const VENUE_INFO = {
   ownerTitle: 'Owner | Thekkanath Souparnika',
   accessNotes: 'On the PWD bus route, at Market Junction bus stop in Nellikunnu, with direct highway access.',
   capacityNotes:
-    'Four halls accommodate up to 100 guests each; the venue is best suited to gatherings of up to 300 guests overall.',
+    'Our hall is available for booking for any number of guests; ideally suited for gatherings of 250 to 300 guests (accommodating up to 400). The venue is booked exclusively as a single hall with four coordinated spaces: three air-conditioned halls with 100 seats arranged each, and the dining hall featuring 100 seats in one sitting.',
   parkingNotes:
     'Dedicated on-site parking accommodates 40–50 cars inside the compound.',
   rooftopPolicy:
@@ -36,10 +36,10 @@ export const HALLS: Hall[] = [
   {
     id: 'auditorium',
     slug: 'auditorium',
-    name: 'Thekkanath Souparnika (Full Venue)',
-    floor: 'Full Facility (All Levels)',
-    capacityText: 'Up to 300 guests',
-    capacityNumber: 300,
+    name: 'Thekkanath Souparnika (Full Hall)',
+    floor: 'Unified Venue (All Levels)',
+    capacityText: 'Ideal for 250 to 300 guests (Up to 400)',
+    capacityNumber: 400,
     airConditioned: true,
     coverImage: '/assets/venue/venue-000.jpg',
     galleryImages: [
@@ -50,17 +50,17 @@ export const HALLS: Hall[] = [
       '/assets/venue/venue-004.jpg',
     ],
     description:
-      'Complete private access to the entire Thekkanath Souparnika venue, including Stage Hall, Welcome Hall, Banquet Dining Hall, and Open Terrace Hall. Available in Morning (8 AM - 3 PM) and Evening (5 PM - 10 PM) sessions.',
+      'Thekkanath Souparnika is booked exclusively as a single unified hall for your event. Complete private access includes Stage Hall, Welcome Hall, First Floor Dining Hall (ideal for feasts & sadhya), and Upper Open Hall. Available for booking for any number of guests, ideally suited for gatherings of 250 to 300 people.',
     suggestedUses: [
-      'Grand Weddings & Receptions',
-      'Large Celebrations & Banquets',
-      'Corporate Summits & Conventions',
+      'Weddings, Receptions & Banquets',
+      'Ceremonies & Traditional Sadhya Feasts',
+      'Seminars, Conferences & Cultural Gatherings',
     ],
     features: [
-      'Exclusive booking of all 4 halls',
-      'Stage & Ceremonial Seating',
-      'Grand Dining Banquet Hall',
-      'Air-conditioned suites',
+      'Exclusive single-hall booking of entire venue',
+      'Stage Hall with 100 cushioned seats arranged',
+      'Welcome Hall with 100 seats arranged',
+      'First Floor Dining Hall: 100 seats in one sitting',
       'Dedicated on-site parking (40-50 cars)',
     ],
     published: true,
@@ -71,7 +71,7 @@ export const HALLS: Hall[] = [
     slug: 'stage-hall',
     name: 'Stage Hall',
     floor: 'Ground Floor',
-    capacityText: 'Up to 100 guests',
+    capacityText: '100 seats arranged',
     capacityNumber: 100,
     airConditioned: true,
     coverImage: '/assets/venue/venue-000.jpg',
@@ -81,7 +81,7 @@ export const HALLS: Hall[] = [
       '/assets/venue/venue-006.jpg',
     ],
     description:
-      'A dedicated ceremonial hall featuring a raised, carpeted stage, cushioned seating, and warm ambient ceiling lighting. Thoughtfully arranged for focused ceremonies, presentations, and cultural programmes.',
+      'A dedicated ceremonial space with 100 cushioned seats arranged, featuring a raised carpeted stage and warm ambient ceiling lighting. Climate-controlled with central air conditioning for focused ceremonies, presentations, and cultural programmes.',
     suggestedUses: [
       'Programmes & Cultural Events',
       'Ceremonies & Engagements',
@@ -89,8 +89,8 @@ export const HALLS: Hall[] = [
     ],
     features: [
       'Raised carpeted stage',
-      'Air-conditioned',
-      'Cushioned seating',
+      'AC Climate Controlled',
+      '100 cushioned seats arranged',
       'Soft ceiling lighting',
       'Ground floor access',
     ],
@@ -102,7 +102,7 @@ export const HALLS: Hall[] = [
     slug: 'welcome-hall',
     name: 'Welcome Hall',
     floor: 'Ground Floor',
-    capacityText: 'Up to 100 guests',
+    capacityText: '100 seats arranged',
     capacityNumber: 100,
     airConditioned: true,
     coverImage: '/assets/venue/venue-001.jpg',
@@ -112,7 +112,7 @@ export const HALLS: Hall[] = [
       '/assets/venue/venue-005.jpg',
     ],
     description:
-      'The reception foyer features an inviting glass-door entrance with cushioned seating arranged along both sides, designed to provide a warm and gracious welcome for arriving guests.',
+      'The ground floor reception foyer features an inviting glass-door entrance with 100 cushioned seats arranged along the sides, designed to provide a warm and gracious welcome for arriving guests.',
     suggestedUses: [
       'Guest Reception & Welcome Area',
       'Pre-event Gatherings',
@@ -120,8 +120,8 @@ export const HALLS: Hall[] = [
     ],
     features: [
       'Glass-door main entrance',
-      'Air-conditioned',
-      'Cushioned side seating',
+      'AC Climate Controlled',
+      '100 cushioned seats arranged',
       'Ground floor access',
       'Welcoming ambiance',
     ],
@@ -133,7 +133,7 @@ export const HALLS: Hall[] = [
     slug: 'dining-hall',
     name: 'Dining Hall',
     floor: 'First Floor',
-    capacityText: 'Up to 100 guests',
+    capacityText: 'In one sitting 100 seats',
     capacityNumber: 100,
     airConditioned: true,
     coverImage: '/assets/venue/venue-002.jpg',
@@ -143,16 +143,16 @@ export const HALLS: Hall[] = [
       '/assets/venue/venue-005.jpg',
     ],
     description:
-      'Spacious banquet dining hall equipped with long banquet tables, cushioned chairs, and large perimeter windows offering a refreshing green outlook. Air-conditioned for guest comfort during shared meals.',
+      'Spacious air-conditioned first floor dining hall with 100 seats arranged in one sitting at long banquet tables, with large perimeter windows. Recommended for traditional Kerala sadhya and banquet feasts, allowing smooth batch service for 250 to 300+ guests.',
     suggestedUses: [
-      'Wedding Feasts & Traditional Sadhya',
-      'Buffet & Banquet Dining',
+      'Traditional Kerala Sadhya (Batch Feasts)',
+      'Wedding Feasts & Banquets',
       'Post-Ceremony Receptions',
     ],
     features: [
-      'Long dining tables & cushioned chairs',
-      'Air-conditioned',
-      'Large windows with green tree outlook',
+      'In one sitting 100 seats',
+      'Recommended for Feast / Sadhya',
+      'AC Climate Controlled',
       'Direct access to wash area',
       'First floor via grand staircase',
     ],
@@ -163,8 +163,8 @@ export const HALLS: Hall[] = [
     id: 'open-hall',
     slug: 'open-hall',
     name: 'Open Hall',
-    floor: 'Terrace Level',
-    capacityText: 'Up to 100 guests',
+    floor: 'Ground / Mezzanine (Terrace Level)',
+    capacityText: '100 seats arranged',
     capacityNumber: 100,
     airConditioned: false,
     coverImage: '/assets/venue/venue-003.jpg',
@@ -173,17 +173,17 @@ export const HALLS: Hall[] = [
       '/assets/venue/venue-006.jpg',
     ],
     description:
-      'A wide, bright space with polished marble-finish flooring, ceiling fans, and three exhaust fans for active airflow. Highly adaptable for flexible layouts, informal gatherings, and open dining.',
+      'A wide, bright space with 100 seats arranged, polished marble-finish flooring, ceiling fans, and three exhaust fans for active airflow. Naturally ventilated and highly adaptable for flexible layouts, informal gatherings, and open dining.',
     suggestedUses: [
       'Flexible Social Functions',
       'Community & Family Gatherings',
       'Informal Receptions & Exhibits',
     ],
     features: [
+      '100 seats arranged',
+      'Naturally Ventilated with exhaust airflow',
       'Polished marble-finish flooring',
-      'Natural cross-ventilation',
       'High-velocity ceiling fans',
-      'Three exhaust fans for continuous airflow',
       'Open plan adaptable layout',
     ],
     soundproofingNotes:
@@ -272,12 +272,17 @@ export const FAQS = [
   {
     question: 'How many guests can Thekkanath Souparnika accommodate?',
     answer:
-      'Each of the four halls accommodates up to 100 guests, and the venue overall is best suited to gatherings of up to 300 guests across coordinated spaces.',
+      'Our hall is available for booking for any number of guests. It is ideally arranged for gatherings of 250 to 300 guests, and can comfortably accommodate up to 400 guests across its coordinated spaces. Each hall has 100 seats arranged, with the First Floor Dining Hall providing 100 seats in one sitting for traditional feast service.',
+  },
+  {
+    question: 'Can individual halls be booked separately?',
+    answer:
+      'No, there are no separate halls for rental. Thekkanath Souparnika is rented exclusively as a single unified hall venue for your event, ensuring full privacy and coordinated access to all spaces (Stage Hall, Welcome Hall, First Floor Dining Hall, and Open Hall).',
   },
   {
     question: 'Which halls are equipped with air conditioning?',
     answer:
-      'The Stage Hall, Welcome Hall, and Dining Hall are fully air-conditioned. The Open Hall is naturally ventilated with ceiling fans and three exhaust fans.',
+      'Three of the halls (Stage Hall, Welcome Hall, and Dining Hall) are fully air-conditioned. The Open Hall is naturally ventilated with ceiling fans and three exhaust fans.',
   },
   {
     question: 'What is the parking capacity?',

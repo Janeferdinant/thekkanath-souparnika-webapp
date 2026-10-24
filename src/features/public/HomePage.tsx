@@ -15,6 +15,7 @@ import {
   ChevronRight,
   HelpCircle,
   Compass,
+  Users,
 } from 'lucide-react';
 import { VENUE_INFO, HALLS, FACILITIES, FAQS } from '../../data/venueData';
 import { Modal } from '../../components/ui/Modal';
@@ -72,7 +73,7 @@ export const HomePage: React.FC = () => {
             {/* Editorial Eyebrow */}
             <div className="inline-flex items-center gap-2.5 text-[10px] sm:text-xs uppercase tracking-[0.2em] font-semibold text-[#e2b8b2]">
               <span className="w-6 h-[1px] bg-[#c58e91]" />
-              <span>An elegant setting for life's occasions</span>
+              <span>Elegant Hall for Weddings, Receptions & Celebrations</span>
             </div>
 
             {/* Cormorant Garamond Editorial Display Headline */}
@@ -84,7 +85,7 @@ export const HomePage: React.FC = () => {
             </h1>
 
             <p className="text-sm sm:text-base text-[#e4d2d0] leading-relaxed max-w-xl font-normal">
-              Thekkanath Souparnika Hall & Events Venue — a welcoming place for wedding ceremonies, receptions, family feasts, seminars, and cultural gatherings at Nellikunnu Market Junction, Thrissur.
+              Elegant halls, three of them air-conditioned, for weddings, receptions, seminars and family gatherings. Ideal for 250 to 300 guests. On the PWD bus route, right at the Market Junction bus stop in Nellikunnu, Thrissur.
             </p>
 
             {/* Responsive Actions with Specular Highlight Sheen */}
@@ -93,7 +94,7 @@ export const HomePage: React.FC = () => {
                 to="/halls"
                 className="inline-flex items-center justify-center gap-2 min-h-[44px] px-6 py-3 rounded-full text-xs uppercase tracking-wider font-semibold text-[#2c0c15] bg-gradient-to-r from-[#e8c7bc] via-[#d8aba2] to-[#c58e91] hover:from-[#f3ded8] hover:to-[#d4a098] shadow-luxury border border-[#e9c6b9] transition-all hover:scale-[1.02] glass-highlight"
               >
-                <span>Explore Our Halls</span>
+                <span>Explore Our Hall Spaces</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
               <Link
@@ -105,17 +106,19 @@ export const HomePage: React.FC = () => {
               </Link>
             </div>
 
-            {/* Key Venue Location Note */}
+            {/* Key Venue Distinction Note */}
             <div className="pt-6 border-t border-[rgba(226,184,178,0.18)] flex flex-wrap items-center gap-4 sm:gap-6 text-xs text-[rgba(203,184,185,0.85)]">
               <div className="flex items-center gap-2 border-l border-[#8f4b58] pl-3">
-                <MapPin className="w-3.5 h-3.5 text-[#e7cfaf]" />
-                <span>Nellikunnu Market Junction</span>
+                <Users className="w-3.5 h-3.5 text-[#e7cfaf]" />
+                <span>Ideal for 250 to 300 Guests (Up to 400)</span>
               </div>
               <div className="flex items-center gap-2 border-l border-[#8f4b58] pl-3">
-                <span>Thrissur, Kerala</span>
+                <ShieldCheck className="w-3.5 h-3.5 text-[#e7cfaf]" />
+                <span>Three Air-Conditioned Halls</span>
               </div>
               <div className="flex items-center gap-2 border-l border-[#8f4b58] pl-3">
-                <span>Best suited for gatherings up to 300</span>
+                <Car className="w-3.5 h-3.5 text-[#e7cfaf]" />
+                <span>40–50 Dedicated On-Site Parking</span>
               </div>
             </div>
           </div>
@@ -129,11 +132,11 @@ export const HomePage: React.FC = () => {
               <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
             </div>
             <p className="text-xs text-[rgba(203,184,185,0.9)] leading-relaxed">
-              Stage Hall, Welcome Hall, and Dining Hall are air-conditioned; Open Hall features polished marble flooring with exhaust airflow.
+              Stage Hall, Welcome Hall, and Dining Hall are air-conditioned; Open Hall features natural airflow. Dining Hall features 100 seats in one sitting.
             </p>
             <div className="text-[11px] text-[#e2b8b2] flex items-center gap-1.5 pt-1 border-t border-[rgba(226,184,178,0.2)]">
               <ShieldCheck className="w-4 h-4 text-[#e7cfaf]" />
-              <span>Full Auditorium or Coordinated Halls</span>
+              <span>Single Unified Venue Booking</span>
             </div>
           </div>
         </div>
@@ -144,7 +147,7 @@ export const HomePage: React.FC = () => {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-[1px] bg-[rgba(226,184,178,0.22)] border border-[rgba(226,184,178,0.22)] rounded-3xl overflow-hidden shadow-luxury">
           <div className="bg-[#240810]/85 p-6 sm:p-8 text-center space-y-1">
             <strong className="block font-serif text-2xl sm:text-3xl font-medium text-[#e2b8b2]">
-              4 Halls
+              4 Spaces
             </strong>
             <span className="text-xs text-[rgba(203,184,185,0.85)]">
               Stage, Welcome, Dining & Open
@@ -152,10 +155,10 @@ export const HomePage: React.FC = () => {
           </div>
           <div className="bg-[#240810]/85 p-6 sm:p-8 text-center space-y-1">
             <strong className="block font-serif text-2xl sm:text-3xl font-medium text-[#e7cfaf]">
-              Up to 300
+              250–300
             </strong>
             <span className="text-xs text-[rgba(203,184,185,0.85)]">
-              Best suited celebration size
+              Ideal gathering size (Up to 400)
             </span>
           </div>
           <div className="bg-[#240810]/85 p-6 sm:p-8 text-center space-y-1">
@@ -201,25 +204,25 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. The Four Halls Showcase — Editorial Glass Cards with Lens Effect */}
+      {/* 4. The Four Spaces Showcase — Coordinated Unified Venue */}
       <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[rgba(226,184,178,0.2)] pb-5">
           <div className="space-y-1">
             <div className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-[#e2b8b2] flex items-center gap-2">
               <span className="w-4 h-[1px] bg-[#c58e91]" />
-              <span>Explore Spaces</span>
+              <span>Coordinated Venue Spaces</span>
             </div>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#f7efe7] tracking-tight">
-              Four Distinct Halls for Your Gathering
+              Four Coordinated Spaces in One Unified Hall
             </h2>
           </div>
           <p className="text-xs sm:text-sm text-[rgba(203,184,185,0.85)] max-w-md leading-relaxed">
-            Every hall is thoughtfully curated for up to 100 guests, with the venue best suited for gatherings of up to 300 overall.
+            Souparnika is booked exclusively as a single hall — ideal for gatherings of 250 to 300 people (up to 400). Each space has 100 seats arranged, with the Dining Hall featuring 100 seats in one sitting.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {HALLS.map((hall) => (
+          {HALLS.filter((h) => h.id !== 'auditorium').map((hall) => (
             <div
               key={hall.id}
               className="group glass-panel rounded-3xl border border-[rgba(226,184,178,0.22)] overflow-hidden shadow-subtle hover:border-[rgba(226,184,178,0.5)] transition-all duration-300 flex flex-col hover:-translate-y-1"
@@ -243,10 +246,26 @@ export const HomePage: React.FC = () => {
               {/* Hall Info */}
               <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                 <div>
-                  <h3 className="font-serif text-2xl font-normal text-[#f7efe7] group-hover:text-[#e7cfaf] transition-colors">
-                    {hall.name}
-                  </h3>
-                  <p className="text-xs text-[rgba(203,184,185,0.85)] mt-2 line-clamp-3 leading-relaxed">
+                  <div className="flex items-baseline justify-between gap-1 mb-1">
+                    <h3 className="font-serif text-2xl font-normal text-[#f7efe7] group-hover:text-[#e7cfaf] transition-colors">
+                      {hall.name}
+                    </h3>
+                  </div>
+
+                  <div className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#e7cfaf] mb-2">
+                    <Users className="w-3.5 h-3.5 text-[#e8c7bc]" />
+                    <span>{hall.capacityText}</span>
+                  </div>
+
+                  {hall.id === 'dining-hall' && (
+                    <div className="mb-2">
+                      <span className="text-[10px] bg-[#451323] text-[#F3E5AB] border border-[#D4AF37]/40 px-2 py-0.5 rounded-full font-semibold">
+                        Recommended for Feast / Sadhya
+                      </span>
+                    </div>
+                  )}
+
+                  <p className="text-xs text-[rgba(203,184,185,0.85)] mt-1 line-clamp-3 leading-relaxed">
                     {hall.description}
                   </p>
                 </div>
@@ -267,7 +286,7 @@ export const HomePage: React.FC = () => {
                     to={`/halls/${hall.slug}`}
                     className="w-full inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-full text-xs font-semibold text-[#f7efe7] bg-white/5 hover:bg-gradient-to-r hover:from-[#e8c7bc] hover:to-[#c58e91] hover:text-[#2c0c15] transition-all border border-[rgba(226,184,178,0.24)] shadow-sm"
                   >
-                    <span>View Hall Details</span>
+                    <span>View Space Details</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
@@ -430,10 +449,10 @@ export const HomePage: React.FC = () => {
               <span>Easy to Locate in Thrissur</span>
             </div>
             <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#f7efe7] tracking-tight leading-tight">
-              Opposite RGLP School, Market Junction, Nellikunnu
+              Effortless Arrival on the Main PWD Bus Route
             </h2>
             <p className="text-xs sm:text-sm text-[rgba(203,184,185,0.85)] leading-relaxed">
-              Situated right at the Market Junction bus stop along the main PWD bus route, with direct highway connectivity for easy arrival from Thrissur town and surrounding districts.
+              Situated right at the Market Junction bus stop along the main PWD bus route in Nellikunnu, with direct highway connectivity for easy arrival from Thrissur town and surrounding districts.
             </p>
 
             <div className="space-y-2.5 text-xs text-[rgba(203,184,185,0.9)] pt-2">
