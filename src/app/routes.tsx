@@ -29,8 +29,16 @@ import { DocumentsPage } from '../features/admin/DocumentsPage';
 import { AICopilotPage } from '../features/admin/AICopilotPage';
 import { SettingsPage } from '../features/admin/SettingsPage';
 import { AuditLogPage } from '../features/admin/AuditLogPage';
+import { LoginPage } from '../features/auth/LoginPage';
+import { ProtectedRoute } from '../components/auth/ProtectedRoute';
 
 export const router = createBrowserRouter([
+  // Authentication
+  {
+    path: '/login',
+    element: <LoginPage />,
+  },
+
   // Public Routes
   {
     path: '/',
@@ -48,10 +56,14 @@ export const router = createBrowserRouter([
     ],
   },
 
-  // Admin Routes
+  // Admin Routes (Protected)
   {
     path: '/admin',
-    element: <AdminLayout />,
+    element: (
+      <ProtectedRoute>
+        <AdminLayout />
+      </ProtectedRoute>
+    ),
     children: [
       { index: true, element: <OverviewPage /> },
       { path: 'enquiries', element: <EnquiriesPage /> },

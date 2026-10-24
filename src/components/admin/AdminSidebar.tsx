@@ -194,7 +194,7 @@ export const AdminSidebar: React.FC = () => {
         <div className="flex items-center justify-between">
           <span>Active Role:</span>
           <span className="font-bold text-gold-400 uppercase tracking-wider">
-            {currentUser.role.replace('_', ' ')}
+            {currentUser?.role?.replace('_', ' ') || 'Staff'}
           </span>
         </div>
       </div>
