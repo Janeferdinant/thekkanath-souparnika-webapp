@@ -59,15 +59,15 @@ export const HallDetailPage: React.FC = () => {
             <div className="text-xs">
               <strong className="text-[#F7EFE7] font-semibold block">{hall.capacityText}</strong>
               <span className="text-[#CBB8B9]">
-                Available for booking for any number of guests; ideal for gatherings of 250 to 300 guests (accommodating up to 400).
+                Arranged for gatherings of 250 to 300 guests (accommodating up to 400 across all spaces).
               </span>
             </div>
           </div>
 
           <div className="p-4 rounded-2xl glass-control border border-[rgba(226,184,178,0.25)] bg-[#18070c]/80 text-xs text-[#F7EFE7] space-y-1">
-            <span className="font-semibold text-[#E7CFAF]">Single Unified Hall Venue:</span>
+            <span className="font-semibold text-[#E7CFAF]">Exclusive Single-Venue Reservation:</span>
             <p className="text-[11px] text-[#CBB8B9] leading-relaxed">
-              No separate halls for rental — Souparnika is booked exclusively as a single hall. Your reservation includes coordinated private access across all spaces (Stage, Welcome, Dining, and Open halls).
+              When you book Thekkanath Souparnika, your event receives exclusive private access across all four spaces (Stage Hall, Welcome Hall, Dining Hall, and Open Hall). No multiple events share the venue.
             </p>
           </div>
 

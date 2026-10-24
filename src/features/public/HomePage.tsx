@@ -73,19 +73,19 @@ export const HomePage: React.FC = () => {
             {/* Editorial Eyebrow */}
             <div className="inline-flex items-center gap-2.5 text-[10px] sm:text-xs uppercase tracking-[0.2em] font-semibold text-[#e2b8b2]">
               <span className="w-6 h-[1px] bg-[#c58e91]" />
-              <span>Elegant Hall for Weddings, Receptions & Celebrations</span>
+              <span>Traditional & Contemporary Celebrations in Thrissur</span>
             </div>
 
             {/* Cormorant Garamond Editorial Display Headline */}
             <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-[#f7efe7] leading-[1.02]">
-              Celebrations for life’s <br />
+              Where family milestones <br />
               <em className="text-[#e2b8b2] not-italic font-normal">
-                special moments.
+                feel truly special.
               </em>
             </h1>
 
             <p className="text-sm sm:text-base text-[#e4d2d0] leading-relaxed max-w-xl font-normal">
-              Elegant halls, three of them air-conditioned, for weddings, receptions, seminars and family gatherings. Ideal for 250 to 300 guests. On the PWD bus route, right at the Market Junction bus stop in Nellikunnu, Thrissur.
+              Four coordinated halls—three with continuous air-conditioning—designed for weddings, engagements, baptisms, and family gatherings. Featuring batch dining for 100 guests, safe ground-floor accessibility for elders, and ample on-site parking at Market Junction, Nellikunnu.
             </p>
 
             {/* Responsive Actions with Specular Highlight Sheen */}
@@ -217,7 +217,7 @@ export const HomePage: React.FC = () => {
             </h2>
           </div>
           <p className="text-xs sm:text-sm text-[rgba(203,184,185,0.85)] max-w-md leading-relaxed">
-            Souparnika is booked exclusively as a single hall — ideal for gatherings of 250 to 300 people (up to 400). Each space has 100 seats arranged, with the Dining Hall featuring 100 seats in one sitting.
+            Every booking includes private, exclusive access to all four coordinated spaces. Move smoothly between the air-conditioned ceremony hall, the welcoming foyer, the traditional sadhya dining hall, and the open gathering area.
           </p>
         </div>
 
@@ -302,13 +302,13 @@ export const HomePage: React.FC = () => {
           <div className="text-center max-w-2xl mx-auto space-y-3">
             <span className="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-[#e2b8b2] font-semibold flex items-center justify-center gap-2">
               <Sparkles className="w-3.5 h-3.5 text-[#e7cfaf]" />
-              <span>Practical Amenities</span>
+              <span>Thoughtful Amenities</span>
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#f7efe7] tracking-tight">
-              The Essentials Behind Smooth Events
+              Comfort & Practical Amenities for Your Event
             </h2>
             <p className="text-xs sm:text-sm text-[rgba(203,184,185,0.85)] leading-relaxed">
-              Every amenity is engineered for guest comfort, safety, and effortless hospitality.
+              From reliable solar-hybrid power and tested drinking water to ample on-site parking, we take care of the essentials so you can focus on your guests.
             </p>
           </div>
 
@@ -345,13 +345,13 @@ export const HomePage: React.FC = () => {
           <div className="space-y-4">
             <div className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-[#e2b8b2] flex items-center gap-2">
               <Compass className="w-4 h-4 text-[#e7cfaf]" />
-              <span>Immersive Walkthrough</span>
+              <span>Venue Walkthrough</span>
             </div>
             <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#f7efe7] leading-tight">
-              Experience The Venue Before You Visit
+              Take a Walk Through the Spaces
             </h2>
             <p className="text-xs sm:text-sm text-[rgba(203,184,185,0.85)] leading-relaxed">
-              Explore our stage, dining area, and welcoming spaces from anywhere. Guided site visits are also gladly scheduled by appointment with our management team.
+              Browse real photographs of our ceremonial stage, dining hall, and welcoming reception foyer. You are always warmly invited to visit us in person at Market Junction, Nellikunnu.
             </p>
             <div className="pt-2 flex flex-wrap gap-3">
               <Link
@@ -552,13 +552,13 @@ export const HomePage: React.FC = () => {
         <div className="rounded-3xl sm:rounded-[2rem] p-8 sm:p-14 bg-gradient-to-r from-[#2f0b16] via-[#451323] to-[#240810] text-[#f7efe7] flex flex-col md:flex-row items-center justify-between gap-8 shadow-luxury border border-[rgba(226,184,178,0.24)]">
           <div className="space-y-2 text-center md:text-left">
             <span className="text-[10px] sm:text-xs uppercase tracking-widest font-semibold text-[#e7cfaf]">
-              Ready to Plan Your Event?
+              Plan Your Special Occasion
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl font-normal leading-tight text-[#f7efe7]">
-              Share your event date and requirements.
+              Let us know your event date and details.
             </h2>
             <p className="text-xs sm:text-sm text-[rgba(203,184,185,0.85)] max-w-lg leading-relaxed">
-              Our venue management team will verify availability, recommend suitable halls, and follow up promptly with formal terms.
+              We will check availability right away, answer all your questions transparently, and help you reserve the venue smoothly.
             </p>
           </div>
 

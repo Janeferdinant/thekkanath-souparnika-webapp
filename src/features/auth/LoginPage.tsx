@@ -74,9 +74,11 @@ export const LoginPage: React.FC = () => {
         <div className="w-full max-w-md glass-panel rounded-3xl border border-[rgba(226,184,178,0.25)] p-8 sm:p-10 shadow-luxury space-y-8 backdrop-blur-xl relative">
           {/* Brand & Crest */}
           <div className="text-center space-y-3">
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#731d34] to-[#2c0c15] text-[#e7cfaf] font-serif font-bold text-xl flex items-center justify-center mx-auto border border-[rgba(226,184,178,0.4)] shadow-subtle">
-              TS
-            </div>
+            <img
+              src="/assets/brand/logo_gold.png"
+              alt="Thekkanath Souparnika Emblem"
+              className="w-16 h-16 mx-auto object-contain drop-shadow-[0_4px_20px_rgba(214,165,65,0.45)]"
+            />
             <div>
               <h1 className="font-serif text-3xl font-normal text-[#f7efe7] tracking-tight">
                 Staff Studio

@@ -25,10 +25,10 @@ export const HallsPage: React.FC = () => {
           <span>Unified Venue Spaces</span>
         </div>
         <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-light text-[#F7EFE7] tracking-tight leading-tight">
-          Elegant Hall for Weddings, Receptions & Celebrations
+          Four Coordinated Spaces in One Venue
         </h1>
         <p className="text-sm sm:text-base text-[#CBB8B9] leading-relaxed">
-          Elegant halls, three of them air-conditioned, for weddings, receptions, seminars and family gatherings. Ideal for 250 to 300 guests. On the PWD bus route, right at the Market Junction bus stop in Nellikunnu, Thrissur.
+          Three air-conditioned halls and an open breezy hall designed to host your entire celebration seamlessly under one roof—from stage rituals to the traditional sadhya feast. Ideally arranged for gatherings of 250 to 300 guests (accommodating up to 400).
         </p>
 
         {/* Single Hall Venue Policy Banner */}
@@ -38,7 +38,7 @@ export const HallsPage: React.FC = () => {
             <span>Single Hall Venue Policy</span>
           </div>
           <p className="text-[11px] text-[#CBB8B9] leading-relaxed">
-            There are no separate halls for rental. Thekkanath Souparnika is booked exclusively as a single unified hall for your event — ideal for gatherings of 250 to 300 guests (accommodating up to 400). All four coordinated spaces below are included for your private celebration.
+            Your event enjoys exclusive private booking of the entire venue. Rather than sharing space with other functions, your family receives private access to all four coordinated areas below for a relaxed, dignified celebration.
           </p>
         </div>
       </div>

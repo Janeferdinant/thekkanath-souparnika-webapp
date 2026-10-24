@@ -186,11 +186,14 @@ export function generateQuotationDocument(
 <body>
   <div class="quote-card">
     <div class="header">
-      <div>
-        <h1 class="venue-title">${VENUE_INFO.name}</h1>
-        <div class="venue-sub">H A L L & E V E N T S V E N U E</div>
-        <p style="font-size: 13px; color: #666; margin: 8px 0 0 0;">${VENUE_INFO.address.fullFormatted}</p>
-        <p style="font-size: 13px; color: #666; margin: 4px 0 0 0;">Ph: ${VENUE_INFO.displayPhones.join(', ')}</p>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <img src="/assets/brand/logo_original_burgundy.png" alt="Emblem" style="width: 52px; height: 52px; object-fit: contain;" />
+        <div>
+          <h1 class="venue-title">${VENUE_INFO.name}</h1>
+          <div class="venue-sub">H A L L & E V E N T S V E N U E</div>
+          <p style="font-size: 13px; color: #666; margin: 6px 0 0 0;">${VENUE_INFO.address.fullFormatted}</p>
+          <p style="font-size: 13px; color: #666; margin: 3px 0 0 0;">Ph: ${VENUE_INFO.displayPhones.join(', ')}</p>
+        </div>
       </div>
       <div class="quote-meta">
         <div class="meta-ref">${quote.reference}</div>

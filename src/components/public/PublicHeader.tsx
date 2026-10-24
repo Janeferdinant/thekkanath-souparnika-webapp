@@ -90,17 +90,11 @@ export const PublicHeader: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
           {/* Brand Logo & Editorial Typography */}
           <Link to="/" className="flex items-center gap-3.5 group">
-            <div className="w-12 h-12 rounded-full overflow-hidden p-1 bg-gradient-to-br from-[#451323] via-[#2f0b16] to-[#18070c] border border-[rgba(226,184,178,0.38)] shadow-md group-hover:scale-105 transition-transform flex items-center justify-center">
-              <img
-                src="/assets/brand/lotus-emblem-burgundy.png"
-                alt="Thekkanath Souparnika Lotus Emblem"
-                className="w-full h-full object-contain filter drop-shadow"
-                onError={(e) => {
-                  // Fallback to ivory crest if burgundy lotus asset not found
-                  (e.target as HTMLImageElement).src = '/assets/brand/lotus-crest-ivory-on-burgundy.png';
-                }}
-              />
-            </div>
+            <img
+              src="/assets/brand/logo_gold.png"
+              alt="Thekkanath Souparnika Lotus Emblem"
+              className="w-11 h-11 object-contain logo-gold-glow"
+            />
             <div>
               <div className="font-serif font-medium text-xl sm:text-2xl text-[#f7efe7] tracking-tight leading-none group-hover:text-[#e7cfaf] transition-colors">
                 Thekkanath Souparnika

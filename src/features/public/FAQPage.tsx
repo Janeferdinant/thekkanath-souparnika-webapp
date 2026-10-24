@@ -23,7 +23,7 @@ export const FAQPage: React.FC = () => {
           Frequently Asked Questions
         </h1>
         <p className="text-sm sm:text-base text-[#CBB8B9] leading-relaxed">
-          Clear answers regarding our halls, capacities, air-conditioning, parking, and booking policies for your upcoming event.
+          Helpful answers to common questions about hall arrangements, seating capacity, sadhya dining, parking, and booking policies.
         </p>
       </div>
 
@@ -62,10 +62,10 @@ export const FAQPage: React.FC = () => {
       <div className="glass-panel p-8 sm:p-10 rounded-3xl border border-[rgba(226,184,178,0.25)] space-y-3">
         <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#E7CFAF]">
           <ShieldCheck className="w-4 h-4 text-[#e8c7bc]" />
-          <span>Pricing & Cancellation Inquiries</span>
+          <span>Pricing & Booking Enquiries</span>
         </div>
         <p className="text-xs sm:text-sm text-[#CBB8B9] leading-relaxed">
-          For rental prices, package rates, advance booking deposit percentages, cancellation/refund terms, and custom event scheduling, please contact management directly. We provide exact quotes tailored to your event requirements.
+          For hall availability, advance booking deposits, and event timing schedules, please reach out to us directly. We are happy to provide clear, upfront details tailored to your occasion.
         </p>
         <div className="pt-2">
           <Link to="/enquire">

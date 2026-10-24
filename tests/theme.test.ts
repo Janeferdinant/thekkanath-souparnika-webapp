@@ -30,6 +30,6 @@ describe('Task 1: Brand Assets & Visual Design Tokens', () => {
     expect(fs.existsSync(brandDir)).toBe(true);
 
     const files = fs.readdirSync(brandDir);
-    expect(files.some((f) => f.includes('lotus') || f.includes('Lotus'))).toBe(true);
+    expect(files.some((f) => f.includes('logo') || f.includes('lotus') || f.includes('Lotus'))).toBe(true);
   });
 });

@@ -10,14 +10,12 @@ export const PublicFooter: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-[rgba(226,184,178,0.16)]">
           {/* Col 1: Brand & Identity */}
           <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full overflow-hidden p-1 bg-[#2f0b16] border border-[rgba(226,184,178,0.3)] flex items-center justify-center">
-                <img
-                  src="/assets/brand/lotus-crest-ivory-on-burgundy.png"
-                  alt="Thekkanath Souparnika Crest"
-                  className="w-full h-full object-contain filter drop-shadow"
-                />
-              </div>
+            <div className="flex items-center gap-3.5">
+              <img
+                src="/assets/brand/logo_gold.png"
+                alt="Thekkanath Souparnika Crest"
+                className="w-12 h-12 object-contain logo-gold-glow"
+              />
               <div>
                 <h3 className="font-serif font-medium text-xl text-[#f7efe7]">Thekkanath Souparnika</h3>
                 <p className="text-[10px] text-[#e7cfaf] uppercase tracking-widest font-semibold">Auditorium & Events Venue</p>

@@ -3,7 +3,7 @@ import { Hall, Facility } from '../types/models';
 export const VENUE_INFO = {
   name: 'Thekkanath Souparnika',
   descriptor: 'Hall & Events Venue',
-  tagline: 'Refined celebration spaces in Nellikunnu, Thrissur',
+  tagline: 'A warm, traditional venue for family celebrations in Thrissur',
   address: {
     street: 'Opposite RGLP School, Market Junction',
     locality: 'Nellikunnu',
@@ -19,13 +19,13 @@ export const VENUE_INFO = {
   emails: ['thekkanathsouparnika@gmail.com', 'nallengara@gmail.com'],
   owner: 'Ferdinant Nallengara',
   ownerTitle: 'Owner | Thekkanath Souparnika',
-  accessNotes: 'On the PWD bus route, at Market Junction bus stop in Nellikunnu, with direct highway access.',
+  accessNotes: 'Located right at the Market Junction bus stop along the PWD bus route in Nellikunnu, with quick highway access.',
   capacityNotes:
-    'Our hall is available for booking for any number of guests; ideally suited for gatherings of 250 to 300 guests (accommodating up to 400). The venue is booked exclusively as a single hall with four coordinated spaces: three air-conditioned halls with 100 seats arranged each, and the dining hall featuring 100 seats in one sitting.',
+    'Whether hosting an intimate gathering or a celebration of up to 400 guests, Thekkanath Souparnika is booked exclusively for your event. The venue is arranged across four coordinated spaces—ideal for 250 to 300 guests—including three air-conditioned halls with 100 seats each, and a dedicated dining hall seating 100 guests per batch.',
   parkingNotes:
-    'Dedicated on-site parking accommodates 40–50 cars inside the compound.',
+    'Dedicated on-site compound parking accommodates 40–50 cars inside the premises.',
   rooftopPolicy:
-    'The 4,000 sq ft truss-roofed rooftop is strictly closed to guests. Private dress-change rooms can be arranged there on request.',
+    'The 4,000 sq ft truss-roofed rooftop is kept closed to guests for safety. Private dress-change rooms can be arranged there upon prior request.',
   googleMapsQuery: 'Thekkanath+Souparnika+Nellikunnu+Thrissur',
   googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Thekkanath+Souparnika+Nellikunnu+Thrissur',
   whatsappUrl:
@@ -50,7 +50,7 @@ export const HALLS: Hall[] = [
       '/assets/venue/venue-004.jpg',
     ],
     description:
-      'Thekkanath Souparnika is booked exclusively as a single unified hall for your event. Complete private access includes Stage Hall, Welcome Hall, First Floor Dining Hall (ideal for feasts & sadhya), and Upper Open Hall. Available for booking for any number of guests, ideally suited for gatherings of 250 to 300 people.',
+      'Thekkanath Souparnika is booked exclusively as a single unified venue for your event. Your family enjoys private, complete access to all four spaces: Stage Hall, Welcome Hall, First Floor Dining Hall (ideal for traditional feasts and sadhya), and the Open Hall. Well-suited for any celebration, and ideally arranged for gatherings of 250 to 300 guests.',
     suggestedUses: [
       'Weddings, Receptions & Banquets',
       'Ceremonies & Traditional Sadhya Feasts',
@@ -81,7 +81,7 @@ export const HALLS: Hall[] = [
       '/assets/venue/venue-006.jpg',
     ],
     description:
-      'A dedicated ceremonial space with 100 cushioned seats arranged, featuring a raised carpeted stage and warm ambient ceiling lighting. Climate-controlled with central air conditioning for focused ceremonies, presentations, and cultural programmes.',
+      'A comfortable air-conditioned ceremonial hall with 100 cushioned seats arranged, an elevated carpeted stage, and soft ambient lighting. Designed for wedding ceremonies, engagements, stage rituals, and cultural presentations.',
     suggestedUses: [
       'Programmes & Cultural Events',
       'Ceremonies & Engagements',
@@ -112,7 +112,7 @@ export const HALLS: Hall[] = [
       '/assets/venue/venue-005.jpg',
     ],
     description:
-      'The ground floor reception foyer features an inviting glass-door entrance with 100 cushioned seats arranged along the sides, designed to provide a warm and gracious welcome for arriving guests.',
+      'An air-conditioned ground-floor reception area with a glass-door entrance and 100 comfortable seats arranged along the perimeter. Ideal for receiving arriving guests, family introductions, and refreshments before the main program.',
     suggestedUses: [
       'Guest Reception & Welcome Area',
       'Pre-event Gatherings',
@@ -143,7 +143,7 @@ export const HALLS: Hall[] = [
       '/assets/venue/venue-005.jpg',
     ],
     description:
-      'Spacious air-conditioned first floor dining hall with 100 seats arranged in one sitting at long banquet tables, with large perimeter windows. Recommended for traditional Kerala sadhya and banquet feasts, allowing smooth batch service for 250 to 300+ guests.',
+      'Air-conditioned first-floor banquet dining hall with 100 seats arranged per sitting at traditional banquet tables, with large breezy windows and direct access to the handwash area. Tailored for traditional Kerala sadhya and buffet dining, ensuring smooth batch service for 250 to 300+ guests.',
     suggestedUses: [
       'Traditional Kerala Sadhya (Batch Feasts)',
       'Wedding Feasts & Banquets',
@@ -173,7 +173,7 @@ export const HALLS: Hall[] = [
       '/assets/venue/venue-006.jpg',
     ],
     description:
-      'A wide, bright space with 100 seats arranged, polished marble-finish flooring, ceiling fans, and three exhaust fans for active airflow. Naturally ventilated and highly adaptable for flexible layouts, informal gatherings, and open dining.',
+      'A bright, open gathering space with 100 seats arranged, polished marble-finish flooring, ceiling fans, and three exhaust fans for continuous fresh airflow. Naturally ventilated and flexible for extra seating, buffet counters, or open family mingling.',
     suggestedUses: [
       'Flexible Social Functions',
       'Community & Family Gatherings',
@@ -196,10 +196,10 @@ export const HALLS: Hall[] = [
 export const FACILITIES: Facility[] = [
   {
     id: 'wash-area',
-    title: 'Dedicated Wash Area',
+    title: 'Dedicated Handwash Area',
     category: 'Hygiene & Comfort',
     description:
-      'A long row of stainless/ceramic wash basins with wall mirrors, abundant natural light, and cross-ventilation for guest convenience during feasts and events.',
+      'Multiple stainless and ceramic wash basins with mirrors, natural ventilation, and continuous water supply, positioned right beside the dining hall for smooth feast service.',
     badge: 'Hygienic Setup',
     iconName: 'Droplets',
   },
@@ -208,7 +208,7 @@ export const FACILITIES: Facility[] = [
     title: 'Grand Staircase',
     category: 'Architecture',
     description:
-      'Wide architectural staircase with polished steps and modern glass railings connecting the ground floor to the upper dining hall. Equipped with a fire-safety hose reel on the landing.',
+      'Wide architectural staircase with polished steps and modern glass railings connecting the ground floor to the upper dining hall. Equipped with a safety hose reel on the landing.',
     badge: 'Safety Equipped',
     iconName: 'Footprints',
   },
@@ -217,7 +217,7 @@ export const FACILITIES: Facility[] = [
     title: 'Solar Hybrid Power with Battery',
     category: 'Power Continuity',
     description:
-      'Eco-friendly solar hybrid power system with dedicated battery backup, engineered to ensure uninterrupted lighting and critical event operations.',
+      'Reliable solar-hybrid power system with battery backup, ensuring lighting, fans, and sound systems stay uninterrupted even during local grid power cuts.',
     badge: 'Eco-Friendly',
     iconName: 'Zap',
   },
@@ -226,7 +226,7 @@ export const FACILITIES: Facility[] = [
     title: 'Water Authority Tested Well Water',
     category: 'Safety & Health',
     description:
-      'Pure well water supply that has been independently tested and approved by the Kerala Water Authority for hygiene and drinking safety.',
+      'Naturally fresh well water tested and approved for drinking and cooking safety by the Kerala Water Authority.',
     badge: 'Authority Approved',
     iconName: 'ShieldCheck',
   },
@@ -235,7 +235,7 @@ export const FACILITIES: Facility[] = [
     title: 'On-Site Parking (40–50 Cars)',
     category: 'Access & Logistics',
     description:
-      'Spacious on-site parking for 40 to 50 cars directly within the venue compound. Highway access makes arrival straightforward for out-of-town guests.',
+      'Dedicated on-site parking for 40 to 50 cars directly inside the venue compound, with easy entry and exit right at Market Junction.',
     badge: '40–50 Cars On-Site',
     iconName: 'Car',
   },
@@ -244,7 +244,7 @@ export const FACILITIES: Facility[] = [
     title: 'Dress-Change Rooms (On Request)',
     category: 'Special Facilities',
     description:
-      'The 4,000 sq ft truss-roofed rooftop is strictly closed to guests; however, dedicated private dress-change rooms can be arranged on the rooftop level upon prior request.',
+      'While the rooftop area is kept closed to guests for safety, private dress-change rooms can be arranged on the rooftop level upon advance request.',
     badge: 'Arranged on Request',
     iconName: 'Sparkles',
   },

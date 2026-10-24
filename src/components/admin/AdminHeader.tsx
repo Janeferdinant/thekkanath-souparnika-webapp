@@ -50,10 +50,12 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ onSearch }) => {
       <header className="sticky top-0 z-30 h-16 bg-white border-b border-cream-200 px-4 sm:px-6 flex items-center justify-between gap-4 shadow-sm">
         {/* Left: Brand / Studio Label */}
         <div className="flex items-center gap-3">
-          <Link to="/admin" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-burgundy-900 to-wine-950 text-gold-300 font-serif font-bold text-sm flex items-center justify-center border border-gold-400/50 shadow-sm">
-              TS
-            </div>
+          <Link to="/admin" className="flex items-center gap-2.5 group">
+            <img
+              src="/assets/brand/logo_original_burgundy.png"
+              alt="Thekkanath Souparnika"
+              className="w-8 h-8 object-contain drop-shadow-sm group-hover:scale-105 transition-transform"
+            />
             <div className="hidden sm:block">
               <span className="font-serif font-bold text-sm text-burgundy-950 block leading-none">
                 Souparnika Studio
