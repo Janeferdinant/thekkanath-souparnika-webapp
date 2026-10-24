@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Phone, Mail, ShieldAlert, UserPlus, Trash2, Lock } from 'lucide-react';
 import { StorageService } from '../../lib/storage';
 import { Badge } from '../../components/ui/Badge';
@@ -7,15 +7,26 @@ import { Modal } from '../../components/ui/Modal';
 import { UserProfile, UserRole } from '../../types/models';
 import { canManageStaff } from '../../lib/adminEngine';
 import { useToast } from '../../context/ToastContext';
+import { useAuth } from '../../context/AuthContext';
 
 export const StaffPage: React.FC = () => {
   const { success, error } = useToast();
-  const currentUser = StorageService.getCurrentUser();
+  const { currentUser, availableProfiles } = useAuth();
   const isSuperAdmin = canManageStaff(currentUser?.role);
 
-  const [profiles, setProfiles] = useState<UserProfile[]>(() =>
-    StorageService.getAvailableProfiles()
-  );
+  const [profiles, setProfiles] = useState<UserProfile[]>(() => {
+    if (availableProfiles && availableProfiles.length > 0) return availableProfiles;
+    if (currentUser) return [currentUser];
+    return [];
+  });
+
+  useEffect(() => {
+    if (availableProfiles && availableProfiles.length > 0) {
+      setProfiles(availableProfiles);
+    } else if (currentUser) {
+      setProfiles([currentUser]);
+    }
+  }, [availableProfiles, currentUser]);
 
   // Add Staff Modal State
   const [addModalOpen, setAddModalOpen] = useState(false);

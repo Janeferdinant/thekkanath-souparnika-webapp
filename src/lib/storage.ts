@@ -12,21 +12,6 @@ import {
   DocumentRecord,
   UserProfile,
 } from '../types/models';
-import {
-  DEMO_PROFILES,
-  DEMO_CUSTOMERS,
-  DEMO_ENQUIRIES,
-  DEMO_BOOKINGS,
-  DEMO_MAINTENANCE,
-  DEMO_QUOTES,
-  DEMO_PAYMENTS,
-  DEMO_EXPENSES,
-  DEMO_STAFF_TASKS,
-  DEMO_VENDORS,
-  DEMO_DOCUMENTS,
-  DEMO_AUDIT_LOG,
-  DEMO_REFERRALS,
-} from '../data/demoSeed';
 import { checkHallAvailability } from './bookingEngine';
 import { allocateBookingAccount } from './financeEngine';
 
@@ -90,24 +75,25 @@ function save<T>(key: string, data: T): void {
 }
 
 export const StorageService = {
-  // Reset all local storage data back to demo seed fixtures
-  resetAllDemoData(): void {
-    localStorage.setItem(STORAGE_KEYS.ENQUIRIES, JSON.stringify(DEMO_ENQUIRIES));
-    localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(DEMO_BOOKINGS));
-    localStorage.setItem(STORAGE_KEYS.CUSTOMERS, JSON.stringify(DEMO_CUSTOMERS));
-    localStorage.setItem(STORAGE_KEYS.QUOTES, JSON.stringify(DEMO_QUOTES));
-    localStorage.setItem(STORAGE_KEYS.PAYMENTS, JSON.stringify(DEMO_PAYMENTS));
-    localStorage.setItem(STORAGE_KEYS.EXPENSES, JSON.stringify(DEMO_EXPENSES));
-    localStorage.setItem(STORAGE_KEYS.TASKS, JSON.stringify(DEMO_STAFF_TASKS));
-    localStorage.setItem(STORAGE_KEYS.VENDORS, JSON.stringify(DEMO_VENDORS));
-    localStorage.setItem(STORAGE_KEYS.MAINTENANCE, JSON.stringify(DEMO_MAINTENANCE));
-    localStorage.setItem(STORAGE_KEYS.DOCUMENTS, JSON.stringify(DEMO_DOCUMENTS));
-    localStorage.setItem(STORAGE_KEYS.AUDIT_LOG, JSON.stringify(DEMO_AUDIT_LOG));
+  // Clear all local storage data back to clean empty production state
+  clearAllStorageData(): void {
+    localStorage.setItem(STORAGE_KEYS.ENQUIRIES, JSON.stringify([]));
+    localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify([]));
+    localStorage.setItem(STORAGE_KEYS.CUSTOMERS, JSON.stringify([]));
+    localStorage.setItem(STORAGE_KEYS.QUOTES, JSON.stringify([]));
+    localStorage.setItem(STORAGE_KEYS.PAYMENTS, JSON.stringify([]));
+    localStorage.setItem(STORAGE_KEYS.EXPENSES, JSON.stringify([]));
+    localStorage.setItem(STORAGE_KEYS.TASKS, JSON.stringify([]));
+    localStorage.setItem(STORAGE_KEYS.VENDORS, JSON.stringify([]));
+    localStorage.setItem(STORAGE_KEYS.MAINTENANCE, JSON.stringify([]));
+    localStorage.setItem(STORAGE_KEYS.DOCUMENTS, JSON.stringify([]));
+    localStorage.setItem(STORAGE_KEYS.AUDIT_LOG, JSON.stringify([]));
+    localStorage.setItem(STORAGE_KEYS.REFERRALS, JSON.stringify([]));
   },
 
   // Auth / Current User Profile
-  getCurrentUser(): UserProfile {
-    return load<UserProfile>(STORAGE_KEYS.CURRENT_USER, DEMO_PROFILES[0]);
+  getCurrentUser(): UserProfile | null {
+    return load<UserProfile | null>(STORAGE_KEYS.CURRENT_USER, null as any);
   },
 
   setCurrentUser(user: UserProfile): void {
@@ -115,7 +101,7 @@ export const StorageService = {
   },
 
   getAvailableProfiles(): UserProfile[] {
-    return load<UserProfile[]>(STORAGE_KEYS.PROFILES, DEMO_PROFILES);
+    return load<UserProfile[]>(STORAGE_KEYS.PROFILES, []);
   },
 
   createProfile(profile: Omit<UserProfile, 'id' | 'createdAt'>): UserProfile {
@@ -149,7 +135,7 @@ export const StorageService = {
 
   // Referrals
   getReferrals(): any[] {
-    return load<any[]>(STORAGE_KEYS.REFERRALS, DEMO_REFERRALS);
+    return load<any[]>(STORAGE_KEYS.REFERRALS, []);
   },
 
   updateReferral(id: string, updates: any): void {
@@ -176,7 +162,7 @@ export const StorageService = {
 
   // Enquiries
   getEnquiries(): Enquiry[] {
-    return load<Enquiry[]>(STORAGE_KEYS.ENQUIRIES, DEMO_ENQUIRIES);
+    return load<Enquiry[]>(STORAGE_KEYS.ENQUIRIES, []);
   },
 
   getEnquiryById(id: string): Enquiry | undefined {
@@ -215,7 +201,7 @@ export const StorageService = {
 
   // Bookings
   getBookings(): Booking[] {
-    return load<Booking[]>(STORAGE_KEYS.BOOKINGS, DEMO_BOOKINGS);
+    return load<Booking[]>(STORAGE_KEYS.BOOKINGS, []);
   },
 
   getBookingById(id: string): Booking | undefined {
@@ -337,7 +323,7 @@ export const StorageService = {
 
   // Customers
   getCustomers(): Customer[] {
-    return load<Customer[]>(STORAGE_KEYS.CUSTOMERS, DEMO_CUSTOMERS);
+    return load<Customer[]>(STORAGE_KEYS.CUSTOMERS, []);
   },
 
   upsertCustomerFromBooking(b: Booking): void {
@@ -365,7 +351,7 @@ export const StorageService = {
 
   // Payments & Receipts
   getPayments(): PaymentReceipt[] {
-    return load<PaymentReceipt[]>(STORAGE_KEYS.PAYMENTS, DEMO_PAYMENTS);
+    return load<PaymentReceipt[]>(STORAGE_KEYS.PAYMENTS, []);
   },
 
   createPayment(payment: Omit<PaymentReceipt, 'id'>): PaymentReceipt {
@@ -398,7 +384,7 @@ export const StorageService = {
 
   // Expenses
   getExpenses(): ExpenseRecord[] {
-    return load<ExpenseRecord[]>(STORAGE_KEYS.EXPENSES, DEMO_EXPENSES);
+    return load<ExpenseRecord[]>(STORAGE_KEYS.EXPENSES, []);
   },
 
   createExpense(expense: Omit<ExpenseRecord, 'id' | 'createdAt'>): ExpenseRecord {
@@ -423,7 +409,7 @@ export const StorageService = {
 
   // Quotations
   getQuotes(): Quotation[] {
-    return load<Quotation[]>(STORAGE_KEYS.QUOTES, DEMO_QUOTES);
+    return load<Quotation[]>(STORAGE_KEYS.QUOTES, []);
   },
 
   createQuote(quote: Omit<Quotation, 'id' | 'createdAt'>): Quotation {
@@ -442,7 +428,7 @@ export const StorageService = {
 
   // Staff Tasks
   getStaffTasks(): StaffTask[] {
-    return load<StaffTask[]>(STORAGE_KEYS.TASKS, DEMO_STAFF_TASKS);
+    return load<StaffTask[]>(STORAGE_KEYS.TASKS, []);
   },
 
   updateStaffTaskStatus(id: string, status: StaffTask['status']): void {
@@ -468,7 +454,7 @@ export const StorageService = {
 
   // Vendors
   getVendors(): Vendor[] {
-    return load<Vendor[]>(STORAGE_KEYS.VENDORS, DEMO_VENDORS);
+    return load<Vendor[]>(STORAGE_KEYS.VENDORS, []);
   },
 
   createVendor(vendor: Omit<Vendor, 'id'>): Vendor {
@@ -484,7 +470,7 @@ export const StorageService = {
 
   // Maintenance
   getMaintenanceBlocks(): MaintenanceBlock[] {
-    return load<MaintenanceBlock[]>(STORAGE_KEYS.MAINTENANCE, DEMO_MAINTENANCE);
+    return load<MaintenanceBlock[]>(STORAGE_KEYS.MAINTENANCE, []);
   },
 
   createMaintenanceBlock(block: Omit<MaintenanceBlock, 'id' | 'createdAt'>): MaintenanceBlock {
@@ -501,12 +487,12 @@ export const StorageService = {
 
   // Documents
   getDocuments(): DocumentRecord[] {
-    return load<DocumentRecord[]>(STORAGE_KEYS.DOCUMENTS, DEMO_DOCUMENTS);
+    return load<DocumentRecord[]>(STORAGE_KEYS.DOCUMENTS, []);
   },
 
   // Audit Logs
   getAuditLogs(): AuditLogEntry[] {
-    return load<AuditLogEntry[]>(STORAGE_KEYS.AUDIT_LOG, DEMO_AUDIT_LOG);
+    return load<AuditLogEntry[]>(STORAGE_KEYS.AUDIT_LOG, []);
   },
 
   logAction(action: string, targetType: string, targetId: string, details: string): void {
@@ -514,8 +500,8 @@ export const StorageService = {
     const user = this.getCurrentUser();
     const entry: AuditLogEntry = {
       id: `log-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
-      actorName: user.fullName || 'System',
-      actorRole: user.role || 'administrator',
+      actorName: user?.fullName || 'System',
+      actorRole: user?.role || 'administrator',
       action,
       targetType,
       targetId,
