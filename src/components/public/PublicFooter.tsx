@@ -22,7 +22,7 @@ export const PublicFooter: React.FC = () => {
               </div>
             </div>
             <p className="text-xs text-[rgba(203,184,185,0.85)] leading-relaxed max-w-sm">
-              Thoughtfully curated luxury auditorium and gathering spaces in Thrissur, Kerala. Featuring four coordinated halls, solar hybrid uninterrupted power, pure tested water, and 40–50 dedicated on-site parking spots.
+              A welcoming events and celebration venue in Nellikunnu, Thrissur. Featuring four connected halls, reliable solar backup power, certified well water, and secure compound parking for 40–50 cars.
             </p>
             <div className="pt-2">
               <Link
@@ -109,7 +109,7 @@ export const PublicFooter: React.FC = () => {
               <span>Celebrations & Enquiries</span>
             </div>
             <p className="text-[11px] text-[rgba(203,184,185,0.85)] leading-relaxed">
-              Bookings are coordinated directly with our on-site management team. Reserving Thekkanath Souparnika provides complete exclusive access across all coordinated spaces (ideal for 250 to 300 guests, up to 400) with 40–50 parking spaces.
+              We host only one event at a time. When you reserve Thekkanath Souparnika, your family gets private use of all four halls (ideal for 250 to 300 guests, up to 400) and the entire parking compound.
             </p>
             <div className="pt-1">
               <Link

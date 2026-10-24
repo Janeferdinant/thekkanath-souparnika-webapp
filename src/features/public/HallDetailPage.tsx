@@ -65,9 +65,9 @@ export const HallDetailPage: React.FC = () => {
           </div>
 
           <div className="p-4 rounded-2xl glass-control border border-[rgba(226,184,178,0.25)] bg-[#18070c]/80 text-xs text-[#F7EFE7] space-y-1">
-            <span className="font-semibold text-[#E7CFAF]">Exclusive Single-Venue Reservation:</span>
+            <span className="font-semibold text-[#E7CFAF]">Reserved Entirely for Your Event:</span>
             <p className="text-[11px] text-[#CBB8B9] leading-relaxed">
-              When you book Thekkanath Souparnika, your event receives exclusive private access across all four spaces (Stage Hall, Welcome Hall, Dining Hall, and Open Hall). No multiple events share the venue.
+              When you book Thekkanath Souparnika, you get private use of all four halls (Stage, Welcome, Dining, and Open Hall). We never take overlapping bookings, so your celebration stays completely private.
             </p>
           </div>
 

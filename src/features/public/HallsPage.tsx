@@ -22,23 +22,23 @@ export const HallsPage: React.FC = () => {
       <div className="space-y-4 max-w-3xl">
         <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.25em] text-[#E7CFAF]">
           <ShieldCheck className="w-4 h-4 text-[#e8c7bc]" />
-          <span>Unified Venue Spaces</span>
+          <span>All 4 Spaces Included</span>
         </div>
         <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-light text-[#F7EFE7] tracking-tight leading-tight">
-          Four Coordinated Spaces in One Venue
+          Four Spaces Built for Your Celebration
         </h1>
         <p className="text-sm sm:text-base text-[#CBB8B9] leading-relaxed">
-          Three air-conditioned halls and an open breezy hall designed to host your entire celebration seamlessly under one roof—from stage rituals to the traditional sadhya feast. Ideally arranged for gatherings of 250 to 300 guests (accommodating up to 400).
+          Three air-conditioned halls and a breezy open hall built to host your whole day under one roof—from stage ceremonies to the traditional sadhya feast. Comfortably laid out for 250 to 300 guests, and can host up to 400.
         </p>
 
-        {/* Single Hall Venue Policy Banner */}
+        {/* Exclusive One-Event Policy Banner */}
         <div className="p-4 sm:p-5 rounded-2xl glass-control border border-[rgba(226,184,178,0.25)] bg-[#18070c]/80 text-xs text-[#F7EFE7] space-y-1.5">
           <div className="flex items-center gap-2 text-[#E7CFAF] font-serif text-base">
             <ShieldCheck className="w-4 h-4 text-[#e8c7bc]" />
-            <span>Single Hall Venue Policy</span>
+            <span>Only One Event at a Time</span>
           </div>
           <p className="text-[11px] text-[#CBB8B9] leading-relaxed">
-            Your event enjoys exclusive private booking of the entire venue. Rather than sharing space with other functions, your family receives private access to all four coordinated areas below for a relaxed, dignified celebration.
+            We host only one celebration at a time. Your family gets the whole venue to yourselves—no sharing spaces with other parties, and no rush between programs.
           </p>
         </div>
       </div>

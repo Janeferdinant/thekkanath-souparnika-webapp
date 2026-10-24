@@ -197,7 +197,7 @@ export const EnquirePage: React.FC = () => {
               Thank You, {submittedEnquiry.customerName}
             </h1>
             <p className="text-xs sm:text-sm text-[#CBB8B9] max-w-md mx-auto leading-relaxed">
-              Your booking enquiry has been recorded in our system. Submitting an enquiry does not automatically reserve a date; management will check availability and follow up.
+              We have received your enquiry! Our team will check the calendar for your date and get in touch with you shortly.
             </p>
           </div>
 
@@ -222,10 +222,10 @@ export const EnquirePage: React.FC = () => {
           <div className="glass-panel text-left text-[#F7EFE7] p-6 rounded-2xl space-y-3 border border-[rgba(226,184,178,0.22)]">
             <h4 className="font-serif text-base font-light text-[#E7CFAF]">What Happens Next?</h4>
             <ol className="list-decimal list-inside text-xs text-[#CBB8B9] space-y-1.5 leading-relaxed">
-              <li>Our management team reviews your preferred date ({submittedEnquiry.preferredDate}) against existing bookings.</li>
-              <li>We will contact you via phone or WhatsApp at <strong className="text-[#F7EFE7]">+91 {submittedEnquiry.customerPhone}</strong>.</li>
-              <li>You can arrange a venue visit to inspect the halls in person.</li>
-              <li>Upon agreement on dates and rental details, your booking will be confirmed.</li>
+              <li>We will check our bookings calendar for your preferred date ({submittedEnquiry.preferredDate}).</li>
+              <li>We will call or WhatsApp you at <strong className="text-[#F7EFE7]">+91 {submittedEnquiry.customerPhone}</strong> to talk through your plans.</li>
+              <li>You are always welcome to visit the venue to walk through the halls in person.</li>
+              <li>Once timing and arrangements are finalized together, your date will be reserved.</li>
             </ol>
           </div>
 
@@ -262,7 +262,7 @@ export const EnquirePage: React.FC = () => {
           Request a Booking Enquiry
         </h1>
         <p className="text-xs sm:text-sm text-[#CBB8B9] leading-relaxed">
-          Tell us about your event. A booking request is not an instant confirmation; our team will verify hall schedules and follow up promptly.
+          Tell us a little about your celebration. We will check date availability right away and get in touch with you.
         </p>
       </div>
 
@@ -455,7 +455,7 @@ export const EnquirePage: React.FC = () => {
                   <p className="text-[11px] text-red-400">{errors.estimatedGuests}</p>
                 ) : (
                   <p className="text-[10px] text-[#CBB8B9]">
-                    Our hall is available for booking for any number of guests. It is ideally arranged for gatherings of 250 to 300 people, accommodating up to 400 guests with 40–50 dedicated on-site parking spaces.
+                    The hall is comfortably arranged for 250 to 300 guests, and can host up to 400 people across the different spaces, with 40–50 parking spaces inside the compound.
                   </p>
                 )}
               </div>

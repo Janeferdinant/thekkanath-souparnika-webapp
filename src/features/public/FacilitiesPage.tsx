@@ -49,10 +49,10 @@ export const FacilitiesPage: React.FC = () => {
           <span>Venue Amenities & Comforts</span>
         </div>
         <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-light text-[#F7EFE7] tracking-tight leading-tight">
-          Venue Facilities & Guest Comforts
+          Venue Facilities & Amenities
         </h1>
         <p className="text-sm sm:text-base text-[#CBB8B9] leading-relaxed">
-          We provide clear, dependable amenities and modern conveniences so hosts and guests enjoy a seamless celebration experience.
+          From uninterrupted solar backup power and certified drinking water to ample on-site parking, we take care of the essentials so you and your guests can enjoy your day.
         </p>
       </div>
 
@@ -88,7 +88,7 @@ export const FacilitiesPage: React.FC = () => {
           <span>Rooftop & Changing Room Policy</span>
         </div>
         <p className="text-xs sm:text-sm text-[#CBB8B9] leading-relaxed max-w-3xl">
-          The venue features a 4,000 sq ft truss-roofed upper structure. Please note: <strong className="text-[#F7EFE7]">the rooftop itself is strictly closed to event guests</strong> for safety. Dedicated private dress-change rooms can be arranged on the rooftop level upon prior request to management.
+          The venue features a 4,000 sq ft truss-roofed upper structure. Please note: <strong className="text-[#F7EFE7]">the rooftop itself is closed to guests during events</strong> for safety. Private dressing and changing rooms can be opened on the rooftop floor whenever requested.
         </p>
       </div>
 
@@ -99,7 +99,7 @@ export const FacilitiesPage: React.FC = () => {
           <span>Custom Event Requirements</span>
         </div>
         <p className="text-xs sm:text-sm text-[#CBB8B9] leading-relaxed max-w-2xl">
-          If your event requires specific logistical support, outside catering coordination, or customized staging equipment, our management team is delighted to assist you in tailoring the setup.
+          Need early access for stage decorators, special catering arrangements, or customized setup? Just let us know—we are flexible and happy to accommodate your plans.
         </p>
         <div className="pt-2">
           <Link to="/enquire">

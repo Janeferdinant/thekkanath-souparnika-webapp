@@ -21,11 +21,11 @@ export const VENUE_INFO = {
   ownerTitle: 'Owner | Thekkanath Souparnika',
   accessNotes: 'Located right at the Market Junction bus stop along the PWD bus route in Nellikunnu, with quick highway access.',
   capacityNotes:
-    'Whether hosting an intimate gathering or a celebration of up to 400 guests, Thekkanath Souparnika is booked exclusively for your event. The venue is arranged across four coordinated spaces—ideal for 250 to 300 guests—including three air-conditioned halls with 100 seats each, and a dedicated dining hall seating 100 guests per batch.',
+    'Whether you are planning a small family ceremony or a grand reception of up to 400 guests, the entire venue is reserved just for your event. The space is arranged across four connected halls—comfortably suited for 250 to 300 guests—with three air-conditioned halls and a dedicated dining hall seating 100 guests per batch.',
   parkingNotes:
     'Dedicated on-site compound parking accommodates 40–50 cars inside the premises.',
   rooftopPolicy:
-    'The 4,000 sq ft truss-roofed rooftop is kept closed to guests for safety. Private dress-change rooms can be arranged there upon prior request.',
+    'For everyone’s safety, the 4,000 sq ft rooftop is closed to guests, but private dressing and changing rooms can be arranged on the rooftop floor upon request.',
   googleMapsQuery: 'Thekkanath+Souparnika+Nellikunnu+Thrissur',
   googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Thekkanath+Souparnika+Nellikunnu+Thrissur',
   whatsappUrl:
@@ -36,8 +36,8 @@ export const HALLS: Hall[] = [
   {
     id: 'auditorium',
     slug: 'auditorium',
-    name: 'Thekkanath Souparnika (Full Hall)',
-    floor: 'Unified Venue (All Levels)',
+    name: 'Thekkanath Souparnika (Full Venue)',
+    floor: 'Entire Venue (All 4 Halls)',
     capacityText: 'Ideal for 250 to 300 guests (Up to 400)',
     capacityNumber: 400,
     airConditioned: true,
@@ -50,18 +50,18 @@ export const HALLS: Hall[] = [
       '/assets/venue/venue-004.jpg',
     ],
     description:
-      'Thekkanath Souparnika is booked exclusively as a single unified venue for your event. Your family enjoys private, complete access to all four spaces: Stage Hall, Welcome Hall, First Floor Dining Hall (ideal for traditional feasts and sadhya), and the Open Hall. Well-suited for any celebration, and ideally arranged for gatherings of 250 to 300 guests.',
+      'We host only one celebration at a time. When you book Thekkanath Souparnika, your family gets exclusive, private use of all four halls: the Stage Hall, Welcome Hall, First-Floor Dining Hall (perfect for traditional sadhya), and the Open Hall. Comfortably accommodates 250 to 300 guests, up to 400.',
     suggestedUses: [
       'Weddings, Receptions & Banquets',
       'Ceremonies & Traditional Sadhya Feasts',
       'Seminars, Conferences & Cultural Gatherings',
     ],
     features: [
-      'Exclusive single-hall booking of entire venue',
-      'Stage Hall with 100 cushioned seats arranged',
+      'Entire venue exclusively reserved for your event',
+      'Stage Hall with 100 cushioned seats',
       'Welcome Hall with 100 seats arranged',
-      'First Floor Dining Hall: 100 seats in one sitting',
-      'Dedicated on-site parking (40-50 cars)',
+      'First Floor Dining Hall: 100 seats per sitting',
+      'Dedicated on-site parking (40–50 cars)',
     ],
     published: true,
     sortOrder: 0,
@@ -81,7 +81,7 @@ export const HALLS: Hall[] = [
       '/assets/venue/venue-006.jpg',
     ],
     description:
-      'A comfortable air-conditioned ceremonial hall with 100 cushioned seats arranged, an elevated carpeted stage, and soft ambient lighting. Designed for wedding ceremonies, engagements, stage rituals, and cultural presentations.',
+      'A comfortable, air-conditioned ceremonial hall with 100 cushioned seats, a raised carpeted stage, and soft lighting. Built specifically for wedding ceremonies, engagements, and cultural events.',
     suggestedUses: [
       'Programmes & Cultural Events',
       'Ceremonies & Engagements',
@@ -89,10 +89,10 @@ export const HALLS: Hall[] = [
     ],
     features: [
       'Raised carpeted stage',
-      'AC Climate Controlled',
+      'Fully air-conditioned',
       '100 cushioned seats arranged',
       'Soft ceiling lighting',
-      'Ground floor access',
+      'Ground floor access for elders',
     ],
     published: true,
     sortOrder: 1,
@@ -112,17 +112,17 @@ export const HALLS: Hall[] = [
       '/assets/venue/venue-005.jpg',
     ],
     description:
-      'An air-conditioned ground-floor reception area with a glass-door entrance and 100 comfortable seats arranged along the perimeter. Ideal for receiving arriving guests, family introductions, and refreshments before the main program.',
+      'A welcoming air-conditioned reception foyer on the ground floor with wide glass doors and 100 comfortable seats arranged along the perimeter. Ideal for receiving guests, family meetups, and welcome refreshments before the main program.',
     suggestedUses: [
       'Guest Reception & Welcome Area',
       'Pre-event Gatherings',
       'High-tea & Refreshment Breakouts',
     ],
     features: [
-      'Glass-door main entrance',
-      'AC Climate Controlled',
+      'Wide glass-door main entrance',
+      'Fully air-conditioned',
       '100 cushioned seats arranged',
-      'Ground floor access',
+      'Step-free ground floor access',
       'Welcoming ambiance',
     ],
     published: true,
@@ -133,7 +133,7 @@ export const HALLS: Hall[] = [
     slug: 'dining-hall',
     name: 'Dining Hall',
     floor: 'First Floor',
-    capacityText: 'In one sitting 100 seats',
+    capacityText: '100 seats per sitting',
     capacityNumber: 100,
     airConditioned: true,
     coverImage: '/assets/venue/venue-002.jpg',
@@ -143,18 +143,18 @@ export const HALLS: Hall[] = [
       '/assets/venue/venue-005.jpg',
     ],
     description:
-      'Air-conditioned first-floor banquet dining hall with 100 seats arranged per sitting at traditional banquet tables, with large breezy windows and direct access to the handwash area. Tailored for traditional Kerala sadhya and buffet dining, ensuring smooth batch service for 250 to 300+ guests.',
+      'A spacious, air-conditioned dining hall on the first floor with 100 seats per sitting, long banquet tables, breezy windows, and direct handwash access. Specially planned for traditional Kerala sadhya and buffet feasts, serving 250 to 300+ guests easily in batches.',
     suggestedUses: [
       'Traditional Kerala Sadhya (Batch Feasts)',
       'Wedding Feasts & Banquets',
       'Post-Ceremony Receptions',
     ],
     features: [
-      'In one sitting 100 seats',
-      'Recommended for Feast / Sadhya',
-      'AC Climate Controlled',
+      '100 seats per sitting',
+      'Ideal for traditional sadhya & feasts',
+      'Fully air-conditioned',
       'Direct access to wash area',
-      'First floor via grand staircase',
+      'Accessible via grand staircase',
     ],
     published: true,
     sortOrder: 3,
@@ -163,7 +163,7 @@ export const HALLS: Hall[] = [
     id: 'open-hall',
     slug: 'open-hall',
     name: 'Open Hall',
-    floor: 'Ground / Mezzanine (Terrace Level)',
+    floor: 'Ground / Mezzanine Level',
     capacityText: '100 seats arranged',
     capacityNumber: 100,
     airConditioned: false,
@@ -173,7 +173,7 @@ export const HALLS: Hall[] = [
       '/assets/venue/venue-006.jpg',
     ],
     description:
-      'A bright, open gathering space with 100 seats arranged, polished marble-finish flooring, ceiling fans, and three exhaust fans for continuous fresh airflow. Naturally ventilated and flexible for extra seating, buffet counters, or open family mingling.',
+      'A bright, airy open space with 100 seats arranged, polished marble-finish flooring, ceiling fans, and exhaust fans for natural breeze. Flexible for casual mingling, extra seating, or buffet counters.',
     suggestedUses: [
       'Flexible Social Functions',
       'Community & Family Gatherings',
@@ -181,13 +181,13 @@ export const HALLS: Hall[] = [
     ],
     features: [
       '100 seats arranged',
-      'Naturally Ventilated with exhaust airflow',
+      'Naturally ventilated with exhaust fans',
       'Polished marble-finish flooring',
       'High-velocity ceiling fans',
-      'Open plan adaptable layout',
+      'Open adaptable layout',
     ],
     soundproofingNotes:
-      'Please note: Open Hall is naturally ventilated; sound can pass through the three exhaust fans. Municipal decibel guidelines apply.',
+      'Please note: Because the Open Hall is naturally ventilated with exhaust fans, sound carries outside, so we follow local municipal sound guidelines for evening functions.',
     published: true,
     sortOrder: 4,
   },
@@ -199,8 +199,8 @@ export const FACILITIES: Facility[] = [
     title: 'Dedicated Handwash Area',
     category: 'Hygiene & Comfort',
     description:
-      'Multiple stainless and ceramic wash basins with mirrors, natural ventilation, and continuous water supply, positioned right beside the dining hall for smooth feast service.',
-    badge: 'Hygienic Setup',
+      'A long row of clean stainless and ceramic wash basins with mirrors and continuous running water, placed conveniently right beside the dining hall for smooth feast service.',
+    badge: 'Clean & Convenient',
     iconName: 'Droplets',
   },
   {
@@ -208,7 +208,7 @@ export const FACILITIES: Facility[] = [
     title: 'Grand Staircase',
     category: 'Architecture',
     description:
-      'Wide architectural staircase with polished steps and modern glass railings connecting the ground floor to the upper dining hall. Equipped with a safety hose reel on the landing.',
+      'A wide, comfortable staircase with smooth steps and modern glass railings connecting the ground floor to the upper dining hall, equipped with a safety hose reel.',
     badge: 'Safety Equipped',
     iconName: 'Footprints',
   },
@@ -217,8 +217,8 @@ export const FACILITIES: Facility[] = [
     title: 'Solar Hybrid Power with Battery',
     category: 'Power Continuity',
     description:
-      'Reliable solar-hybrid power system with battery backup, ensuring lighting, fans, and sound systems stay uninterrupted even during local grid power cuts.',
-    badge: 'Eco-Friendly',
+      'An automatic solar-hybrid power system with battery backup, keeping lights, fans, and audio systems running without interruption even during local power cuts.',
+    badge: 'Uninterrupted Power',
     iconName: 'Zap',
   },
   {
@@ -226,8 +226,8 @@ export const FACILITIES: Facility[] = [
     title: 'Water Authority Tested Well Water',
     category: 'Safety & Health',
     description:
-      'Naturally fresh well water tested and approved for drinking and cooking safety by the Kerala Water Authority.',
-    badge: 'Authority Approved',
+      'Pure well water on tap, tested and certified safe for drinking and cooking by the Kerala Water Authority.',
+    badge: 'Certified Safe Water',
     iconName: 'ShieldCheck',
   },
   {
@@ -236,25 +236,25 @@ export const FACILITIES: Facility[] = [
     category: 'Access & Logistics',
     description:
       'Dedicated on-site parking for 40 to 50 cars directly inside the venue compound, with easy entry and exit right at Market Junction.',
-    badge: '40–50 Cars On-Site',
+    badge: '40–50 Cars Inside',
     iconName: 'Car',
   },
   {
     id: 'rooftop-changing',
-    title: 'Dress-Change Rooms (On Request)',
+    title: 'Dressing & Changing Rooms (On Request)',
     category: 'Special Facilities',
     description:
-      'While the rooftop area is kept closed to guests for safety, private dress-change rooms can be arranged on the rooftop level upon advance request.',
-    badge: 'Arranged on Request',
+      'While the rooftop area is kept closed for safety, private dressing and changing rooms can be opened on the rooftop floor whenever requested.',
+    badge: 'Available on Request',
     iconName: 'Sparkles',
   },
   {
     id: 'highway-access',
-    title: 'PWD Route & Highway Access',
+    title: 'PWD Bus Route & Highway Access',
     category: 'Connectivity',
     description:
-      'Strategically positioned right at Market Junction in Nellikunnu, directly on the PWD bus route and opposite RGLP School with swift access to the Thrissur highway network.',
-    badge: 'Central Location',
+      'Located right at Market Junction in Nellikunnu, directly on the PWD bus route and opposite RGLP School with quick access to Thrissur town and the highway.',
+    badge: 'Easy to Find',
     iconName: 'MapPin',
   },
   {
@@ -262,7 +262,7 @@ export const FACILITIES: Facility[] = [
     title: 'Air-Conditioned Comfort',
     category: 'Climate Control',
     description:
-      'Three dedicated halls (Stage Hall, Welcome Hall, and Dining Hall) are fully air-conditioned to ensure complete comfort in all Kerala weather conditions.',
+      'Three dedicated halls (Stage Hall, Welcome Hall, and Dining Hall) are fully air-conditioned to keep your guests cool and comfortable year-round.',
     badge: '3 AC Halls',
     iconName: 'Wind',
   },
@@ -272,41 +272,41 @@ export const FAQS = [
   {
     question: 'How many guests can Thekkanath Souparnika accommodate?',
     answer:
-      'Our hall is available for booking for any number of guests. It is ideally arranged for gatherings of 250 to 300 guests, and can comfortably accommodate up to 400 guests across its coordinated spaces. Each hall has 100 seats arranged, with the First Floor Dining Hall providing 100 seats in one sitting for traditional feast service.',
+      'We welcome events of all sizes. The venue is arranged comfortably for gatherings of 250 to 300 guests, and can host up to 400 people across its halls. Each hall has 100 seats, with the First Floor Dining Hall seating 100 guests per batch for traditional sadhya service.',
   },
   {
     question: 'Can individual halls be booked separately?',
     answer:
-      'No, there are no separate halls for rental. Thekkanath Souparnika is rented exclusively as a single unified hall venue for your event, ensuring full privacy and coordinated access to all spaces (Stage Hall, Welcome Hall, First Floor Dining Hall, and Open Hall).',
+      'No, we only host one celebration at a time. When you book Thekkanath Souparnika, the entire venue is reserved exclusively for your family. You get private, unrestricted access to all four halls (Stage Hall, Welcome Hall, First Floor Dining Hall, and Open Hall) with no other parties on the property.',
   },
   {
     question: 'Which halls are equipped with air conditioning?',
     answer:
-      'Three of the halls (Stage Hall, Welcome Hall, and Dining Hall) are fully air-conditioned. The Open Hall is naturally ventilated with ceiling fans and three exhaust fans.',
+      'Three halls—the Stage Hall, Welcome Hall, and Dining Hall—are fully air-conditioned. The Open Hall is naturally ventilated with ceiling fans and three exhaust fans.',
   },
   {
     question: 'What is the parking capacity?',
     answer:
-      'Dedicated on-site parking is available for 40–50 cars directly inside the venue compound.',
+      'We have dedicated, secure compound parking for 40 to 50 cars directly inside the venue gates.',
   },
   {
-    question: 'How do I confirm date availability and rates?',
+    question: 'How do I check date availability and rates?',
     answer:
-      'Submitting an enquiry via our website or calling our management team initiates a date check. Booking confirmation requires verification of schedule and mutually agreed details with management.',
+      'Simply send an enquiry through our website or give us a call. We will check the calendar right away and discuss availability, timing, and pricing directly with you.',
   },
   {
     question: 'Can guests access the rooftop area?',
     answer:
-      'No, the 4,000 sq ft truss-roofed rooftop is strictly closed to event guests for safety. However, private air-conditioned dress-change rooms can be arranged on the rooftop floor upon prior request.',
+      'For everyone’s safety, the 4,000 sq ft rooftop is closed to guests during events. However, private air-conditioned dressing and changing rooms can be opened on the rooftop floor upon advance request.',
   },
   {
     question: 'Is the Open Hall soundproofed?',
     answer:
-      'All enclosed halls feature acoustic insulation. Please note that sound can pass naturally through the Open Hall’s three exhaust fans, and municipal evening decibel guidelines apply.',
+      'Our indoor halls are well insulated. Since the Open Hall has exhaust fans for natural airflow, sound carries outside, so we follow local municipal sound guidelines for evening functions.',
   },
   {
     question: 'What power backup is in place?',
     answer:
-      'The venue features an advanced solar hybrid electrical system with dedicated battery backup, ensuring uninterrupted event lighting and continuity.',
+      'We have an automatic solar-hybrid electrical system with dedicated battery backup, ensuring lights, fans, and audio keep running without a hitch during power interruptions.',
   },
 ];

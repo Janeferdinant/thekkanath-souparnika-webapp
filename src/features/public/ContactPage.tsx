@@ -42,7 +42,7 @@ export const ContactPage: React.FC = () => {
           Visit Thekkanath Souparnika
         </h1>
         <p className="text-sm sm:text-base text-[#CBB8B9] leading-relaxed">
-          Conveniently located at Market Junction in Nellikunnu, Thrissur. We welcome site inspections and in-person discussions by appointment.
+          Located right at Market Junction in Nellikunnu, Thrissur. You are welcome to visit anytime to walk through the halls and meet us in person.
         </p>
       </div>
 
@@ -129,7 +129,7 @@ export const ContactPage: React.FC = () => {
           <div className="glass-panel p-6 rounded-3xl border border-[rgba(226,184,178,0.22)] shadow-subtle text-xs text-[#CBB8B9] space-y-2">
             <h4 className="font-serif font-light text-[#E7CFAF] text-base">Travel & Access Note</h4>
             <p className="leading-relaxed">
-              The venue is situated directly on the PWD bus route with a stop at Market Junction in Nellikunnu. Highway access connects smoothly to Thrissur town centre, Paliyekkara bypass, and National Highway 544.
+              The venue is right at the Market Junction bus stop on the main PWD bus route in Nellikunnu, with quick driving routes to Thrissur town, the bypass, and National Highway 544.
             </p>
           </div>
         </div>

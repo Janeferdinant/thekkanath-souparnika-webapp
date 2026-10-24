@@ -33,7 +33,7 @@ export const HomePage: React.FC = () => {
     {
       icon: Zap,
       title: 'Solar Hybrid Power',
-      desc: 'Seamless uninterrupted power with solar hybrid inverter & battery reserve',
+      desc: 'Continuous backup power with solar hybrid inverter & battery reserve',
     },
     {
       icon: Droplets,
@@ -73,7 +73,7 @@ export const HomePage: React.FC = () => {
             {/* Editorial Eyebrow */}
             <div className="inline-flex items-center gap-2.5 text-[10px] sm:text-xs uppercase tracking-[0.2em] font-semibold text-[#e2b8b2]">
               <span className="w-6 h-[1px] bg-[#c58e91]" />
-              <span>Traditional & Contemporary Celebrations in Thrissur</span>
+              <span>A Warm Family Venue in Thrissur</span>
             </div>
 
             {/* Cormorant Garamond Editorial Display Headline */}
@@ -85,7 +85,7 @@ export const HomePage: React.FC = () => {
             </h1>
 
             <p className="text-sm sm:text-base text-[#e4d2d0] leading-relaxed max-w-xl font-normal">
-              Four coordinated halls—three with continuous air-conditioning—designed for weddings, engagements, baptisms, and family gatherings. Featuring batch dining for 100 guests, safe ground-floor accessibility for elders, and ample on-site parking at Market Junction, Nellikunnu.
+              Four connected halls—three fully air-conditioned—arranged for weddings, engagements, baptisms, and family celebrations. Includes 100-seat batch dining for traditional sadhya, easy ground-floor access for elders, and ample on-site parking at Market Junction, Nellikunnu.
             </p>
 
             {/* Responsive Actions with Specular Highlight Sheen */}
@@ -94,7 +94,7 @@ export const HomePage: React.FC = () => {
                 to="/halls"
                 className="inline-flex items-center justify-center gap-2 min-h-[44px] px-6 py-3 rounded-full text-xs uppercase tracking-wider font-semibold text-[#2c0c15] bg-gradient-to-r from-[#e8c7bc] via-[#d8aba2] to-[#c58e91] hover:from-[#f3ded8] hover:to-[#d4a098] shadow-luxury border border-[#e9c6b9] transition-all hover:scale-[1.02] glass-highlight"
               >
-                <span>Explore Our Hall Spaces</span>
+                <span>Explore the Halls</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
               <Link
@@ -110,15 +110,15 @@ export const HomePage: React.FC = () => {
             <div className="pt-6 border-t border-[rgba(226,184,178,0.18)] flex flex-wrap items-center gap-4 sm:gap-6 text-xs text-[rgba(203,184,185,0.85)]">
               <div className="flex items-center gap-2 border-l border-[#8f4b58] pl-3">
                 <Users className="w-3.5 h-3.5 text-[#e7cfaf]" />
-                <span>Ideal for 250 to 300 Guests (Up to 400)</span>
+                <span>Comfortably hosts 250–300 guests (up to 400)</span>
               </div>
               <div className="flex items-center gap-2 border-l border-[#8f4b58] pl-3">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#e7cfaf]" />
-                <span>Three Air-Conditioned Halls</span>
+                <span>3 Air-Conditioned Halls</span>
               </div>
               <div className="flex items-center gap-2 border-l border-[#8f4b58] pl-3">
                 <Car className="w-3.5 h-3.5 text-[#e7cfaf]" />
-                <span>40–50 Dedicated On-Site Parking</span>
+                <span>40–50 Cars Compound Parking</span>
               </div>
             </div>
           </div>
@@ -132,11 +132,11 @@ export const HomePage: React.FC = () => {
               <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
             </div>
             <p className="text-xs text-[rgba(203,184,185,0.9)] leading-relaxed">
-              Stage Hall, Welcome Hall, and Dining Hall are air-conditioned; Open Hall features natural airflow. Dining Hall features 100 seats in one sitting.
+              Stage, Welcome, and Dining halls are air-conditioned. The Dining Hall seats 100 guests per batch for feasts. The entire venue is reserved exclusively for you.
             </p>
             <div className="text-[11px] text-[#e2b8b2] flex items-center gap-1.5 pt-1 border-t border-[rgba(226,184,178,0.2)]">
               <ShieldCheck className="w-4 h-4 text-[#e7cfaf]" />
-              <span>Single Unified Venue Booking</span>
+              <span>Only One Event at a Time</span>
             </div>
           </div>
         </div>
@@ -204,20 +204,20 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. The Four Spaces Showcase — Coordinated Unified Venue */}
+      {/* 4. The Four Spaces Showcase — All Spaces Included */}
       <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[rgba(226,184,178,0.2)] pb-5">
           <div className="space-y-1">
             <div className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-[#e2b8b2] flex items-center gap-2">
               <span className="w-4 h-[1px] bg-[#c58e91]" />
-              <span>Coordinated Venue Spaces</span>
+              <span>The Venue Spaces</span>
             </div>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#f7efe7] tracking-tight">
-              Four Coordinated Spaces in One Unified Hall
+              Four Spaces Designed for Your Entire Event
             </h2>
           </div>
           <p className="text-xs sm:text-sm text-[rgba(203,184,185,0.85)] max-w-md leading-relaxed">
-            Every booking includes private, exclusive access to all four coordinated spaces. Move smoothly between the air-conditioned ceremony hall, the welcoming foyer, the traditional sadhya dining hall, and the open gathering area.
+            When you book with us, all four halls are exclusively yours. Your guests can move smoothly from the ceremony in the Stage Hall, to the Welcome foyer, upstairs for a traditional sadhya feast, and out to the Open Hall.
           </p>
         </div>
 
@@ -302,13 +302,13 @@ export const HomePage: React.FC = () => {
           <div className="text-center max-w-2xl mx-auto space-y-3">
             <span className="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-[#e2b8b2] font-semibold flex items-center justify-center gap-2">
               <Sparkles className="w-3.5 h-3.5 text-[#e7cfaf]" />
-              <span>Thoughtful Amenities</span>
+              <span>Thoughtful Comforts</span>
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#f7efe7] tracking-tight">
-              Comfort & Practical Amenities for Your Event
+              Thoughtful Amenities for You and Your Guests
             </h2>
             <p className="text-xs sm:text-sm text-[rgba(203,184,185,0.85)] leading-relaxed">
-              From reliable solar-hybrid power and tested drinking water to ample on-site parking, we take care of the essentials so you can focus on your guests.
+              From uninterrupted solar backup power and certified drinking water to ample on-site parking, we take care of the essentials so your day runs smoothly.
             </p>
           </div>
 
@@ -348,10 +348,10 @@ export const HomePage: React.FC = () => {
               <span>Venue Walkthrough</span>
             </div>
             <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#f7efe7] leading-tight">
-              Take a Walk Through the Spaces
+              A Look Inside the Venue
             </h2>
             <p className="text-xs sm:text-sm text-[rgba(203,184,185,0.85)] leading-relaxed">
-              Browse real photographs of our ceremonial stage, dining hall, and welcoming reception foyer. You are always warmly invited to visit us in person at Market Junction, Nellikunnu.
+              Take a look at photos of our ceremonial stage, banquet dining hall, and welcoming reception foyer. You are always welcome to stop by Market Junction, Nellikunnu to see everything in person.
             </p>
             <div className="pt-2 flex flex-wrap gap-3">
               <Link
@@ -449,10 +449,10 @@ export const HomePage: React.FC = () => {
               <span>Easy to Locate in Thrissur</span>
             </div>
             <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#f7efe7] tracking-tight leading-tight">
-              Effortless Arrival on the Main PWD Bus Route
+              Easy to Find on the Main PWD Bus Route
             </h2>
             <p className="text-xs sm:text-sm text-[rgba(203,184,185,0.85)] leading-relaxed">
-              Situated right at the Market Junction bus stop along the main PWD bus route in Nellikunnu, with direct highway connectivity for easy arrival from Thrissur town and surrounding districts.
+              Located right by the Market Junction bus stop along the main PWD bus route in Nellikunnu, with direct roads connecting to Thrissur town and the national highway.
             </p>
 
             <div className="space-y-2.5 text-xs text-[rgba(203,184,185,0.9)] pt-2">
@@ -555,10 +555,10 @@ export const HomePage: React.FC = () => {
               Plan Your Special Occasion
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl font-normal leading-tight text-[#f7efe7]">
-              Let us know your event date and details.
+              Planning an upcoming celebration?
             </h2>
             <p className="text-xs sm:text-sm text-[rgba(203,184,185,0.85)] max-w-lg leading-relaxed">
-              We will check availability right away, answer all your questions transparently, and help you reserve the venue smoothly.
+              Let us know your preferred date. We'll check the calendar, answer all your questions, and help you plan your booking without any hassle.
             </p>
           </div>
 

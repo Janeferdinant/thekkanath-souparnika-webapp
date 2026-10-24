@@ -113,7 +113,7 @@ export const GalleryPage: React.FC = () => {
           Visual Tour & Photo Gallery
         </h1>
         <p className="text-sm sm:text-base text-[#CBB8B9] leading-relaxed">
-          Explore actual photographs of all four halls, the architectural grand staircase, dedicated wash area, and venue exterior. Authentic photography without stock images or artificial renders.
+          Browse real photographs of all four halls, the dining area, staircase, wash facilities, and exterior compound. Every picture shows the venue as it actually is.
         </p>
       </div>
 
