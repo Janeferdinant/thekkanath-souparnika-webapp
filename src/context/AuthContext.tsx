@@ -20,9 +20,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [availableProfiles, setAvailableProfiles] = useState<UserProfile[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Sync profile from Supabase user ID
-  const fetchProfile = async (userId: string, email?: string): Promise<UserProfile | null> => {
-    if (!supabase) return null;
+  // Sync profile from Supabase user
+  const fetchProfile = async (userOrId: any, fallbackEmail?: string): Promise<UserProfile | null> => {
+    if (!supabase || !userOrId) return null;
+    
+    let userId = '';
+    let email = '';
+    let metaRole: UserRole = 'staff';
+    let metaName = '';
+    let metaPhone: string | undefined = undefined;
+
+    if (typeof userOrId === 'object' && userOrId !== null) {
+      userId = userOrId.id;
+      email = userOrId.email || '';
+      metaRole = (userOrId.user_metadata?.role || userOrId.app_metadata?.role || 'staff') as UserRole;
+      metaName = userOrId.user_metadata?.full_name || email.split('@')[0];
+      metaPhone = userOrId.user_metadata?.phone;
+    } else {
+      userId = String(userOrId);
+      email = fallbackEmail || '';
+      metaName = email.split('@')[0];
+    }
+
     try {
       const { data, error } = await supabase
         .from('profiles')
@@ -44,19 +63,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           createdAt: data.created_at,
         };
       }
-
-      // Fallback profile if user exists in auth but profile record is pending
-      if (email) {
-        return {
-          id: userId,
-          fullName: email.split('@')[0],
-          email: email,
-          role: 'staff',
-          createdAt: new Date().toISOString(),
-        };
-      }
     } catch (err) {
       console.error('Exception fetching user profile:', err);
+    }
+
+    // Fallback profile using user metadata from auth token
+    if (email) {
+      return {
+        id: userId,
+        fullName: metaName,
+        email: email,
+        phone: metaPhone,
+        role: metaRole,
+        createdAt: new Date().toISOString(),
+      };
     }
     return null;
   };
@@ -73,7 +93,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       try {
         const { data: { session } } = await supabase.auth.getSession();
         if (session?.user && mounted) {
-          const profile = await fetchProfile(session.user.id, session.user.email);
+          const profile = await fetchProfile(session.user);
           if (mounted && profile) {
             setCurrentUser(profile);
             StorageService.setCurrentUser(profile);
@@ -94,7 +114,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const { data: authListener } = supabase?.auth.onAuthStateChange(
       async (_event, session) => {
         if (session?.user) {
-          const profile = await fetchProfile(session.user.id, session.user.email);
+          const profile = await fetchProfile(session.user);
           if (profile) {
             setCurrentUser(profile);
             StorageService.setCurrentUser(profile);
@@ -163,7 +183,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
 
       if (data.user) {
-        const profile = await fetchProfile(data.user.id, data.user.email);
+        const profile = await fetchProfile(data.user);
         if (profile) {
           setCurrentUser(profile);
           StorageService.setCurrentUser(profile);

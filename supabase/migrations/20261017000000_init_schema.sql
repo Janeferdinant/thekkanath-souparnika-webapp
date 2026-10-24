@@ -322,3 +322,5 @@ CREATE POLICY "Accounts and admin can view expenses" ON public.expenses FOR ALL 
 CREATE POLICY "Staff can view documents" ON public.documents FOR SELECT TO authenticated USING (true);
 CREATE POLICY "Audit logs append only" ON public.audit_logs FOR INSERT TO authenticated WITH CHECK (true);
 CREATE POLICY "Audit logs readable by admin" ON public.audit_logs FOR SELECT TO authenticated USING (true);
+CREATE POLICY "Authenticated users can read profiles" ON public.profiles FOR SELECT TO authenticated USING (true);
+CREATE POLICY "Users can update own profile" ON public.profiles FOR UPDATE TO authenticated USING (auth.uid() = id);
