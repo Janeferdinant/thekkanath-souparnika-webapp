@@ -18,11 +18,11 @@ export const PublicFooter: React.FC = () => {
               />
               <div>
                 <h3 className="font-serif font-medium text-xl text-[#f7efe7]">Thekkanath Souparnika</h3>
-                <p className="text-[10px] text-[#e7cfaf] uppercase tracking-widest font-semibold">Auditorium & Events Venue</p>
+                <p className="text-[10px] text-[#e7cfaf] uppercase tracking-widest font-semibold">{VENUE_INFO.descriptor}</p>
               </div>
             </div>
             <p className="text-xs text-[rgba(203,184,185,0.85)] leading-relaxed max-w-sm">
-              A welcoming events and celebration venue in Nellikunnu, Thrissur. Featuring four connected halls, reliable solar backup power, certified well water, and secure compound parking for 40–50 cars.
+              A welcoming celebration venue at Market Junction, Nellikunnu, Thrissur, with four connected halls under one roof.
             </p>
             <div className="pt-2">
               <Link
@@ -109,7 +109,7 @@ export const PublicFooter: React.FC = () => {
               <span>Celebrations & Enquiries</span>
             </div>
             <p className="text-[11px] text-[rgba(203,184,185,0.85)] leading-relaxed">
-              We host only one event at a time. When you reserve Thekkanath Souparnika, your family gets private use of all four halls (ideal for 250 to 300 guests, up to 400) and the entire parking compound.
+              We host only one event at a time. When you reserve Thekkanath Souparnika, your family gets private use of all four halls.
             </p>
             <div className="pt-1">
               <Link
@@ -125,15 +125,9 @@ export const PublicFooter: React.FC = () => {
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[rgba(203,184,185,0.7)]">
           <div>
-            © {new Date().getFullYear()} Thekkanath Souparnika · Hall & Events Venue. All rights reserved.
+            © {new Date().getFullYear()} Thekkanath Souparnika · {VENUE_INFO.descriptor}. All rights reserved.
           </div>
-          <div className="flex items-center gap-4 text-[11px]">
-            <span>Nellikunnu, Thrissur</span>
-            <span>·</span>
-            <span>Solar Hybrid Power</span>
-            <span>·</span>
-            <span>Water Authority Tested Water</span>
-          </div>
+          <span className="text-[11px]">Nellikunnu, Thrissur</span>
         </div>
       </div>
     </footer>

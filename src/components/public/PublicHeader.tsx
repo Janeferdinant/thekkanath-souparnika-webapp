@@ -52,9 +52,6 @@ export const PublicHeader: React.FC = () => {
               <MapPin className="w-3.5 h-3.5 text-[#e7cfaf]" />
               Nellikunnu Market Junction, Thrissur
             </span>
-            <span className="hidden md:inline-flex items-center gap-1 text-[rgba(203,184,185,0.7)]">
-              · On PWD Bus Route · 40–50 Compound Parking
-            </span>
           </div>
 
           <div className="flex items-center gap-5 flex-wrap">
@@ -100,7 +97,7 @@ export const PublicHeader: React.FC = () => {
                 Thekkanath Souparnika
               </div>
               <div className="text-[9px] tracking-[0.18em] uppercase font-semibold text-[#e2b8b2] mt-1 flex items-center gap-1.5">
-                <span>Auditorium & Events Venue</span>
+                <span>{VENUE_INFO.descriptor}</span>
                 <span className="text-[rgba(226,184,178,0.4)]">·</span>
                 <span className="text-[rgba(203,184,185,0.8)] font-normal">Thrissur</span>
               </div>
