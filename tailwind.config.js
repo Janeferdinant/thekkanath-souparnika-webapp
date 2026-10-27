@@ -5,6 +5,15 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Public brand palette (see src/styles/brandTokens.ts). Existing scales below are untouched.
+        brand: {
+          burgundy: { 950: 'var(--brand-burgundy-950)', 900: 'var(--brand-burgundy-900)', 800: 'var(--brand-burgundy-800)', 700: 'var(--brand-burgundy-700)', 600: 'var(--brand-burgundy-600)' },
+          champagne: { 300: 'var(--brand-champagne-300)', 400: 'var(--brand-champagne-400)', 500: 'var(--brand-champagne-500)' },
+          bronze: { 700: 'var(--brand-bronze-700)' },
+          ivory: { 50: 'var(--brand-ivory-50)', 100: 'var(--brand-ivory-100)', 200: 'var(--brand-ivory-200)', muted: 'var(--brand-ivory-muted)' },
+          charcoal: { 900: 'var(--brand-charcoal-900)', 600: 'var(--brand-charcoal-600)' },
+          rosegold: 'var(--brand-rosegold)',
+        },
         burgundy: {
           950: '#1a0510',
           900: '#2a081b',
@@ -124,6 +133,8 @@ export default {
       fontFamily: {
         serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
         sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
+        // Public website text and UI; staff screens keep Inter
+        public: ['Manrope', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
       },
       boxShadow: {
         'luxury': '0 20px 50px -10px rgba(74, 14, 23, 0.25), 0 10px 20px -5px rgba(26, 5, 16, 0.15)',

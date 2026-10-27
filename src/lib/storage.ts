@@ -33,18 +33,7 @@ const STORAGE_KEYS = {
   REFERRALS: 'ts_referrals',
 };
 
-/**
- * Checks if Supabase environment variables are available and properly configured
- */
-export function isSupabaseConfigured(): boolean {
-  const url = import.meta.env.VITE_SUPABASE_URL;
-  const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-  return Boolean(url && anonKey && url.startsWith('http') && anonKey.length > 20);
-}
-
-export function isDemoMode(): boolean {
-  return !isSupabaseConfigured();
-}
+export { isSupabaseConfigured, isDemoMode } from './demoMode';
 
 /**
  * Generic local storage loader with default fallback
@@ -72,6 +61,14 @@ function save<T>(key: string, data: T): void {
   } catch (err) {
     console.error(`Error saving localStorage key "${key}":`, err);
   }
+}
+
+/**
+ * Like save(), but for a write the caller must not pretend succeeded. A visitor's enquiry is only
+ * "received" if the browser really kept it, so a refused write (blocked or full storage) throws.
+ */
+function saveOrThrow<T>(key: string, data: T): void {
+  localStorage.setItem(key, JSON.stringify(data));
 }
 
 export const StorageService = {
@@ -178,7 +175,7 @@ export const StorageService = {
       updatedAt: new Date().toISOString(),
     };
     enquiries.unshift(newEnquiry);
-    save(STORAGE_KEYS.ENQUIRIES, enquiries);
+    saveOrThrow(STORAGE_KEYS.ENQUIRIES, enquiries);
 
     this.logAction('PUBLIC_ENQUIRY_CREATED', 'Enquiry', newEnquiry.id, `New enquiry ${newEnquiry.reference} from ${newEnquiry.customerName}`);
     return newEnquiry;

@@ -1,0 +1,276 @@
+/* ------------------------------------------------------------------
+   Glass surfaces. Three rendering tiers, chosen at runtime and written to
+   <html data-glass-tier="enhanced|lite|fallback">:
+     lite      translucent fill, limited blur, static edge highlight (also the pre-JS default)
+     enhanced  lite plus layered specular, Fresnel edge ring and pointer lighting
+     fallback  solid or lightly translucent surfaces; no blur, canvas or WebGL needed
+   Blur is only ever applied under lite/enhanced/pre-JS selectors, never switched off.
+   ------------------------------------------------------------------ */
+
+.glass-surface {
+  --glass-fill-light: rgba(248, 243, 235, 0.72);
+  --glass-fill-dark: rgba(46, 15, 25, 0.92);
+  --glass-radius: 1.25rem;
+  --glass-light-x: 0.3;
+  --glass-light-y: 0.2;
+  position: relative;
+  isolation: isolate;
+  border-radius: var(--glass-radius);
+  border: 1px solid var(--glass-edge, transparent);
+  box-shadow: var(--glass-shadow, none);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.glass-surface[data-tone='light'] {
+  background: var(--glass-fill-light);
+  color: var(--brand-charcoal-900);
+  --glass-edge: rgba(255, 255, 255, 0.6);
+  --glass-shadow: 0 8px 28px rgba(46, 15, 25, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+.glass-surface[data-tone='dark'] {
+  background: var(--glass-fill-dark);
+  color: var(--brand-ivory-100);
+  --glass-edge: rgba(201, 165, 106, 0.38);
+  --glass-shadow: 0 10px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(230, 211, 174, 0.28);
+}
+.glass-surface[data-interactive]:hover {
+  transform: translateY(-2px);
+}
+
+/* Lenses sit over the hero photo, so they can be more see-through than surfaces on plain ivory/burgundy.
+   The hero location card is meant to be clear and discreet: a light tint, a faint champagne edge, a soft
+   shadow, and a text shadow that keeps the small type crisp over the paving.
+   Tests keep both fills at WCAG AA for their text. */
+.glass-surface[data-glass-lens] {
+  --glass-fill-dark: rgba(46, 15, 25, 0.4);
+  --glass-radius: 1rem;
+  --glass-edge: rgba(240, 217, 163, 0.22);
+  --glass-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+  text-shadow: 0 1px 2px rgba(20, 6, 10, 0.55);
+}
+
+/* lite, enhanced, and before JS has chosen a tier: blur the backdrop */
+[data-glass-tier='lite'] .glass-surface,
+[data-glass-tier='enhanced'] .glass-surface,
+:root:not([data-glass-tier]) .glass-surface {
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  backdrop-filter: blur(12px) saturate(120%);
+}
+[data-glass-tier='lite'] .glass-surface[data-glass-lens],
+[data-glass-tier='enhanced'] .glass-surface[data-glass-lens],
+:root:not([data-glass-tier]) .glass-surface[data-glass-lens] {
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  backdrop-filter: blur(10px) saturate(120%);
+}
+
+/* enhanced: specular highlight that follows the pointer, a Fresnel-style edge ring,
+   inner edge darkening and a contact shadow */
+[data-glass-tier='enhanced'] .glass-surface {
+  --glass-shadow: 0 1px 2px rgba(0, 0, 0, 0.18), 0 14px 36px rgba(0, 0, 0, 0.22), inset 0 0 18px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+[data-glass-tier='enhanced'] .glass-surface::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at calc(var(--glass-light-x) * 100%) calc(var(--glass-light-y) * 100%),
+    rgba(255, 244, 222, 0.34),
+    rgba(255, 244, 222, 0) 55%
+  );
+}
+[data-glass-tier='enhanced'] .glass-surface::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.6),
+    rgba(255, 255, 255, 0.06) 38%,
+    rgba(255, 255, 255, 0.06) 62%,
+    rgba(255, 255, 255, 0.4)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+/* the hero location card keeps only its faint champagne hairline: no specular highlight, edge ring or deep
+   shadow, and its own light tint even while the canvas refracts the photo beneath it */
+[data-glass-tier='enhanced'] .glass-surface[data-glass-lens] {
+  --glass-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+}
+[data-glass-tier='enhanced'] .glass-surface[data-glass-lens][data-glass-refracting][data-tone='dark'] {
+  background: var(--glass-fill-dark);
+}
+[data-glass-tier='enhanced'] .glass-surface[data-glass-lens]::before,
+[data-glass-tier='enhanced'] .glass-surface[data-glass-lens]::after {
+  content: none;
+}
+/* inside a lens whose canvas is refracting the photo, let the canvas show through */
+[data-glass-tier='enhanced'] .glass-surface[data-glass-refracting][data-tone='dark'] {
+  background: rgba(46, 15, 25, 0.5);
+}
+
+/* fallback: deliberate solid surfaces with a champagne hairline, top highlight and shadow */
+[data-glass-tier='fallback'] .glass-surface[data-tone='dark'] {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0) 40%), rgba(46, 15, 25, 0.96);
+  border: 1px solid rgba(201, 165, 106, 0.35);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(230, 211, 174, 0.25);
+}
+[data-glass-tier='fallback'] .glass-surface[data-tone='light'] {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0) 45%), rgba(252, 250, 246, 0.98);
+  border: 1px solid rgba(201, 165, 106, 0.35);
+  box-shadow: 0 8px 24px rgba(46, 15, 25, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* browsers without backdrop-filter get the fallback look whatever tier was chosen */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-surface[data-tone='dark'] {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0) 40%), rgba(46, 15, 25, 0.96);
+    border: 1px solid rgba(201, 165, 106, 0.35);
+  }
+  .glass-surface[data-tone='light'] {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0) 45%), rgba(252, 250, 246, 0.98);
+    border: 1px solid rgba(201, 165, 106, 0.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-surface {
+    transition: none;
+  }
+  .glass-surface[data-interactive]:hover {
+    transform: none;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Navigation bar: transparent over the hero, burgundy glass after it.
+   ------------------------------------------------------------------ */
+.glass-nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  color: var(--brand-ivory-100);
+  border-bottom: 1px solid transparent;
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.glass-nav-bar[data-nav-state='over-hero'] {
+  /* strong enough that the 9px descriptor and small links hold 4.5:1 over the brightest sky (tests/navContrast) */
+  background: linear-gradient(180deg, rgba(30, 10, 16, 0.7), rgba(30, 10, 16, 0.45));
+  border-bottom-color: rgba(230, 211, 174, 0.18);
+}
+.glass-nav-bar[data-nav-state='scrolled'] {
+  background: rgba(46, 15, 25, 0.88);
+  border-bottom-color: rgba(201, 165, 106, 0.28);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
+}
+.public-strip :focus-visible,
+.glass-surface[data-tone='dark'] :focus-visible {
+  outline: 2px solid var(--brand-champagne-400);
+  outline-offset: 2px;
+}
+.glass-nav-bar :focus-visible {
+  outline: 2px solid var(--brand-champagne-400);
+  outline-offset: 2px;
+}
+
+[data-glass-tier='lite'] .glass-nav-bar,
+[data-glass-tier='enhanced'] .glass-nav-bar,
+:root:not([data-glass-tier]) .glass-nav-bar {
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  backdrop-filter: blur(14px) saturate(120%);
+}
+
+/* no blur available: stronger tint so links stay legible over the photo */
+[data-glass-tier='fallback'] .glass-nav-bar[data-nav-state='over-hero'] {
+  background: linear-gradient(180deg, rgba(30, 10, 16, 0.82), rgba(30, 10, 16, 0.4));
+}
+[data-glass-tier='fallback'] .glass-nav-bar[data-nav-state='scrolled'] {
+  background: rgba(30, 10, 16, 0.98);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-nav-bar[data-nav-state='over-hero'] {
+    background: linear-gradient(180deg, rgba(30, 10, 16, 0.82), rgba(30, 10, 16, 0.4));
+  }
+  .glass-nav-bar[data-nav-state='scrolled'] {
+    background: rgba(30, 10, 16, 0.98);
+  }
+}
+
+/* mobile quick-action dock */
+.glass-dock {
+  --glass-radius: 9999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-nav-bar {
+    transition: none;
+  }
+}
+
+/* Modal backdrop: dark burgundy veil, blurred where blur is available */
+.glass-modal-backdrop {
+  background: rgba(30, 10, 16, 0.82);
+}
+[data-glass-tier='lite'] .glass-modal-backdrop,
+[data-glass-tier='enhanced'] .glass-modal-backdrop,
+:root:not([data-glass-tier]) .glass-modal-backdrop {
+  background: rgba(30, 10, 16, 0.7);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-modal-backdrop {
+    background: rgba(30, 10, 16, 0.92);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Badges and caption chips on photos. The tint is a ::after layer so it paints above the refraction
+   canvas (an element's own background would sit below it) and always keeps the text at WCAG AA over
+   any photo. On enhanced devices the canvas behind the tint adds a refracted rim.
+   ------------------------------------------------------------------ */
+.refractive-overlay {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid rgba(201, 165, 106, 0.55);
+  color: var(--brand-ivory-100);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+.refractive-overlay > canvas {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.refractive-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: rgba(46, 15, 25, 0.78);
+}
+[data-glass-tier='fallback'] .refractive-overlay::after {
+  background: rgba(46, 15, 25, 0.96);
+}
+@media (prefers-reduced-motion: reduce) {
+  .refractive-overlay > canvas {
+    transition: none;
+  }
+}

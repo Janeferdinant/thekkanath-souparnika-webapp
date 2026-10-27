@@ -68,12 +68,9 @@
 
 /* Public Website Root Theme Scope */
 .public-luxury {
-  background:
-    radial-gradient(ellipse at 14% 10%, rgba(126, 38, 59, 0.22), transparent 44%),
-    radial-gradient(ellipse at 88% 55%, rgba(197, 142, 145, 0.08), transparent 40%),
-    radial-gradient(circle at 50% 80%, rgba(69, 19, 35, 0.15), transparent 50%),
-    var(--color-ink);
-  color: var(--color-ivory);
+  /* Ivory is the default content surface; burgundy bands (.surface-burgundy) carry the dark gradients. */
+  background: var(--brand-ivory-100);
+  color: var(--brand-charcoal-900);
   min-height: 100vh;
 }
 
@@ -280,4 +277,270 @@
   .glass-control:hover {
     transform: none;
   }
+}
+
+
+/* ------------------------------------------------------------------
+   Public brand tokens: burgundy, champagne gold, warm ivory.
+   Mirrors src/styles/brandTokens.ts. Admin colour scales are unchanged.
+   Champagne is never used as text on ivory (2.1:1); on burgundy it is 5.8:1.
+   ------------------------------------------------------------------ */
+:root {
+  --brand-burgundy-950: #1E0A10;
+  --brand-burgundy-900: #2E0F19;
+  --brand-burgundy-800: #3F1520;
+  --brand-burgundy-700: #541B2A;
+  --brand-burgundy-600: #6B2537;
+  --brand-champagne-300: #E6D3AE;
+  --brand-champagne-400: #D8BD8A;
+  --brand-champagne-500: #C9A56A;
+  --brand-bronze-700: #7A5A2E;
+  --brand-ivory-50: #FCFAF6;
+  --brand-ivory-100: #F8F3EB;
+  --brand-ivory-200: #EFE6D8;
+  --brand-ivory-muted: #D9CBBF;
+  --brand-charcoal-900: #2A2421;
+  --brand-charcoal-600: #5C524C;
+  --brand-rosegold: #C8907A;
+}
+
+/* Editorial surfaces. Each sets its own text colour and focus ring. */
+.surface-ivory {
+  background-color: var(--brand-ivory-100);
+  color: var(--brand-charcoal-900);
+}
+.surface-ivory-alt {
+  background-color: var(--brand-ivory-200);
+  color: var(--brand-charcoal-900);
+}
+.surface-burgundy {
+  background-color: var(--brand-burgundy-900);
+  background-image:
+    radial-gradient(ellipse at 14% 10%, rgba(107, 37, 55, 0.4), transparent 44%),
+    radial-gradient(ellipse at 88% 55%, rgba(201, 165, 106, 0.07), transparent 40%),
+    linear-gradient(180deg, var(--brand-burgundy-900) 0%, var(--brand-burgundy-950) 100%);
+  color: var(--brand-ivory-100);
+}
+
+/* ------------------------------------------------------------------
+   Homepage hero. The venue name is reflective champagne gold, sampled from the owner's mockup: each glyph is
+   even pale cream over its upper part and warms to amber at the baseline. A crisp diagonal reflection, a warm
+   glow, a small glint and (where motion is allowed) a slow light sweep make it shine. Each line (span) carries its own fill. Where text clipping is unsupported the h1's solid
+   champagne colour shows instead.
+   ------------------------------------------------------------------ */
+.hero-surface {
+  /* the mockup's warm wine (sampled): lit around the title, settling to a deep wine lower down, never as dark
+     as burgundy-950; a faint amber spill where the photo meets the text */
+  background-image:
+    radial-gradient(ellipse 60% 55% at 22% 34%, #3B0F17 0%, rgba(59, 15, 23, 0) 72%),
+    radial-gradient(ellipse 28% 45% at 52% 62%, rgba(140, 62, 20, 0.16), transparent 70%),
+    linear-gradient(180deg, #2E0C14 0%, #270A11 100%);
+}
+.hero-name-glow {
+  position: absolute;
+  inset: -22% -14% -14% -10%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at 46% 50%,
+    rgba(238, 186, 104, 0.22) 0%,
+    rgba(238, 186, 104, 0.08) 45%,
+    rgba(238, 186, 104, 0) 72%
+  );
+  opacity: 0.75;
+}
+@media (max-width: 767px) {
+  /* phones: the name sits over the photo, where extra light would only cost contrast */
+  .hero-name-glow {
+    display: none;
+  }
+}
+.hero-venue-name {
+  --gold-cream: #F2E2C2;
+  --gold-warm: #EDC27E;
+  --gold-amber: #E7AF4C; /* darkest stop, 8.9:1 on burgundy-900 */
+  --gold-base: #EBB95E;
+  /* a crisp near-white reflection across the middle of the word, and a narrow moving glint */
+  --gold-sheen: linear-gradient(105deg, transparent 43%, rgba(255, 253, 245, 0.85) 48%, transparent 53%);
+  --gold-sweep: linear-gradient(
+    105deg,
+    transparent 45%,
+    rgba(255, 253, 245, 0.35) 48.3%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 253, 245, 0.35) 51.7%,
+    transparent 55%
+  );
+  letter-spacing: -0.015em;
+  filter: drop-shadow(0 0 8px rgba(255, 214, 140, 0.22)) drop-shadow(0 0 26px rgba(232, 170, 80, 0.2));
+}
+.hero-glint {
+  color: #FFF6E0;
+  filter: drop-shadow(0 0 5px rgba(255, 236, 190, 0.85));
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .hero-venue-name > span {
+    /* As in the mockup: even pale cream over the upper ~60% of each letter, then warming to amber at the
+       baseline. Stops follow the glyphs in the padded box: cap tops near 24%, baseline near 76%. The amber
+       keeps 3:1 even over the brightest paving behind the name on phones. */
+    --gold-metal: linear-gradient(
+      180deg,
+      var(--gold-cream) 55%,
+      var(--gold-warm) 66%,
+      var(--gold-amber) 78%,
+      var(--gold-base) 100%
+    );
+    /* the sweep layer is three words wide and parked off the left edge until it animates */
+    background-image: var(--gold-sweep), var(--gold-sheen), var(--gold-metal);
+    background-size: 300% 100%, 100% 100%, 100% 100%;
+    background-position: 100% 0, 0 0, 0 0;
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* glyphs overhang the tight (0.78) line box by ~0.22em; pad each line so the clipped fill reaches them,
+       without moving anything (the h1 is a flex column, so these margins never collapse) */
+    padding-block: 0.22em;
+    margin-block: -0.22em;
+  }
+  /* a light sweep across the name every 5s (the second line a beat later), only where the visitor allows
+     motion and the device is not on the low-power glass tier */
+  @media (prefers-reduced-motion: no-preference) {
+    :root:not([data-glass-tier='fallback']) .hero-venue-name > span {
+      animation: hero-gold-sweep 5s ease-in-out 0.8s infinite;
+    }
+    :root:not([data-glass-tier='fallback']) .hero-venue-name > span + span {
+      animation-delay: 1.05s;
+    }
+  }
+}
+/* the glow behind the name breathes and the glint flares as the sweep passes it; transform and opacity only,
+   so the compositor does the work */
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-glass-tier='fallback']) .hero-name-glow {
+    animation: hero-glow-breathe 5s ease-in-out infinite;
+  }
+  :root:not([data-glass-tier='fallback']) .hero-glint {
+    animation: hero-glint-flare 5s ease-in-out 0.8s infinite;
+  }
+}
+@keyframes hero-gold-sweep {
+  0% {
+    background-position: 100% 0, 0 0, 0 0;
+  }
+  30%,
+  100% {
+    background-position: 0% 0, 0 0, 0 0;
+  }
+}
+@keyframes hero-glow-breathe {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(0.97);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+}
+@keyframes hero-glint-flare {
+  0%,
+  14%,
+  40%,
+  100% {
+    opacity: 0.75;
+    transform: scale(0.85) rotate(0deg);
+  }
+  24% {
+    opacity: 1;
+    transform: scale(1.4) rotate(45deg);
+  }
+}
+@media (forced-colors: active) {
+  .hero-venue-name {
+    filter: none;
+  }
+  .hero-venue-name > span {
+    -webkit-text-fill-color: currentColor;
+  }
+  .hero-glint,
+  .hero-name-glow {
+    display: none;
+  }
+}
+
+/* Hero photo edges melt into the burgundy page. A mask rather than an overlay, so the real page background
+   shows through with no seam; the location card always sits inside the unfaded area.
+   Phones: the bottom edge, under the venue name (the card is hidden there).
+   Tablets: both sides and the top (the bottom has the gradient overlay above the canvas).
+   Desktop: an eased left edge beside the title and a short right edge where the page width ends. */
+@media (max-width: 767px) {
+  .hero-photo-fade {
+    -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 70%, transparent 100%);
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero-photo-fade {
+    -webkit-mask-image:
+      linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent),
+      linear-gradient(180deg, transparent, #000 9%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent),
+      linear-gradient(180deg, transparent, #000 9%);
+    mask-composite: intersect;
+  }
+}
+@media (min-width: 1024px) {
+  .hero-photo-fade {
+    /* the photo column is 54% of the max-w-7xl content width plus the 1.5rem it reaches back toward the title
+       (the grid in HeroSection); the frame is as tall as the text beside it, between a near-square and the
+       whole 3:4 photo */
+    --hero-photo-w: calc((min(100vw, 80rem) - 4rem) * 0.54 + 1.5rem);
+    min-height: calc(var(--hero-photo-w) * 1.05);
+    max-height: calc(var(--hero-photo-w) * 4 / 3);
+    /* ~120px eased fade beside the title, ~75px where the page width ends */
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.12) 4%,
+      rgba(0, 0, 0, 0.4) 9%,
+      rgba(0, 0, 0, 0.75) 14%,
+      rgba(0, 0, 0, 0.95) 18%,
+      #000 21%,
+      #000 89%,
+      rgba(0, 0, 0, 0.6) 94%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.12) 4%,
+      rgba(0, 0, 0, 0.4) 9%,
+      rgba(0, 0, 0, 0.75) 14%,
+      rgba(0, 0, 0, 0.95) 18%,
+      #000 21%,
+      #000 89%,
+      rgba(0, 0, 0, 0.6) 94%,
+      transparent 100%
+    );
+  }
+}
+
+/* Every focusable thing on the public site gets a visible ring. Burgundy on the ivory base; the
+   dark surfaces below (and in glass.css) switch to champagne. This default must stay above them. */
+.public-luxury :focus-visible {
+  outline: 2px solid var(--brand-burgundy-700);
+  outline-offset: 2px;
+}
+
+.surface-ivory :focus-visible,
+.surface-ivory-alt :focus-visible {
+  outline: 2px solid var(--brand-burgundy-700);
+  outline-offset: 2px;
+}
+.surface-burgundy :focus-visible {
+  outline: 2px solid var(--brand-champagne-400);
+  outline-offset: 2px;
 }

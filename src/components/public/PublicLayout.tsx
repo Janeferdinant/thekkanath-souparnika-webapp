@@ -4,84 +4,83 @@ import { Building2, Calendar, Phone, MessageCircle } from 'lucide-react';
 import { PublicHeader } from './PublicHeader';
 import { PublicFooter } from './PublicFooter';
 import { VENUE_INFO } from '../../data/venueData';
+import { GlassPerformanceManager } from '../../glass/GlassPerformanceManager';
+import { GlassSurface } from '../../glass/GlassSurface';
+import { usePageMeta } from '../../hooks/usePageMeta';
+
+const DOCK_ITEM =
+  'min-h-[44px] flex flex-col items-center justify-center py-1 rounded-full transition-all';
+const DOCK_ACTIVE = 'text-brand-burgundy-900 font-bold bg-gradient-to-r from-brand-champagne-300 to-brand-champagne-500 shadow-sm';
+const DOCK_IDLE = 'text-brand-ivory-muted hover:text-brand-ivory-100 hover:bg-white/5';
 
 export const PublicLayout: React.FC = () => {
   const location = useLocation();
+  usePageMeta(location.pathname);
 
   return (
-    <div className="public-luxury min-h-screen flex flex-col selection:bg-rose-700 selection:text-white relative font-sans">
-      {/* Main sticky luxury navigation header */}
-      <PublicHeader />
+    <GlassPerformanceManager>
+      <div className="public-luxury min-h-screen flex flex-col selection:bg-brand-champagne-500 selection:text-brand-burgundy-900 relative font-public">
+        {/* Strip + sticky glass navigation */}
+        <PublicHeader />
 
-      {/* Main content body */}
-      <main className="flex-1 pb-24 lg:pb-0 relative z-10">
-        <Outlet />
-      </main>
+        {/* Main content body */}
+        <main className="flex-1 pb-24 lg:pb-0 relative z-10">
+          <Outlet />
+        </main>
 
-      {/* Footer */}
-      <PublicFooter />
+        {/* Footer */}
+        <PublicFooter />
 
-      {/* Mobile Fixed Bottom Navigation Dock (>=44px touch targets) */}
-      <nav
-        aria-label="Mobile quick actions"
-        className="fixed bottom-2.5 inset-x-3 z-50 lg:hidden rounded-full bg-[#18070c]/85 backdrop-blur-xl border border-[rgba(226,184,178,0.24)] shadow-luxury py-1 px-2.5"
-      >
-        <div className="max-w-md mx-auto grid grid-cols-5 gap-1 text-center">
-          <Link
-            to="/halls"
-            className={`min-h-[44px] flex flex-col items-center justify-center py-1 rounded-full transition-all ${
-              location.pathname === '/halls'
-                ? 'text-[#2c0c15] font-bold bg-gradient-to-r from-[#e8c7bc] to-[#c58e91] shadow-sm'
-                : 'text-[rgba(203,184,185,0.85)] hover:text-[#f7efe7]'
-            }`}
-          >
-            <Building2 className="w-4 h-4 mb-0.5" />
-            <span className="text-[10px] tracking-tight">Venue</span>
-          </Link>
+        {/* Mobile Fixed Bottom Navigation Dock (>=44px touch targets) */}
+        <GlassSurface
+          as="nav"
+          tone="dark"
+          elevation="raised"
+          aria-label="Mobile quick actions"
+          className="glass-dock fixed bottom-2.5 inset-x-3 z-50 lg:hidden py-1 px-2.5"
+        >
+          <div className="max-w-md mx-auto grid grid-cols-5 gap-1 text-center">
+            <Link
+              to="/halls"
+              className={`${DOCK_ITEM} ${location.pathname === '/halls' ? DOCK_ACTIVE : DOCK_IDLE}`}
+            >
+              <Building2 className="w-4 h-4 mb-0.5" />
+              <span className="text-[10px] tracking-tight">Venue</span>
+            </Link>
 
-          <Link
-            to="/halls#sessions"
-            className={`min-h-[44px] flex flex-col items-center justify-center py-1 rounded-full transition-all ${
-              location.hash === '#sessions'
-                ? 'text-[#2c0c15] font-bold bg-gradient-to-r from-[#e8c7bc] to-[#c58e91] shadow-sm'
-                : 'text-[rgba(203,184,185,0.85)] hover:text-[#f7efe7]'
-            }`}
-          >
-            <Calendar className="w-4 h-4 mb-0.5 text-[#e7cfaf]" />
-            <span className="text-[10px] tracking-tight">Sessions</span>
-          </Link>
+            <Link
+              to="/halls#sessions"
+              className={`${DOCK_ITEM} ${location.hash === '#sessions' ? DOCK_ACTIVE : DOCK_IDLE}`}
+            >
+              <Calendar className="w-4 h-4 mb-0.5" />
+              <span className="text-[10px] tracking-tight">Sessions</span>
+            </Link>
 
-          <Link
-            to="/enquire"
-            className={`min-h-[44px] flex flex-col items-center justify-center py-1 rounded-full transition-all ${
-              location.pathname.startsWith('/enquire')
-                ? 'text-[#2c0c15] font-bold bg-gradient-to-r from-[#e8c7bc] to-[#c58e91] shadow-sm'
-                : 'text-[rgba(203,184,185,0.85)] hover:text-[#f7efe7]'
-            }`}
-          >
-            <Calendar className="w-4 h-4 mb-0.5 text-[#c58e91]" />
-            <span className="text-[10px] tracking-tight font-medium">Enquire</span>
-          </Link>
+            <Link
+              to="/enquire"
+              className={`${DOCK_ITEM} ${location.pathname.startsWith('/enquire') ? DOCK_ACTIVE : DOCK_IDLE}`}
+            >
+              <Calendar className="w-4 h-4 mb-0.5" />
+              <span className="text-[10px] tracking-tight font-medium">Enquire</span>
+            </Link>
 
-          <a
-            href={`tel:${VENUE_INFO.phones[0]}`}
-            className="min-h-[44px] flex flex-col items-center justify-center py-1 rounded-full text-[rgba(203,184,185,0.85)] hover:text-[#f7efe7] hover:bg-white/5 transition-all"
-          >
-            <Phone className="w-4 h-4 mb-0.5 text-[#e2b8b2]" />
-            <span className="text-[10px] tracking-tight">Call</span>
-          </a>
+            <a href={`tel:${VENUE_INFO.phones[0]}`} className={`${DOCK_ITEM} ${DOCK_IDLE}`}>
+              <Phone className="w-4 h-4 mb-0.5 text-brand-champagne-400" />
+              <span className="text-[10px] tracking-tight">Call</span>
+            </a>
 
-          <a
-            href={VENUE_INFO.whatsappUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="min-h-[44px] flex flex-col items-center justify-center py-1 rounded-full text-emerald-400 hover:text-emerald-300 hover:bg-white/5 transition-all"
-          >
-            <MessageCircle className="w-4 h-4 mb-0.5" />
-            <span className="text-[10px] tracking-tight font-medium">WhatsApp</span>
-          </a>
-        </div>
-      </nav>
-    </div>
+            <a
+              href={VENUE_INFO.whatsappUrl}
+              target="_blank"
+              rel="noreferrer"
+              className={`${DOCK_ITEM} text-emerald-400 hover:text-emerald-300 hover:bg-white/5`}
+            >
+              <MessageCircle className="w-4 h-4 mb-0.5" />
+              <span className="text-[10px] tracking-tight font-medium">WhatsApp</span>
+            </a>
+          </div>
+        </GlassSurface>
+      </div>
+    </GlassPerformanceManager>
   );
 };

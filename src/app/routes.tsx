@@ -1,42 +1,53 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import React, { lazy, Suspense } from 'react';
+import { createBrowserRouter, Navigate, type RouteObject } from 'react-router-dom';
 import { PublicLayout } from '../components/public/PublicLayout';
-import { AdminLayout } from '../components/admin/AdminLayout';
-
-// Public Pages
 import { HomePage } from '../features/public/HomePage';
-import { HallsPage } from '../features/public/HallsPage';
-import { HallDetailPage } from '../features/public/HallDetailPage';
-import { FacilitiesPage } from '../features/public/FacilitiesPage';
-import { GalleryPage } from '../features/public/GalleryPage';
-import { EnquirePage } from '../features/public/EnquirePage';
-import { ContactPage } from '../features/public/ContactPage';
-import { FAQPage } from '../features/public/FAQPage';
+import { RouteFallback } from './RouteFallback';
+import { RouteError } from './RouteError';
 
-// Admin Pages
-import { OverviewPage } from '../features/admin/OverviewPage';
-import { EnquiriesPage } from '../features/admin/EnquiriesPage';
-import { CalendarPage } from '../features/admin/CalendarPage';
-import { BookingsPage } from '../features/admin/BookingsPage';
-import { CustomersPage } from '../features/admin/CustomersPage';
-import { OperationsPage } from '../features/admin/OperationsPage';
-import { FinancePage } from '../features/admin/FinancePage';
-import { StaffPage } from '../features/admin/StaffPage';
-import { VendorsPage } from '../features/admin/VendorsPage';
-import { MaintenancePage } from '../features/admin/MaintenancePage';
-import { MarketingPage } from '../features/admin/MarketingPage';
-import { ReportsPage } from '../features/admin/ReportsPage';
-import { DocumentsPage } from '../features/admin/DocumentsPage';
-import { AICopilotPage } from '../features/admin/AICopilotPage';
-import { SettingsPage } from '../features/admin/SettingsPage';
-import { AuditLogPage } from '../features/admin/AuditLogPage';
-import { LoginPage } from '../features/auth/LoginPage';
-import { ProtectedRoute } from '../components/auth/ProtectedRoute';
+// Everything except the home page and its layout is loaded on demand.
+const AdminRoot = lazy(() => import('./AdminRoot').then((m) => ({ default: m.AdminRoot })));
+const AdminLayout = lazy(() => import('../components/admin/AdminLayout').then((m) => ({ default: m.AdminLayout })));
+const ProtectedRoute = lazy(() => import('../components/auth/ProtectedRoute').then((m) => ({ default: m.ProtectedRoute })));
+const LoginPage = lazy(() => import('../features/auth/LoginPage').then((m) => ({ default: m.LoginPage })));
+const HallsPage = lazy(() => import('../features/public/HallsPage').then((m) => ({ default: m.HallsPage })));
+const HallDetailPage = lazy(() => import('../features/public/HallDetailPage').then((m) => ({ default: m.HallDetailPage })));
+const FacilitiesPage = lazy(() => import('../features/public/FacilitiesPage').then((m) => ({ default: m.FacilitiesPage })));
+const GalleryPage = lazy(() => import('../features/public/GalleryPage').then((m) => ({ default: m.GalleryPage })));
+const EnquirePage = lazy(() => import('../features/public/EnquirePage').then((m) => ({ default: m.EnquirePage })));
+const ContactPage = lazy(() => import('../features/public/ContactPage').then((m) => ({ default: m.ContactPage })));
+const FAQPage = lazy(() => import('../features/public/FAQPage').then((m) => ({ default: m.FAQPage })));
+const OverviewPage = lazy(() => import('../features/admin/OverviewPage').then((m) => ({ default: m.OverviewPage })));
+const EnquiriesPage = lazy(() => import('../features/admin/EnquiriesPage').then((m) => ({ default: m.EnquiriesPage })));
+const CalendarPage = lazy(() => import('../features/admin/CalendarPage').then((m) => ({ default: m.CalendarPage })));
+const BookingsPage = lazy(() => import('../features/admin/BookingsPage').then((m) => ({ default: m.BookingsPage })));
+const CustomersPage = lazy(() => import('../features/admin/CustomersPage').then((m) => ({ default: m.CustomersPage })));
+const OperationsPage = lazy(() => import('../features/admin/OperationsPage').then((m) => ({ default: m.OperationsPage })));
+const FinancePage = lazy(() => import('../features/admin/FinancePage').then((m) => ({ default: m.FinancePage })));
+const StaffPage = lazy(() => import('../features/admin/StaffPage').then((m) => ({ default: m.StaffPage })));
+const VendorsPage = lazy(() => import('../features/admin/VendorsPage').then((m) => ({ default: m.VendorsPage })));
+const MaintenancePage = lazy(() => import('../features/admin/MaintenancePage').then((m) => ({ default: m.MaintenancePage })));
+const MarketingPage = lazy(() => import('../features/admin/MarketingPage').then((m) => ({ default: m.MarketingPage })));
+const ReportsPage = lazy(() => import('../features/admin/ReportsPage').then((m) => ({ default: m.ReportsPage })));
+const DocumentsPage = lazy(() => import('../features/admin/DocumentsPage').then((m) => ({ default: m.DocumentsPage })));
+const AICopilotPage = lazy(() => import('../features/admin/AICopilotPage').then((m) => ({ default: m.AICopilotPage })));
+const SettingsPage = lazy(() => import('../features/admin/SettingsPage').then((m) => ({ default: m.SettingsPage })));
+const AuditLogPage = lazy(() => import('../features/admin/AuditLogPage').then((m) => ({ default: m.AuditLogPage })));
 
-export const router = createBrowserRouter([
+const withSuspense = (element: React.ReactElement) => (
+  <Suspense fallback={<RouteFallback />}>{element}</Suspense>
+);
+
+export const routes: RouteObject[] = [
   // Authentication
   {
     path: '/login',
-    element: <LoginPage />,
+    errorElement: <RouteError fullPage />,
+    element: withSuspense(
+      <AdminRoot>
+        <LoginPage />
+      </AdminRoot>,
+    ),
   },
 
   // Public Routes
@@ -44,43 +55,52 @@ export const router = createBrowserRouter([
     path: '/',
     element: <PublicLayout />,
     children: [
-      { index: true, element: <HomePage /> },
-      { path: 'halls', element: <HallsPage /> },
-      { path: 'halls/:slug', element: <HallDetailPage /> },
-      { path: 'facilities', element: <FacilitiesPage /> },
-      { path: 'gallery', element: <GalleryPage /> },
-      { path: 'tour', element: <Navigate to="/gallery" replace /> },
-      { path: 'enquire', element: <EnquirePage /> },
-      { path: 'contact', element: <ContactPage /> },
-      { path: 'faq', element: <FAQPage /> },
+      {
+        // a page that fails to load shows its message inside the site header and footer
+        errorElement: <RouteError />,
+        children: [
+          { index: true, element: <HomePage /> },
+          { path: 'halls', element: withSuspense(<HallsPage />) },
+          { path: 'halls/:slug', element: withSuspense(<HallDetailPage />) },
+          { path: 'facilities', element: withSuspense(<FacilitiesPage />) },
+          { path: 'gallery', element: withSuspense(<GalleryPage />) },
+          { path: 'tour', element: <Navigate to="/gallery" replace /> },
+          { path: 'enquire', element: withSuspense(<EnquirePage />) },
+          { path: 'contact', element: withSuspense(<ContactPage />) },
+          { path: 'faq', element: withSuspense(<FAQPage />) },
+        ],
+      },
     ],
   },
 
   // Admin Routes (Protected)
   {
     path: '/admin',
-    element: (
-      <ProtectedRoute>
-        <AdminLayout />
-      </ProtectedRoute>
+    errorElement: <RouteError fullPage />,
+    element: withSuspense(
+      <AdminRoot>
+        <ProtectedRoute>
+          <AdminLayout />
+        </ProtectedRoute>
+      </AdminRoot>,
     ),
     children: [
-      { index: true, element: <OverviewPage /> },
-      { path: 'enquiries', element: <EnquiriesPage /> },
-      { path: 'calendar', element: <CalendarPage /> },
-      { path: 'bookings', element: <BookingsPage /> },
-      { path: 'customers', element: <CustomersPage /> },
-      { path: 'operations', element: <OperationsPage /> },
-      { path: 'finance', element: <FinancePage /> },
-      { path: 'staff', element: <StaffPage /> },
-      { path: 'vendors', element: <VendorsPage /> },
-      { path: 'maintenance', element: <MaintenancePage /> },
-      { path: 'marketing', element: <MarketingPage /> },
-      { path: 'reports', element: <ReportsPage /> },
-      { path: 'documents', element: <DocumentsPage /> },
-      { path: 'ai', element: <AICopilotPage /> },
-      { path: 'settings', element: <SettingsPage /> },
-      { path: 'audit', element: <AuditLogPage /> },
+      { index: true, element: withSuspense(<OverviewPage />) },
+      { path: 'enquiries', element: withSuspense(<EnquiriesPage />) },
+      { path: 'calendar', element: withSuspense(<CalendarPage />) },
+      { path: 'bookings', element: withSuspense(<BookingsPage />) },
+      { path: 'customers', element: withSuspense(<CustomersPage />) },
+      { path: 'operations', element: withSuspense(<OperationsPage />) },
+      { path: 'finance', element: withSuspense(<FinancePage />) },
+      { path: 'staff', element: withSuspense(<StaffPage />) },
+      { path: 'vendors', element: withSuspense(<VendorsPage />) },
+      { path: 'maintenance', element: withSuspense(<MaintenancePage />) },
+      { path: 'marketing', element: withSuspense(<MarketingPage />) },
+      { path: 'reports', element: withSuspense(<ReportsPage />) },
+      { path: 'documents', element: withSuspense(<DocumentsPage />) },
+      { path: 'ai', element: withSuspense(<AICopilotPage />) },
+      { path: 'settings', element: withSuspense(<SettingsPage />) },
+      { path: 'audit', element: withSuspense(<AuditLogPage />) },
     ],
   },
 
@@ -89,4 +109,6 @@ export const router = createBrowserRouter([
     path: '*',
     element: <Navigate to="/" replace />,
   },
-]);
+];
+
+export const router = createBrowserRouter(routes);
