@@ -8,7 +8,6 @@ import { join } from 'node:path';
  */
 export const PENDING_MIGRATION: string[] = [
   'src/components/public/PreferredCaterersCard.tsx',
-  'src/components/public/PublicFooter.tsx',
   'src/features/public/ContactPage.tsx',
   'src/features/public/EnquirePage.tsx',
   'src/features/public/FAQPage.tsx',
@@ -16,7 +15,6 @@ export const PENDING_MIGRATION: string[] = [
   'src/features/public/GalleryPage.tsx',
   'src/features/public/HallDetailPage.tsx',
   'src/features/public/HallsPage.tsx',
-  'src/features/public/HomePage.tsx',
 ];
 
 const COLOUR = /#[0-9a-fA-F]{3,8}\b|rgba?\(/;
