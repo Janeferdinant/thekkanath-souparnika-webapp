@@ -3,10 +3,6 @@ import { Link } from 'react-router-dom';
 import {
   Calendar,
   Sparkles,
-  Zap,
-  Droplets,
-  Car,
-  Wind,
   CheckCircle2,
   ArrowRight,
   ShieldCheck,
@@ -17,35 +13,12 @@ import {
   Compass,
   Users,
 } from 'lucide-react';
-import { VENUE_INFO, HALLS, FACILITIES, FAQS } from '../../data/venueData';
+import { VENUE_INFO, HALLS, FACILITIES, FAQS, HOME_FAQ_IDS } from '../../data/venueData';
 import { Modal } from '../../components/ui/Modal';
 import { AmbientParticles } from '../../components/public/AmbientParticles';
 
 export const HomePage: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
-  const trustBadges = [
-    {
-      icon: Wind,
-      title: 'Air-Conditioned Comfort',
-      desc: 'Stage, Welcome & Dining halls are climate-controlled with modern AC units',
-    },
-    {
-      icon: Zap,
-      title: 'Solar Hybrid Power',
-      desc: 'Continuous backup power with solar hybrid inverter & battery reserve',
-    },
-    {
-      icon: Droplets,
-      title: 'Tested Well Water',
-      desc: 'Tested and certified by Kerala Water Authority for absolute purity',
-    },
-    {
-      icon: Car,
-      title: 'On-Site Compound Parking',
-      desc: 'Spacious secure compound parking for 40–50 cars on-site',
-    },
-  ];
 
   return (
     <div className="space-y-16 sm:space-y-24 pb-20">
@@ -70,22 +43,27 @@ export const HomePage: React.FC = () => {
 
           {/* Hero Content */}
           <div className="relative z-10 p-6 sm:p-12 lg:p-16 max-w-3xl space-y-6 sm:space-y-7">
+            {/* Brand heading */}
+            <h1 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-medium tracking-tight text-[#e7cfaf] leading-none">
+              Thekkanath Souparnika
+            </h1>
+
             {/* Editorial Eyebrow */}
             <div className="inline-flex items-center gap-2.5 text-[10px] sm:text-xs uppercase tracking-[0.2em] font-semibold text-[#e2b8b2]">
               <span className="w-6 h-[1px] bg-[#c58e91]" />
-              <span>A Warm Family Venue in Thrissur</span>
+              <span>Traditional & Contemporary Celebrations in Thrissur</span>
             </div>
 
             {/* Cormorant Garamond Editorial Display Headline */}
-            <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-[#f7efe7] leading-[1.02]">
+            <p className="font-serif text-4xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-[#f7efe7] leading-[1.02]">
               Where family milestones <br />
               <em className="text-[#e2b8b2] not-italic font-normal">
                 feel truly special.
               </em>
-            </h1>
+            </p>
 
             <p className="text-sm sm:text-base text-[#e4d2d0] leading-relaxed max-w-xl font-normal">
-              Four connected halls—three fully air-conditioned—arranged for weddings, engagements, baptisms, and family celebrations. Includes 100-seat batch dining for traditional sadhya, easy ground-floor access for elders, and ample on-site parking at Market Junction, Nellikunnu.
+              Four connected halls—three fully air-conditioned—arranged for weddings, engagements, baptisms, and family celebrations. Includes 100-seat batch dining for traditional sadhya and easy ground-floor access for elders, at Market Junction, Nellikunnu.
             </p>
 
             {/* Responsive Actions with Specular Highlight Sheen */}
@@ -104,22 +82,6 @@ export const HomePage: React.FC = () => {
                 <Calendar className="w-3.5 h-3.5 text-[#e7cfaf]" />
                 <span>Check Date / Enquire</span>
               </Link>
-            </div>
-
-            {/* Key Venue Distinction Note */}
-            <div className="pt-6 border-t border-[rgba(226,184,178,0.18)] flex flex-wrap items-center gap-4 sm:gap-6 text-xs text-[rgba(203,184,185,0.85)]">
-              <div className="flex items-center gap-2 border-l border-[#8f4b58] pl-3">
-                <Users className="w-3.5 h-3.5 text-[#e7cfaf]" />
-                <span>Comfortably hosts 250–300 guests (up to 400)</span>
-              </div>
-              <div className="flex items-center gap-2 border-l border-[#8f4b58] pl-3">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#e7cfaf]" />
-                <span>3 Air-Conditioned Halls</span>
-              </div>
-              <div className="flex items-center gap-2 border-l border-[#8f4b58] pl-3">
-                <Car className="w-3.5 h-3.5 text-[#e7cfaf]" />
-                <span>40–50 Cars Compound Parking</span>
-              </div>
             </div>
           </div>
 
@@ -142,65 +104,41 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 2. Key Details Row — 4 Refined Editorial Metric Tiles */}
+      {/* 2. Venue Highlights — one strip of editorial metric tiles */}
       <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-[1px] bg-[rgba(226,184,178,0.22)] border border-[rgba(226,184,178,0.22)] rounded-3xl overflow-hidden shadow-luxury">
           <div className="bg-[#240810]/85 p-6 sm:p-8 text-center space-y-1">
             <strong className="block font-serif text-2xl sm:text-3xl font-medium text-[#e2b8b2]">
-              4 Spaces
+              4 Halls
             </strong>
             <span className="text-xs text-[rgba(203,184,185,0.85)]">
-              Stage, Welcome, Dining & Open
+              Stage, Welcome, Dining &amp; Open
             </span>
           </div>
           <div className="bg-[#240810]/85 p-6 sm:p-8 text-center space-y-1">
             <strong className="block font-serif text-2xl sm:text-3xl font-medium text-[#e7cfaf]">
-              250–300
+              250–300 Guests
             </strong>
             <span className="text-xs text-[rgba(203,184,185,0.85)]">
-              Ideal gathering size (Up to 400)
+              Comfortable size, up to 400
             </span>
           </div>
           <div className="bg-[#240810]/85 p-6 sm:p-8 text-center space-y-1">
             <strong className="block font-serif text-2xl sm:text-3xl font-medium text-[#e2b8b2]">
-              40–50 Cars
+              3 AC Halls
             </strong>
             <span className="text-xs text-[rgba(203,184,185,0.85)]">
-              Dedicated compound parking
+              Stage, Welcome &amp; Dining
             </span>
           </div>
           <div className="bg-[#240810]/85 p-6 sm:p-8 text-center space-y-1">
             <strong className="block font-serif text-2xl sm:text-3xl font-medium text-[#e7cfaf]">
-              Solar Hybrid
+              One Event at a Time
             </strong>
             <span className="text-xs text-[rgba(203,184,185,0.85)]">
-              Uninterrupted battery backup
+              All four halls reserved for you
             </span>
           </div>
-        </div>
-      </section>
-
-      {/* 3. Trust Badges Row — Translucent Liquid Glass Cards */}
-      <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {trustBadges.map((badge, idx) => (
-            <div
-              key={idx}
-              className="p-6 rounded-3xl glass-panel border border-[rgba(226,184,178,0.22)] shadow-subtle hover:border-[rgba(226,184,178,0.45)] transition-all duration-300 hover:-translate-y-1 flex items-start gap-4"
-            >
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#451323] to-[#2f0b16] text-[#e7cfaf] border border-[rgba(226,184,178,0.3)] flex items-center justify-center shrink-0 shadow-md">
-                <badge.icon className="w-5 h-5" />
-              </div>
-              <div>
-                <h4 className="text-base font-serif font-medium text-[#f7efe7] leading-tight">
-                  {badge.title}
-                </h4>
-                <p className="text-xs text-[rgba(203,184,185,0.85)] mt-1.5 leading-relaxed">
-                  {badge.desc}
-                </p>
-              </div>
-            </div>
-          ))}
         </div>
       </section>
 
@@ -308,7 +246,7 @@ export const HomePage: React.FC = () => {
               Thoughtful Amenities for You and Your Guests
             </h2>
             <p className="text-xs sm:text-sm text-[rgba(203,184,185,0.85)] leading-relaxed">
-              From uninterrupted solar backup power and certified drinking water to ample on-site parking, we take care of the essentials so your day runs smoothly.
+              From uninterrupted solar backup power to certified drinking water, we take care of the essentials so your day runs smoothly.
             </p>
           </div>
 
@@ -458,10 +396,6 @@ export const HomePage: React.FC = () => {
             <div className="space-y-2.5 text-xs text-[rgba(203,184,185,0.9)] pt-2">
               <div className="flex items-center gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-[#c58e91]" />
-                <span>On-site compound parking for 40 to 50 cars</span>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-[#c58e91]" />
                 <span>Immediate PWD bus route stop connectivity</span>
               </div>
               <div className="flex items-center gap-2.5">
@@ -524,9 +458,9 @@ export const HomePage: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-          {FAQS.slice(0, 4).map((faq, idx) => (
+          {HOME_FAQ_IDS.map((id) => FAQS.find((f) => f.id === id)!).map((faq) => (
             <div
-              key={idx}
+              key={faq.id}
               className="p-6 rounded-3xl glass-panel border border-[rgba(226,184,178,0.22)] space-y-2 shadow-subtle hover:border-[rgba(226,184,178,0.45)] transition-colors"
             >
               <h4 className="font-serif text-lg font-medium text-[#f7efe7] leading-snug">

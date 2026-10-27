@@ -1,10 +1,11 @@
 import React from 'react';
 import { describe, it, expect } from 'vitest';
-import { render, fireEvent, within } from '@testing-library/react';
+import { render, fireEvent, within, screen } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { PublicHeader } from '../src/components/public/PublicHeader';
 import { PublicFooter } from '../src/components/public/PublicFooter';
 import { FAQS, HOME_FAQ_IDS } from '../src/data/venueData';
+import { HomePage } from '../src/features/public/HomePage';
 import { HallsPage } from '../src/features/public/HallsPage';
 import { HallDetailPage } from '../src/features/public/HallDetailPage';
 import { FacilitiesPage } from '../src/features/public/FacilitiesPage';
@@ -61,6 +62,7 @@ it('every homepage FAQ id resolves to exactly one FAQ', () => {
 
 // [name, element, path, routePath, parking (exact), capacity [min, max]]
 const PAGES = [
+  ['Home', <HomePage />, '/', '/', 0, [1, 1]],
   ['Halls', <HallsPage />, '/halls', '/halls', 0, [1, 1]],
   ['Stage Hall detail', <HallDetailPage />, '/halls/stage-hall', '/halls/:slug', 0, [0, 0]],
   ['Dining Hall detail', <HallDetailPage />, '/halls/dining-hall', '/halls/:slug', 0, [0, 0]],
@@ -104,5 +106,30 @@ describe('FAQ page repeated facts', () => {
     expect(headings.length).toBe(FAQS.length);
     expect(parking).toBe(1);
     expect(capacity).toBe(1);
+  });
+});
+
+describe('homepage hero', () => {
+  it('uses the venue name as the h1 with the required hero lines', () => {
+    render(<MemoryRouter><HomePage /></MemoryRouter>);
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Thekkanath Souparnika');
+    expect(screen.getByText('Traditional & Contemporary Celebrations in Thrissur')).toBeInTheDocument();
+    const body = document.body.textContent ?? '';
+    expect(body).toContain('Where family milestones');
+    expect(body).toContain('feel truly special.');
+    expect(body).not.toContain('A Warm Family Venue in Thrissur');
+  });
+  it('keeps the hero actions', () => {
+    render(<MemoryRouter><HomePage /></MemoryRouter>);
+    expect(screen.getByRole('link', { name: /Explore the Halls/ })).toHaveAttribute('href', '/halls');
+    expect(screen.getAllByRole('link', { name: /Check Date \/ Enquire/ })[0]).toHaveAttribute('href', '/enquire');
+  });
+  it('previews four FAQs without the capacity or parking questions', () => {
+    render(<MemoryRouter><HomePage /></MemoryRouter>);
+    expect(screen.queryByText('What is the parking capacity?')).toBeNull();
+    expect(screen.queryByText('How many guests can Thekkanath Souparnika accommodate?')).toBeNull();
+    for (const id of HOME_FAQ_IDS) {
+      expect(screen.getByText(FAQS.find((f) => f.id === id)!.question)).toBeInTheDocument();
+    }
   });
 });
