@@ -93,6 +93,14 @@ describe('Google Fonts request', () => {
     expect(href).not.toMatch(/Cormorant\+Garamond:ital/);
   });
 
+  it('does not block first paint: loaded as a preloaded stylesheet, with a no-script fallback', () => {
+    // a render-blocking font stylesheet delays the first paint of everything; text shows in the system
+    // font first and swaps (font-display: swap) once the fonts arrive
+    expect(html).toMatch(/<link\s+rel="preload"\s+as="style"\s+href="https:\/\/fonts\.googleapis\.com\/css2[^"]+"\s+onload="this\.onload=null;this\.rel='stylesheet'"/);
+    expect(html).toMatch(/<noscript>\s*<link\s+rel="stylesheet"\s+href="https:\/\/fonts\.googleapis\.com\/css2[^"]+"\s*\/?>\s*<\/noscript>/);
+    expect(html).not.toMatch(/<link\s+href="https:\/\/fonts\.googleapis\.com\/css2[^"]+"\s+rel="stylesheet"/);
+  });
+
   it('keeps every Inter weight the site uses', () => {
     expect(href).toContain('Inter:wght@300;400;500;600;700');
   });

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { getCardRenderer, onCardRendererDisabled } from './renderer/cardRefraction';
+import { onCardRendererDisabled } from './renderer/cardEvents';
 import { useGlassCapabilities } from './useGlassCapabilities';
 
 interface RefractiveOverlayProps {
@@ -12,11 +12,15 @@ interface RefractiveOverlayProps {
 /** How long to wait after a hover starts or ends for the photo's zoom transition to settle. */
 const HOVER_SETTLE_MS = 750;
 
+/** The renderer is its own chunk: fetched, and its WebGL context created, only when a card first needs a draw. */
+const loadCardRenderer = () => import('./renderer/cardRefraction').then((m) => m.getCardRenderer());
+
 /**
  * A label on a photo (a badge, a caption chip). On an enhanced device it draws the photo behind
  * itself with a refracted rim, once when its card scrolls into view and again after a hover
- * settles; it never animates and never runs while off-screen. On every other device, or if the
- * shared renderer is unavailable or over budget, it is simply the plain translucent chip.
+ * settles; it never animates and never runs while off-screen. Nothing touches WebGL (no chunk
+ * fetch, no context, no shader compile) until the first card is actually on screen. On every other
+ * device, or if the shared renderer is unavailable or over budget, it is simply the plain chip.
  */
 export const RefractiveOverlay: React.FC<RefractiveOverlayProps> = ({ imageRef, className, children }) => {
   const { tier, reportReason } = useGlassCapabilities();
@@ -28,10 +32,11 @@ export const RefractiveOverlay: React.FC<RefractiveOverlayProps> = ({ imageRef, 
   const [active, setActive] = useState(false);
 
   useEffect(() => {
-    if (tier !== 'enhanced' || !getCardRenderer()) {
+    if (tier !== 'enhanced') {
       setActive(false);
       return;
     }
+    // Optimistic: the canvas is only a cheap element until the first draw proves WebGL works.
     setActive(true);
     return onCardRendererDisabled(() => {
       setActive(false);
@@ -44,13 +49,16 @@ export const RefractiveOverlay: React.FC<RefractiveOverlayProps> = ({ imageRef, 
     if (!active || !wrap) return;
 
     let drawn = false;
+    let alive = true;
     const timers = new Set<number>();
 
-    const draw = () => {
+    const draw = async () => {
       const canvas = canvasRef.current;
       const image = imageRef.current;
       if (!canvas || !image || !image.complete || image.naturalWidth === 0) return;
-      const renderer = getCardRenderer();
+      drawn = true; // claim it now so a second trigger does not start a second load
+      const renderer = await loadCardRenderer();
+      if (!alive) return;
       if (!renderer) {
         setActive(false);
         return;
@@ -75,7 +83,6 @@ export const RefractiveOverlay: React.FC<RefractiveOverlayProps> = ({ imageRef, 
         cropY: Math.round(top * dpr),
       });
       canvas.style.opacity = '1';
-      drawn = true;
     };
 
     const later = (fn: () => void, ms: number) => {
@@ -92,7 +99,7 @@ export const RefractiveOverlay: React.FC<RefractiveOverlayProps> = ({ imageRef, 
     let inViewOnce = false;
     const tryFirstDraw = () => {
       if (!inViewOnce || drawn) return;
-      draw();
+      void draw();
     };
     if (typeof IntersectionObserver !== 'undefined') {
       const observer = new IntersectionObserver((entries) => {
@@ -120,7 +127,7 @@ export const RefractiveOverlay: React.FC<RefractiveOverlayProps> = ({ imageRef, 
     // static between triggers: redraw only after a hover settles or the window is resized
     const card = wrap.closest('.group');
     if (card) {
-      const onHover = () => later(() => drawn && draw(), HOVER_SETTLE_MS);
+      const onHover = () => later(() => drawn && void draw(), HOVER_SETTLE_MS);
       card.addEventListener('pointerenter', onHover);
       card.addEventListener('pointerleave', onHover);
       cleanups.push(() => {
@@ -128,11 +135,12 @@ export const RefractiveOverlay: React.FC<RefractiveOverlayProps> = ({ imageRef, 
         card.removeEventListener('pointerleave', onHover);
       });
     }
-    const onResize = () => later(() => drawn && draw(), 150);
+    const onResize = () => later(() => drawn && void draw(), 150);
     window.addEventListener('resize', onResize, { passive: true });
     cleanups.push(() => window.removeEventListener('resize', onResize));
 
     return () => {
+      alive = false;
       cleanups.forEach((fn) => fn());
       timers.forEach((id) => window.clearTimeout(id));
     };

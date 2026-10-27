@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
+import { describe, it, expect, vi, afterEach, beforeAll, beforeEach } from 'vitest';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { HeroSection } from '../src/components/public/HeroSection';
@@ -27,6 +27,12 @@ const ENHANCED: GlassEnvironment = {
   hardwareConcurrency: 8,
   sessionDowngrade: null,
 };
+
+// Load the lazily imported renderer chunk once up front, so "it was not mounted" assertions below can
+// only mean the component chose not to mount it, not that the chunk was still being fetched.
+beforeAll(async () => {
+  await import('../src/glass/renderer/HeroRefraction');
+});
 
 let rafQueue: FrameRequestCallback[] = [];
 let resizeCallbacks: ResizeObserverCallback[] = [];
@@ -100,6 +106,14 @@ const renderHero = (downgrade = vi.fn(), tier: 'enhanced' | 'lite' = 'enhanced')
   return { ...utils, frame, img, downgrade };
 };
 
+/** Advances fake time, then gives the lazily imported renderer chunk real time to resolve. */
+const settle = async (ms: number) => {
+  await act(async () => {
+    vi.advanceTimersByTime(ms);
+    await new Promise((resolve) => setTimeout(resolve, 80));
+  });
+};
+
 const mountRenderer = async (ctx: ReturnType<typeof renderHero>) => {
   fireEvent.load(ctx.img);
   await act(async () => {
@@ -126,6 +140,45 @@ describe('HeroRefraction mounting', () => {
     });
     expect(createSpy).not.toHaveBeenCalled();
     expect(ctx.frame.querySelector('canvas')).toBeNull();
+  });
+
+  it('waits for the window load event before starting, so it never competes with page load', async () => {
+    const original = Object.getOwnPropertyDescriptor(document, 'readyState');
+    Object.defineProperty(document, 'readyState', { value: 'loading', configurable: true });
+    try {
+      const ctx = renderHero();
+      fireEvent.load(ctx.img);
+      await settle(3000);
+      expect(createSpy).not.toHaveBeenCalled();
+
+      Object.defineProperty(document, 'readyState', { value: 'complete', configurable: true });
+      await act(async () => {
+        window.dispatchEvent(new Event('load'));
+      });
+      await settle(250);
+      await waitFor(() => expect(createSpy).toHaveBeenCalled());
+    } finally {
+      if (original) Object.defineProperty(document, 'readyState', original);
+      else delete (document as unknown as Record<string, unknown>).readyState;
+    }
+  });
+
+  it('does not start if the page is left before load completes', async () => {
+    const original = Object.getOwnPropertyDescriptor(document, 'readyState');
+    Object.defineProperty(document, 'readyState', { value: 'loading', configurable: true });
+    try {
+      const ctx = renderHero();
+      fireEvent.load(ctx.img);
+      ctx.unmount();
+      await act(async () => {
+        window.dispatchEvent(new Event('load'));
+      });
+      await settle(1000);
+      expect(createSpy).not.toHaveBeenCalled();
+    } finally {
+      if (original) Object.defineProperty(document, 'readyState', original);
+      else delete (document as unknown as Record<string, unknown>).readyState;
+    }
   });
 
   it('leaves no canvas when the hero image errors (slow or failed image)', async () => {

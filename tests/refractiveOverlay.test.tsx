@@ -1,29 +1,27 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { act, render, screen } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import { createRef } from 'react';
 import { RefractiveOverlay } from '../src/glass/RefractiveOverlay';
 import { GlassContext } from '../src/glass/GlassPerformanceManager';
+import { emitCardRendererDisabled, resetCardRendererListeners } from '../src/glass/renderer/cardEvents';
 
 const renderTo = vi.fn();
 const fakeRenderer = { disabled: false, renderTo };
-let disabledListeners: (() => void)[] = [];
+const getCardRenderer = vi.fn();
 let available = true;
 
+// The real card renderer is a lazily loaded chunk; here it is replaced by a recording fake.
 vi.mock('../src/glass/renderer/cardRefraction', () => ({
-  getCardRenderer: () => (available ? fakeRenderer : null),
-  onCardRendererDisabled: (cb: () => void) => {
-    disabledListeners.push(cb);
-    return () => {
-      disabledListeners = disabledListeners.filter((l) => l !== cb);
-    };
-  },
+  getCardRenderer: () => getCardRenderer(),
 }));
 
 let intersectionCallbacks: IntersectionObserverCallback[] = [];
 
 beforeEach(() => {
   renderTo.mockClear();
-  disabledListeners = [];
+  getCardRenderer.mockClear();
+  getCardRenderer.mockImplementation(() => (available ? fakeRenderer : null));
+  resetCardRendererListeners();
   intersectionCallbacks = [];
   available = true;
   vi.stubGlobal(
@@ -48,14 +46,18 @@ afterEach(() => {
 const rect = (x: number, y: number, w: number, h: number) =>
   ({ left: x, top: y, width: w, height: h, right: x + w, bottom: y + h, x, y, toJSON: () => ({}) }) as DOMRect;
 
-const setup = (tier: 'enhanced' | 'lite' | 'fallback' = 'enhanced') => {
-  const reportReason = vi.fn();
+const makeImage = () => {
   const img = document.createElement('img');
   Object.defineProperty(img, 'complete', { value: true });
   Object.defineProperty(img, 'naturalWidth', { value: 640 });
   img.getBoundingClientRect = () => rect(0, 0, 400, 200);
+  return img;
+};
+
+const setup = (tier: 'enhanced' | 'lite' | 'fallback' = 'enhanced') => {
+  const reportReason = vi.fn();
   const imageRef = createRef<HTMLImageElement>() as { current: HTMLImageElement | null };
-  imageRef.current = img;
+  imageRef.current = makeImage();
 
   const utils = render(
     <GlassContext.Provider value={{ tier, reasons: [], pageVisible: true, downgrade: vi.fn(), reportReason }}>
@@ -66,11 +68,16 @@ const setup = (tier: 'enhanced' | 'lite' | 'fallback' = 'enhanced') => {
   );
   const wrap = utils.container.querySelector('[data-refractive-overlay]') as HTMLElement | null;
   if (wrap) wrap.getBoundingClientRect = () => rect(20, 20, 100, 30);
-  return { ...utils, wrap, img, reportReason };
+  return { ...utils, wrap, reportReason };
 };
 
-const intersect = (isIntersecting: boolean) =>
-  act(() => intersectionCallbacks.forEach((cb) => cb([{ isIntersecting } as IntersectionObserverEntry], {} as IntersectionObserver)));
+const intersect = async (isIntersecting: boolean) => {
+  await act(async () => {
+    intersectionCallbacks.forEach((cb) => cb([{ isIntersecting } as IntersectionObserverEntry], {} as IntersectionObserver));
+    // let the lazily imported renderer module resolve
+    await new Promise((resolve) => setTimeout(resolve, 0));
+  });
+};
 
 describe('RefractiveOverlay', () => {
   it('always shows its label content', () => {
@@ -78,15 +85,21 @@ describe('RefractiveOverlay', () => {
     expect(screen.getByText('Ground Floor')).toBeInTheDocument();
   });
 
-  it('does not draw anything while the card is off-screen', () => {
+  it('does not touch WebGL at all until its card is on screen', async () => {
     setup();
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+    // no context, no shader compile, no renderer chunk: the page is not slowed down at load
+    expect(getCardRenderer).not.toHaveBeenCalled();
     expect(renderTo).not.toHaveBeenCalled();
   });
 
-  it('draws once, statically, when the card scrolls into view', () => {
+  it('creates the shared renderer and draws once, statically, when the card scrolls into view', async () => {
     const { wrap } = setup();
-    intersect(true);
-    expect(renderTo).toHaveBeenCalledTimes(1);
+    await intersect(true);
+    await waitFor(() => expect(renderTo).toHaveBeenCalledTimes(1));
+    expect(getCardRenderer).toHaveBeenCalled();
     const [targetCanvas, , lens, area] = renderTo.mock.calls[0];
     expect(wrap!.contains(targetCanvas)).toBe(true);
     // 100x30 overlay at (20,20) on a 400x200 image at dpr 2 (desktop cap)
@@ -94,39 +107,35 @@ describe('RefractiveOverlay', () => {
     expect(targetCanvas.height).toBe(60);
     expect([...(lens as Float32Array)]).toEqual([40, (200 - 20 - 30) * 2, 200, 60, 0]);
     expect(area).toEqual({ width: 800, height: 400, cropX: 40, cropY: 40 });
-    intersect(true);
+    await intersect(true);
     expect(renderTo).toHaveBeenCalledTimes(1); // no repeated drawing without a trigger
   });
 
-  it('never draws on lite or fallback tiers', () => {
+  it('never loads or draws anything on lite or fallback tiers', async () => {
     setup('lite');
-    intersect(true);
+    await intersect(true);
     setup('fallback');
-    intersect(true);
+    await intersect(true);
+    expect(getCardRenderer).not.toHaveBeenCalled();
     expect(renderTo).not.toHaveBeenCalled();
   });
 
-  it('does not draw when WebGL is unavailable and keeps the plain label', () => {
+  it('keeps the plain label and drops its canvas when WebGL turns out to be unavailable', async () => {
     available = false;
-    setup();
-    intersect(true);
+    const { container } = setup();
+    await intersect(true);
+    await waitFor(() => expect(container.querySelector('canvas')).toBeNull());
     expect(renderTo).not.toHaveBeenCalled();
     expect(screen.getByText('Ground Floor')).toBeInTheDocument();
   });
 
-  it('redraws after a hover transition on its card, and not otherwise', () => {
-    vi.useFakeTimers();
+  it('redraws after a hover transition on its card, and not otherwise', async () => {
     const card = document.createElement('div');
     card.className = 'group';
     document.body.appendChild(card);
-    const reportReason = vi.fn();
-    const img = document.createElement('img');
-    Object.defineProperty(img, 'complete', { value: true });
-    Object.defineProperty(img, 'naturalWidth', { value: 640 });
-    img.getBoundingClientRect = () => rect(0, 0, 400, 200);
-    const imageRef = { current: img } as { current: HTMLImageElement | null };
+    const imageRef = { current: makeImage() } as { current: HTMLImageElement | null };
     const { container } = render(
-      <GlassContext.Provider value={{ tier: 'enhanced', reasons: [], pageVisible: true, downgrade: vi.fn(), reportReason }}>
+      <GlassContext.Provider value={{ tier: 'enhanced', reasons: [], pageVisible: true, downgrade: vi.fn(), reportReason: vi.fn() }}>
         <RefractiveOverlay imageRef={imageRef}>
           <span>chip</span>
         </RefractiveOverlay>
@@ -134,32 +143,33 @@ describe('RefractiveOverlay', () => {
       { container: card },
     );
     (container.querySelector('[data-refractive-overlay]') as HTMLElement).getBoundingClientRect = () => rect(20, 20, 100, 30);
-    intersect(true);
-    expect(renderTo).toHaveBeenCalledTimes(1);
+    await intersect(true);
+    await waitFor(() => expect(renderTo).toHaveBeenCalledTimes(1));
 
-    act(() => {
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+    await act(async () => {
       card.dispatchEvent(new Event('pointerenter'));
       vi.advanceTimersByTime(900);
     });
-    expect(renderTo).toHaveBeenCalledTimes(2);
     vi.useRealTimers();
+    await waitFor(() => expect(renderTo).toHaveBeenCalledTimes(2));
     card.remove();
   });
 
-  it('falls back to the plain label and reports the reason when the shared renderer disables itself', () => {
+  it('falls back to the plain label and reports the reason when the shared renderer disables itself', async () => {
     const { container, reportReason } = setup();
-    intersect(true);
-    expect(container.querySelector('canvas')).not.toBeNull();
-    act(() => disabledListeners.forEach((cb) => cb()));
+    await intersect(true);
+    await waitFor(() => expect(container.querySelector('canvas')).not.toBeNull());
+    act(() => emitCardRendererDisabled());
     expect(container.querySelector('canvas')).toBeNull();
     expect(reportReason).toHaveBeenCalledWith('card-refraction-disabled');
     expect(screen.getByText('Ground Floor')).toBeInTheDocument();
   });
 
-  it('stops listening when unmounted', () => {
-    const { unmount } = setup();
-    expect(disabledListeners.length).toBe(1);
+  it('stops listening for the disabled signal when unmounted', async () => {
+    const { unmount, reportReason } = setup();
     unmount();
-    expect(disabledListeners.length).toBe(0);
+    act(() => emitCardRendererDisabled());
+    expect(reportReason).not.toHaveBeenCalled();
   });
 });

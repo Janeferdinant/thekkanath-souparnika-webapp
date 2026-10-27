@@ -1,4 +1,7 @@
 import { buildProgram, createPhotoTexture, createQuadBuffer, drawFrame, lookupUniforms, type UniformLocations } from './webgl';
+import { emitCardRendererDisabled, onCardRendererDisabled, resetCardRendererListeners } from './cardEvents';
+
+export { onCardRendererDisabled };
 
 /** Where the overlay sits inside the photo it refracts, in device pixels. */
 export interface CardArea {
@@ -26,7 +29,6 @@ const BUDGET_MEDIAN_MS = 8;
 /** Small chips need a much tighter bevel than the hero panel, so the lens effect is scaled down. */
 const CARD_LENS_SCALE = 0.5;
 
-const disabledListeners = new Set<() => void>();
 let instance: (CardRenderer & { dispose(): void }) | null | undefined;
 
 const renderDpr = () => Math.min(window.devicePixelRatio || 1, window.innerWidth < 768 ? 1.5 : 2);
@@ -101,7 +103,7 @@ function create(): (CardRenderer & { dispose(): void }) | null {
     if (sorted[Math.floor(sorted.length / 2)] > BUDGET_MEDIAN_MS) {
       disabled = true;
       releaseAll();
-      disabledListeners.forEach((cb) => cb());
+      emitCardRendererDisabled();
     }
   };
 
@@ -168,17 +170,9 @@ export function getCardRenderer(): CardRenderer | null {
   return instance && !instance.disabled ? instance : null;
 }
 
-/** Calls `cb` once if the shared renderer disables itself for exceeding the performance budget. */
-export function onCardRendererDisabled(cb: () => void): () => void {
-  disabledListeners.add(cb);
-  return () => {
-    disabledListeners.delete(cb);
-  };
-}
-
 /** Releases the shared context and forgets it (tests, and teardown). */
 export function resetCardRenderer(): void {
   instance?.dispose();
   instance = undefined;
-  disabledListeners.clear();
+  resetCardRendererListeners();
 }

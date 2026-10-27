@@ -30,19 +30,41 @@ export const HeroSection: React.FC = () => {
     if (img && img.complete && img.naturalWidth > 0) setImageReady(true);
   }, []);
 
-  // Start the WebGL layer only when the device can afford it, the photo is really on screen, and the
-  // browser is idle. Any other case leaves the plain photo, which is complete on its own.
+  // Start the WebGL layer only when the device can afford it, the photo is really on screen, the page
+  // has finished loading, and the browser is idle, so setting up the context, compiling the shader and
+  // uploading the texture never compete with anything the first view needs. Any other case leaves the
+  // plain photo, which is complete on its own.
   useEffect(() => {
     if (tier !== 'enhanced' || !imageReady) {
       setRendererWanted(false);
       return;
     }
-    if (typeof window.requestIdleCallback === 'function') {
-      const handle = window.requestIdleCallback(() => setRendererWanted(true), { timeout: 1500 });
-      return () => window.cancelIdleCallback(handle);
-    }
-    const timer = window.setTimeout(() => setRendererWanted(true), 200);
-    return () => window.clearTimeout(timer);
+
+    let cancelled = false;
+    let cancelIdle = () => {};
+
+    const whenIdle = () => {
+      if (cancelled) return;
+      const want = () => {
+        if (!cancelled) setRendererWanted(true);
+      };
+      if (typeof window.requestIdleCallback === 'function') {
+        const handle = window.requestIdleCallback(want, { timeout: 1500 });
+        cancelIdle = () => window.cancelIdleCallback(handle);
+      } else {
+        const timer = window.setTimeout(want, 200);
+        cancelIdle = () => window.clearTimeout(timer);
+      }
+    };
+
+    if (document.readyState === 'complete') whenIdle();
+    else window.addEventListener('load', whenIdle, { once: true });
+
+    return () => {
+      cancelled = true;
+      window.removeEventListener('load', whenIdle);
+      cancelIdle();
+    };
   }, [tier, imageReady]);
 
   return (
