@@ -81,11 +81,16 @@ describe('brand tokens', () => {
     }
   });
 
-  it('dark glass over the hero photo (lens) keeps ivory text at AA against a bright paving highlight', () => {
+  it('dark glass over the hero photo (lens) keeps its ivory text and champagne link at AA over the brightest paving behind it', () => {
     const alpha = fillAlpha(String.raw`\.glass-surface\[data-glass-lens\]`);
-    const brightPaving = '#FFC864';
-    const bg = blend(BRAND['burgundy-900'], alpha, brightPaving);
-    expect(contrast(BRAND['ivory-100'], bg), `alpha ${alpha}`).toBeGreaterThanOrEqual(4.5);
+    // Brightest pixel of the blurred photo behind the location card's text, measured in Chromium with the tint
+    // removed: lower-right card, 10px backdrop blur, lite and enhanced tiers, 768-1920px wide (worst: 1920px).
+    // Re-measure if the card moves or its blur changes. The no-blur fallback tier uses a solid fill instead.
+    const brightestPavingUnderCard = '#D76A16';
+    const bg = blend(BRAND['burgundy-900'], alpha, brightestPavingUnderCard);
+    for (const text of ['ivory-100', 'champagne-300']) {
+      expect(contrast(BRAND[text], bg), `${text} at alpha ${alpha}`).toBeGreaterThanOrEqual(4.5);
+    }
   });
 
   it('the chip tint is a layer above the refraction canvas, so it always covers the photo', () => {

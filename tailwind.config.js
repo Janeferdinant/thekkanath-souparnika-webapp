@@ -133,6 +133,8 @@ export default {
       fontFamily: {
         serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
         sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
+        // Public website text and UI; staff screens keep Inter
+        public: ['Manrope', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
       },
       boxShadow: {
         'luxury': '0 20px 50px -10px rgba(74, 14, 23, 0.25), 0 10px 20px -5px rgba(26, 5, 16, 0.15)',

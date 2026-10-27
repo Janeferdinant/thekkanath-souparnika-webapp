@@ -60,7 +60,7 @@ export const GlassModal: React.FC<GlassModalProps> = ({
   return createPortal(
     <div
       data-testid="glass-modal-backdrop"
-      className="glass-modal-backdrop fixed inset-0 z-[60] flex items-center justify-center p-4 overflow-y-auto"
+      className="glass-modal-backdrop fixed inset-0 z-[60] flex items-center justify-center p-4 overflow-y-auto font-public"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}

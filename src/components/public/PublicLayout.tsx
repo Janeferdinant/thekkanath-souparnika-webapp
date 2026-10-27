@@ -19,7 +19,7 @@ export const PublicLayout: React.FC = () => {
 
   return (
     <GlassPerformanceManager>
-      <div className="public-luxury min-h-screen flex flex-col selection:bg-brand-champagne-500 selection:text-brand-burgundy-900 relative font-sans">
+      <div className="public-luxury min-h-screen flex flex-col selection:bg-brand-champagne-500 selection:text-brand-burgundy-900 relative font-public">
         {/* Strip + sticky glass navigation */}
         <PublicHeader />
 

@@ -81,8 +81,11 @@ describe('EventVenue JSON-LD', () => {
 describe('Google Fonts request', () => {
   const href = /href="(https:\/\/fonts\.googleapis\.com\/css2[^"]+)"/.exec(html)![1];
 
-  it('asks only for the two families, with swap', () => {
+  it('asks only for the three families, with swap', () => {
+    // Cormorant for display type, Manrope for public text and UI, Inter for the staff screens. A browser only
+    // downloads the files a page renders, so public pages never fetch Inter.
     expect(href).toContain('family=Cormorant+Garamond');
+    expect(href).toContain('family=Manrope');
     expect(href).toContain('family=Inter');
     expect(href).toContain('display=swap');
   });
@@ -91,6 +94,10 @@ describe('Google Fonts request', () => {
     // 300/400/500 all render as 400 and 700 renders as 700; 600 and the italics are never used
     expect(href).toContain('Cormorant+Garamond:wght@400;700');
     expect(href).not.toMatch(/Cormorant\+Garamond:ital/);
+  });
+
+  it('keeps every Manrope weight the public site uses', () => {
+    expect(href).toContain('Manrope:wght@300;400;500;600;700');
   });
 
   it('does not block first paint: loaded as a preloaded stylesheet, with a no-script fallback', () => {

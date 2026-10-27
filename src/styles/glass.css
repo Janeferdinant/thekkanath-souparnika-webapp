@@ -38,9 +38,15 @@
 }
 
 /* Lenses sit over the hero photo, so they can be more see-through than surfaces on plain ivory/burgundy.
+   The hero location card is meant to be clear and discreet: a light tint, a faint champagne edge, a soft
+   shadow, and a text shadow that keeps the small type crisp over the paving.
    Tests keep both fills at WCAG AA for their text. */
 .glass-surface[data-glass-lens] {
-  --glass-fill-dark: rgba(46, 15, 25, 0.7);
+  --glass-fill-dark: rgba(46, 15, 25, 0.4);
+  --glass-radius: 1rem;
+  --glass-edge: rgba(240, 217, 163, 0.22);
+  --glass-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+  text-shadow: 0 1px 2px rgba(20, 6, 10, 0.55);
 }
 
 /* lite, enhanced, and before JS has chosen a tier: blur the backdrop */
@@ -49,6 +55,12 @@
 :root:not([data-glass-tier]) .glass-surface {
   -webkit-backdrop-filter: blur(12px) saturate(120%);
   backdrop-filter: blur(12px) saturate(120%);
+}
+[data-glass-tier='lite'] .glass-surface[data-glass-lens],
+[data-glass-tier='enhanced'] .glass-surface[data-glass-lens],
+:root:not([data-glass-tier]) .glass-surface[data-glass-lens] {
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  backdrop-filter: blur(10px) saturate(120%);
 }
 
 /* enhanced: specular highlight that follows the pointer, a Fresnel-style edge ring,
@@ -88,6 +100,18 @@
   -webkit-mask-composite: xor;
   mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
   mask-composite: exclude;
+}
+/* the hero location card keeps only its faint champagne hairline: no specular highlight, edge ring or deep
+   shadow, and its own light tint even while the canvas refracts the photo beneath it */
+[data-glass-tier='enhanced'] .glass-surface[data-glass-lens] {
+  --glass-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+}
+[data-glass-tier='enhanced'] .glass-surface[data-glass-lens][data-glass-refracting][data-tone='dark'] {
+  background: var(--glass-fill-dark);
+}
+[data-glass-tier='enhanced'] .glass-surface[data-glass-lens]::before,
+[data-glass-tier='enhanced'] .glass-surface[data-glass-lens]::after {
+  content: none;
 }
 /* inside a lens whose canvas is refracting the photo, let the canvas show through */
 [data-glass-tier='enhanced'] .glass-surface[data-glass-refracting][data-tone='dark'] {

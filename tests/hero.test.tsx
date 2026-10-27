@@ -28,12 +28,20 @@ describe('HeroSection photo', () => {
     expect(img.getAttribute('src')).toContain('entrance-1086.jpg');
   });
 
-  it('never asks for more than 600 CSS px on screens wider than a phone', () => {
+  it('never asks for more than 681 CSS px on screens wider than a phone (the source is 1086 px wide)', () => {
     const { container } = renderHero();
     const sizes = frameOf(container).querySelector('img')!.getAttribute('sizes')!;
-    expect(sizes).toContain('(min-width:1024px) 600px');
+    // desktop: 54% of the max-w-7xl content width plus 24px reaching toward the title, matching the grid
+    expect(sizes).toContain('(min-width:1280px) 681px');
+    expect(sizes).toContain('(min-width:1024px) calc(54vw - 11px)');
     expect(sizes).toContain('(min-width:768px) 600px');
     expect(sizes).toContain('100vw');
+  });
+
+  it('preloads the hero with the same sizes the image uses, so the preloaded file is the one shown', () => {
+    const { container } = renderHero();
+    const sizes = frameOf(container).querySelector('img')!.getAttribute('sizes')!;
+    expect(readFileSync('index.html', 'utf8')).toContain(`imagesizes="${sizes.replace(/,\s*/g, ', ')}"`);
   });
 
   it('marks the frame ready only after the image really loads', () => {
