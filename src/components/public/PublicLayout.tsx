@@ -6,6 +6,7 @@ import { PublicFooter } from './PublicFooter';
 import { VENUE_INFO } from '../../data/venueData';
 import { GlassPerformanceManager } from '../../glass/GlassPerformanceManager';
 import { GlassSurface } from '../../glass/GlassSurface';
+import { usePageMeta } from '../../hooks/usePageMeta';
 
 const DOCK_ITEM =
   'min-h-[44px] flex flex-col items-center justify-center py-1 rounded-full transition-all';
@@ -14,6 +15,7 @@ const DOCK_IDLE = 'text-brand-ivory-muted hover:text-brand-ivory-100 hover:bg-wh
 
 export const PublicLayout: React.FC = () => {
   const location = useLocation();
+  usePageMeta(location.pathname);
 
   return (
     <GlassPerformanceManager>
