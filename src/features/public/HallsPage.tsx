@@ -226,7 +226,7 @@ export const HallsPage: React.FC = () => {
           Booking Availability & Seating Capacity
         </h3>
         <p className="text-xs sm:text-sm text-[#CBB8B9] leading-relaxed max-w-4xl">
-          Our hall is available for booking for any number of guests. It is ideally arranged for gatherings of 250 to 300 people, accommodating functions of up to 400 guests across its coordinated areas. No separate halls are rented to outside parties during your event. For each hall, 100 seats are arranged, and our air-conditioned First Floor Dining Hall provides 100 seats in one sitting, making it ideal for smooth multi-batch traditional sadhyas and festive banquets.
+          Our hall can be booked for any number of guests, and no part of the venue is rented to another party during your event. Each hall has 100 seats arranged, and the air-conditioned First Floor Dining Hall seats 100 guests in one sitting, which keeps multi-batch traditional sadhyas and festive banquets running smoothly.
         </p>
       </div>
     </div>

@@ -58,9 +58,6 @@ export const HallDetailPage: React.FC = () => {
             <Users className="w-5 h-5 text-[#e8c7bc] shrink-0" />
             <div className="text-xs">
               <strong className="text-[#F7EFE7] font-semibold block">{hall.capacityText}</strong>
-              <span className="text-[#CBB8B9]">
-                Arranged for gatherings of 250 to 300 guests (accommodating up to 400 across all spaces).
-              </span>
             </div>
           </div>
 

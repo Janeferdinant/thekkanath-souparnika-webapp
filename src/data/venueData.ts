@@ -50,7 +50,7 @@ export const HALLS: Hall[] = [
       '/assets/venue/venue-004.jpg',
     ],
     description:
-      'We host only one celebration at a time. When you book Thekkanath Souparnika, your family gets exclusive, private use of all four halls: the Stage Hall, Welcome Hall, First-Floor Dining Hall (perfect for traditional sadhya), and the Open Hall. Comfortably accommodates 250 to 300 guests, up to 400.',
+      'We host only one celebration at a time. When you book Thekkanath Souparnika, your family gets exclusive, private use of all four halls: the Stage Hall, Welcome Hall, First-Floor Dining Hall (perfect for traditional sadhya), and the Open Hall.',
     suggestedUses: [
       'Weddings, Receptions & Banquets',
       'Ceremonies & Traditional Sadhya Feasts',
@@ -61,7 +61,6 @@ export const HALLS: Hall[] = [
       'Stage Hall with 100 cushioned seats',
       'Welcome Hall with 100 seats arranged',
       'First Floor Dining Hall: 100 seats per sitting',
-      'Dedicated on-site parking (40–50 cars)',
     ],
     published: true,
     sortOrder: 0,
@@ -143,7 +142,7 @@ export const HALLS: Hall[] = [
       '/assets/venue/venue-005.jpg',
     ],
     description:
-      'A spacious, air-conditioned dining hall on the first floor with 100 seats per sitting, long banquet tables, breezy windows, and direct handwash access. Specially planned for traditional Kerala sadhya and buffet feasts, serving 250 to 300+ guests easily in batches.',
+      'A spacious, air-conditioned dining hall on the first floor with 100 seats per sitting, long banquet tables, breezy windows, and direct handwash access. Specially planned for traditional Kerala sadhya and buffet feasts, served easily in batches.',
     suggestedUses: [
       'Traditional Kerala Sadhya (Batch Feasts)',
       'Wedding Feasts & Banquets',
@@ -232,10 +231,10 @@ export const FACILITIES: Facility[] = [
   },
   {
     id: 'on-site-parking',
-    title: 'On-Site Parking (40–50 Cars)',
+    title: 'On-Site Compound Parking',
     category: 'Access & Logistics',
     description:
-      'Dedicated on-site parking for 40 to 50 cars directly inside the venue compound, with easy entry and exit right at Market Junction.',
+      'Dedicated parking directly inside the venue compound, with easy entry and exit right at Market Junction.',
     badge: '40–50 Cars Inside',
     iconName: 'Car',
   },
@@ -268,45 +267,65 @@ export const FACILITIES: Facility[] = [
   },
 ];
 
-export const FAQS = [
+export type FaqId =
+  | 'capacity'
+  | 'separate-halls'
+  | 'air-conditioning'
+  | 'parking'
+  | 'availability'
+  | 'rooftop'
+  | 'soundproofing'
+  | 'power-backup';
+
+export const FAQS: { id: FaqId; question: string; answer: string }[] = [
   {
+    id: 'capacity',
     question: 'How many guests can Thekkanath Souparnika accommodate?',
     answer:
       'We welcome events of all sizes. The venue is arranged comfortably for gatherings of 250 to 300 guests, and can host up to 400 people across its halls. Each hall has 100 seats, with the First Floor Dining Hall seating 100 guests per batch for traditional sadhya service.',
   },
   {
+    id: 'separate-halls',
     question: 'Can individual halls be booked separately?',
     answer:
       'No, we only host one celebration at a time. When you book Thekkanath Souparnika, the entire venue is reserved exclusively for your family. You get private, unrestricted access to all four halls (Stage Hall, Welcome Hall, First Floor Dining Hall, and Open Hall) with no other parties on the property.',
   },
   {
+    id: 'air-conditioning',
     question: 'Which halls are equipped with air conditioning?',
     answer:
       'Three halls—the Stage Hall, Welcome Hall, and Dining Hall—are fully air-conditioned. The Open Hall is naturally ventilated with ceiling fans and three exhaust fans.',
   },
   {
+    id: 'parking',
     question: 'What is the parking capacity?',
     answer:
       'We have dedicated, secure compound parking for 40 to 50 cars directly inside the venue gates.',
   },
   {
+    id: 'availability',
     question: 'How do I check date availability and rates?',
     answer:
       'Simply send an enquiry through our website or give us a call. We will check the calendar right away and discuss availability, timing, and pricing directly with you.',
   },
   {
+    id: 'rooftop',
     question: 'Can guests access the rooftop area?',
     answer:
       'For everyone’s safety, the 4,000 sq ft rooftop is closed to guests during events. However, private air-conditioned dressing and changing rooms can be opened on the rooftop floor upon advance request.',
   },
   {
+    id: 'soundproofing',
     question: 'Is the Open Hall soundproofed?',
     answer:
       'Our indoor halls are well insulated. Since the Open Hall has exhaust fans for natural airflow, sound carries outside, so we follow local municipal sound guidelines for evening functions.',
   },
   {
+    id: 'power-backup',
     question: 'What power backup is in place?',
     answer:
       'We have an automatic solar-hybrid electrical system with dedicated battery backup, ensuring lights, fans, and audio keep running without a hitch during power interruptions.',
   },
 ];
+
+export const HOME_FAQ_IDS: readonly FaqId[] = ['separate-halls', 'air-conditioning', 'availability', 'rooftop'];

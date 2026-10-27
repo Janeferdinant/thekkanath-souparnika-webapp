@@ -53,7 +53,7 @@ export const PreferredCaterersCard: React.FC = () => {
           </p>
           <div className="flex flex-wrap gap-1.5 pt-1">
             <span className="text-[10px] font-medium bg-[#240810]/80 px-2 py-0.5 rounded-md border border-[rgba(226,184,178,0.2)] text-[#F7EFE7] inline-flex items-center gap-1">
-              <CheckCircle2 className="w-3 h-3 text-[#e8c7bc]" /> 250–300+ in Batches
+              <CheckCircle2 className="w-3 h-3 text-[#e8c7bc]" /> Multi-Batch Service
             </span>
             <span className="text-[10px] font-medium bg-[#240810]/80 px-2 py-0.5 rounded-md border border-[rgba(226,184,178,0.2)] text-[#F7EFE7] inline-flex items-center gap-1">
               <CheckCircle2 className="w-3 h-3 text-[#e8c7bc]" /> AC Comfort

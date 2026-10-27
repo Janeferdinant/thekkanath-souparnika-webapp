@@ -451,12 +451,8 @@ export const EnquirePage: React.FC = () => {
                   }`}
                   placeholder="e.g. 250"
                 />
-                {errors.estimatedGuests ? (
+                {errors.estimatedGuests && (
                   <p className="text-[11px] text-red-400">{errors.estimatedGuests}</p>
-                ) : (
-                  <p className="text-[10px] text-[#CBB8B9]">
-                    The hall is comfortably arranged for 250 to 300 guests, and can host up to 400 people across the different spaces, with 40–50 parking spaces inside the compound.
-                  </p>
                 )}
               </div>
             </div>
