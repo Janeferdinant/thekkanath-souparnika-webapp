@@ -52,7 +52,7 @@ export const FacilitiesPage: React.FC = () => {
           Venue Facilities & Amenities
         </h1>
         <p className="text-sm sm:text-base text-[#CBB8B9] leading-relaxed">
-          From uninterrupted solar backup power and certified drinking water to ample on-site parking, we take care of the essentials so you and your guests can enjoy your day.
+          From uninterrupted solar backup power to certified drinking water, we take care of the essentials so you and your guests can enjoy your day.
         </p>
       </div>
 
