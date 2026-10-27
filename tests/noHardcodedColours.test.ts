@@ -10,8 +10,6 @@ export const PENDING_MIGRATION: string[] = [
   'src/components/public/AmbientParticles.tsx',
   'src/components/public/PreferredCaterersCard.tsx',
   'src/components/public/PublicFooter.tsx',
-  'src/components/public/PublicHeader.tsx',
-  'src/components/public/PublicLayout.tsx',
   'src/features/public/ContactPage.tsx',
   'src/features/public/EnquirePage.tsx',
   'src/features/public/FAQPage.tsx',

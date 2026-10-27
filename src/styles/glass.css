@@ -120,3 +120,62 @@
     transform: none;
   }
 }
+
+/* ------------------------------------------------------------------
+   Navigation bar: transparent over the hero, burgundy glass after it.
+   ------------------------------------------------------------------ */
+.glass-nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  color: var(--brand-ivory-100);
+  border-bottom: 1px solid transparent;
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.glass-nav-bar[data-nav-state='over-hero'] {
+  background: linear-gradient(180deg, rgba(30, 10, 16, 0.55), rgba(30, 10, 16, 0.18));
+  border-bottom-color: rgba(230, 211, 174, 0.18);
+}
+.glass-nav-bar[data-nav-state='scrolled'] {
+  background: rgba(46, 15, 25, 0.88);
+  border-bottom-color: rgba(201, 165, 106, 0.28);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
+}
+.glass-nav-bar :focus-visible {
+  outline: 2px solid var(--brand-champagne-400);
+  outline-offset: 2px;
+}
+
+[data-glass-tier='lite'] .glass-nav-bar,
+[data-glass-tier='enhanced'] .glass-nav-bar,
+:root:not([data-glass-tier]) .glass-nav-bar {
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  backdrop-filter: blur(14px) saturate(120%);
+}
+
+/* no blur available: stronger tint so links stay legible over the photo */
+[data-glass-tier='fallback'] .glass-nav-bar[data-nav-state='over-hero'] {
+  background: linear-gradient(180deg, rgba(30, 10, 16, 0.82), rgba(30, 10, 16, 0.4));
+}
+[data-glass-tier='fallback'] .glass-nav-bar[data-nav-state='scrolled'] {
+  background: rgba(30, 10, 16, 0.98);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-nav-bar[data-nav-state='over-hero'] {
+    background: linear-gradient(180deg, rgba(30, 10, 16, 0.82), rgba(30, 10, 16, 0.4));
+  }
+  .glass-nav-bar[data-nav-state='scrolled'] {
+    background: rgba(30, 10, 16, 0.98);
+  }
+}
+
+/* mobile quick-action dock */
+.glass-dock {
+  --glass-radius: 9999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-nav-bar {
+    transition: none;
+  }
+}
