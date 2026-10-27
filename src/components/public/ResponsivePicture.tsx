@@ -3,6 +3,14 @@ import manifest from '../../data/imageManifest.json';
 
 export type ImageKey = keyof typeof manifest;
 
+/** Maps a plain venue photo path or a manifest key to its ImageKey, or null if it has no derivatives. */
+export function imageKeyForSrc(src: string): ImageKey | null {
+  if (src in manifest) return src as ImageKey;
+  const match = /venue-(\d{3})\.jpg$/.exec(src);
+  const key = match ? `venue-${match[1]}` : null;
+  return key && key in manifest ? (key as ImageKey) : null;
+}
+
 interface ResponsivePictureProps {
   image: ImageKey;
   sizes: string;

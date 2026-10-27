@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Eye, ChevronLeft, ChevronRight, X, ShieldCheck } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { Eye, ShieldCheck } from 'lucide-react';
+import { Lightbox } from '../../components/public/Lightbox';
+import { ResponsivePicture, imageKeyForSrc } from '../../components/public/ResponsivePicture';
 
 interface GalleryItem {
   id: string;
@@ -72,34 +74,12 @@ const GALLERY_ITEMS: GalleryItem[] = [
 export const GalleryPage: React.FC = () => {
   const [filter, setFilter] = useState<'all' | 'halls' | 'facilities' | 'exterior'>('all');
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
+  const lightboxTrigger = useRef<HTMLElement | null>(null);
 
   const filteredItems = GALLERY_ITEMS.filter((item) => {
     if (filter === 'all') return true;
     return item.category === filter;
   });
-
-  // Lightbox keyboard navigation
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (activeIdx === null) return;
-      if (e.key === 'Escape') setActiveIdx(null);
-      if (e.key === 'ArrowRight') nextPhoto();
-      if (e.key === 'ArrowLeft') prevPhoto();
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [activeIdx, filteredItems.length]);
-
-  const nextPhoto = () => {
-    if (activeIdx === null) return;
-    setActiveIdx((activeIdx + 1) % filteredItems.length);
-  };
-
-  const prevPhoto = () => {
-    if (activeIdx === null) return;
-    setActiveIdx((activeIdx - 1 + filteredItems.length) % filteredItems.length);
-  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-10">
@@ -147,22 +127,35 @@ export const GalleryPage: React.FC = () => {
         {filteredItems.map((item, idx) => (
           <div
             key={item.id}
-            onClick={() => setActiveIdx(idx)}
-            className="group glass-panel rounded-3xl overflow-hidden border border-[rgba(226,184,178,0.22)] hover:border-[rgba(226,184,178,0.45)] cursor-pointer transition-all duration-300 flex flex-col hover:-translate-y-1"
+            className="group glass-panel rounded-3xl overflow-hidden border border-[rgba(226,184,178,0.22)] hover:border-[rgba(226,184,178,0.45)] transition-all duration-300 flex flex-col hover:-translate-y-1"
           >
-            <div className="lens-hover relative h-64 overflow-hidden bg-[#18070c]">
-              <img
-                src={item.src}
+            <div className="relative">
+            <button
+              type="button"
+              onClick={(e) => {
+                lightboxTrigger.current = e.currentTarget;
+                setActiveIdx(idx);
+              }}
+              className="lens-hover relative block w-full h-64 overflow-hidden bg-[#18070c] text-left"
+            >
+              <ResponsivePicture
+                image={imageKeyForSrc(item.src)!}
                 alt={item.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                className="block w-full h-full"
+                imgClassName="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute top-3 left-3 glass-control text-[#E7CFAF] text-[11px] font-bold px-3 py-1 rounded-full border border-[rgba(226,184,178,0.3)] shadow-md">
-                {item.categoryLabel}
-              </div>
-              <div className="absolute inset-0 bg-[#18070c]/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-[#18070c]/50 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity flex items-center justify-center"
+              >
                 <span className="p-3.5 rounded-full glass-control text-[#e8c7bc] border border-[rgba(226,184,178,0.4)] shadow-xl">
                   <Eye className="w-5 h-5" />
                 </span>
+              </div>
+            </button>
+              <div className="absolute top-3 left-3 pointer-events-none glass-control text-[#E7CFAF] text-[11px] font-bold px-3 py-1 rounded-full border border-[rgba(226,184,178,0.3)] shadow-md">
+                {item.categoryLabel}
               </div>
             </div>
 
@@ -176,63 +169,13 @@ export const GalleryPage: React.FC = () => {
         ))}
       </div>
 
-      {/* Fullscreen Lightbox Modal — Wine Glass & Gold */}
-      {activeIdx !== null && filteredItems[activeIdx] && (
-        <div
-          className="fixed inset-0 z-50 bg-[#18070c]/95 backdrop-blur-2xl flex flex-col items-center justify-between p-4 sm:p-8 animate-in fade-in duration-200"
-          role="dialog"
-          aria-modal="true"
-        >
-          {/* Top Bar */}
-          <div className="w-full flex items-center justify-between text-[#F7EFE7]">
-            <div className="text-xs font-semibold text-[#E7CFAF]">
-              Photo {activeIdx + 1} of {filteredItems.length}
-            </div>
-            <button
-              onClick={() => setActiveIdx(null)}
-              className="p-2.5 rounded-full glass-control text-[#F7EFE7] hover:border-[rgba(226,184,178,0.5)] transition-colors"
-              aria-label="Close photo viewer"
-            >
-              <X className="w-6 h-6" />
-            </button>
-          </div>
-
-          {/* Main Image with Navigation */}
-          <div className="relative flex-1 w-full max-w-5xl flex items-center justify-center my-4">
-            <button
-              onClick={prevPhoto}
-              className="absolute left-2 sm:left-4 z-10 p-3.5 rounded-full glass-control text-[#F7EFE7] hover:text-[#E7CFAF] border border-[rgba(226,184,178,0.35)] shadow-2xl transition-all"
-              aria-label="Previous photo"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-
-            <img
-              src={filteredItems[activeIdx].src}
-              alt={filteredItems[activeIdx].title}
-              className="max-h-[70vh] max-w-full object-contain rounded-2xl shadow-2xl border border-[rgba(226,184,178,0.25)]"
-            />
-
-            <button
-              onClick={nextPhoto}
-              className="absolute right-2 sm:right-4 z-10 p-3.5 rounded-full glass-control text-[#F7EFE7] hover:text-[#E7CFAF] border border-[rgba(226,184,178,0.35)] shadow-2xl transition-all"
-              aria-label="Next photo"
-            >
-              <ChevronRight className="w-6 h-6" />
-            </button>
-          </div>
-
-          {/* Bottom Caption */}
-          <div className="text-center max-w-xl space-y-1 text-[#F7EFE7] pb-2">
-            <h4 className="font-serif text-xl sm:text-2xl font-light text-[#E7CFAF]">
-              {filteredItems[activeIdx].title}
-            </h4>
-            <p className="text-xs text-[#CBB8B9] leading-relaxed">
-              {filteredItems[activeIdx].description}
-            </p>
-          </div>
-        </div>
-      )}
+      {/* Shared photo lightbox */}
+      <Lightbox
+        photos={filteredItems.map((i) => ({ src: i.src, title: i.title, description: i.description }))}
+        index={activeIdx}
+        onIndexChange={setActiveIdx}
+        returnFocusRef={lightboxTrigger}
+      />
     </div>
   );
 };

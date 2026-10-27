@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { HALLS, VENUE_INFO } from '../../data/venueData';
 import {
@@ -11,11 +11,12 @@ import {
   MessageCircle,
 } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
-import { Modal } from '../../components/ui/Modal';
+import { GlassModal } from '../../glass/GlassModal';
 
 export const HallDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null);
+  const photoTrigger = useRef<HTMLElement | null>(null);
 
   const hall = HALLS.find((h) => h.slug === slug);
 
@@ -84,9 +85,13 @@ export const HallDetailPage: React.FC = () => {
         </div>
 
         {/* Featured Main Photo with Lens Hover */}
-        <div
-          onClick={() => setSelectedPhoto(hall.coverImage)}
-          className="lens-hover relative h-80 sm:h-96 rounded-3xl overflow-hidden cursor-pointer shadow-luxury border border-[rgba(226,184,178,0.25)] group bg-[#18070c]"
+        <button
+          type="button"
+          onClick={(e) => {
+            photoTrigger.current = e.currentTarget;
+            setSelectedPhoto(hall.coverImage);
+          }}
+          className="lens-hover relative block w-full text-left h-80 sm:h-96 rounded-3xl overflow-hidden shadow-luxury border border-[rgba(226,184,178,0.25)] group bg-[#18070c]"
         >
           <img
             src={hall.coverImage}
@@ -99,7 +104,7 @@ export const HallDetailPage: React.FC = () => {
               <Eye className="w-4 h-4 text-[#e8c7bc]" />
             </div>
           </div>
-        </div>
+        </button>
       </div>
 
       {/* Gallery strip for this hall */}
@@ -107,10 +112,14 @@ export const HallDetailPage: React.FC = () => {
         <h3 className="font-serif text-2xl sm:text-3xl font-light text-[#F7EFE7]">Venue Photographs</h3>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6">
           {hall.galleryImages.map((img, idx) => (
-            <div
+            <button
+              type="button"
               key={idx}
-              onClick={() => setSelectedPhoto(img)}
-              className="lens-hover relative h-48 rounded-2xl overflow-hidden cursor-pointer shadow-subtle border border-[rgba(226,184,178,0.2)] group bg-[#18070c]"
+              onClick={(e) => {
+                photoTrigger.current = e.currentTarget;
+                setSelectedPhoto(img);
+              }}
+              className="lens-hover relative block w-full text-left h-48 rounded-2xl overflow-hidden shadow-subtle border border-[rgba(226,184,178,0.2)] group bg-[#18070c]"
             >
               <img
                 src={img}
@@ -118,7 +127,7 @@ export const HallDetailPage: React.FC = () => {
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-[#18070c]/30 group-hover:bg-transparent transition-colors" />
-            </div>
+            </button>
           ))}
         </div>
       </div>
@@ -171,11 +180,12 @@ export const HallDetailPage: React.FC = () => {
 
       {/* Lightbox Modal */}
       {selectedPhoto && (
-        <Modal
-          isOpen={Boolean(selectedPhoto)}
+        <GlassModal
+          isOpen
           onClose={() => setSelectedPhoto(null)}
           title={`${hall.name} — Photograph`}
           maxWidth="2xl"
+          returnFocusRef={photoTrigger}
         >
           <div className="space-y-4">
             <img
@@ -187,7 +197,7 @@ export const HallDetailPage: React.FC = () => {
               Interior view of {hall.name} at Thekkanath Souparnika.
             </p>
           </div>
-        </Modal>
+        </GlassModal>
       )}
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Calendar,
@@ -13,11 +13,23 @@ import {
   Users,
 } from 'lucide-react';
 import { VENUE_INFO, HALLS, FACILITIES, FAQS, HOME_FAQ_IDS } from '../../data/venueData';
-import { Modal } from '../../components/ui/Modal';
+import { Lightbox } from '../../components/public/Lightbox';
+import { ResponsivePicture, imageKeyForSrc } from '../../components/public/ResponsivePicture';
 import { HeroSection } from '../../components/public/HeroSection';
 
+const GALLERY_PHOTOS = [
+  { src: '/assets/venue/venue-000.jpg', title: 'Stage Hall — Raised Stage & Seating' },
+  { src: '/assets/venue/venue-001.jpg', title: 'Welcome Hall — Front Entrance Area' },
+  { src: '/assets/venue/venue-002.jpg', title: 'Dining Hall — Banquet Tables' },
+  { src: '/assets/venue/venue-003.jpg', title: 'Open Hall — Polished Marble Flooring' },
+  { src: '/assets/venue/venue-004.jpg', title: 'Dedicated Wash Basin Area' },
+  { src: '/assets/venue/venue-005.jpg', title: 'Grand Staircase with Glass Railings' },
+  { src: '/assets/venue/venue-006.jpg', title: 'Main Venue Exterior at Market Junction' },
+];
+
 export const HomePage: React.FC = () => {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [galleryIndex, setGalleryIndex] = useState<number | null>(null);
+  const galleryTrigger = useRef<HTMLElement | null>(null);
 
   return (
     <div className="space-y-16 sm:space-y-24 pb-20">
@@ -267,33 +279,33 @@ export const HomePage: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-          {[
-            { img: '/assets/venue/venue-000.jpg', title: 'Stage Hall — Raised Stage & Seating' },
-            { img: '/assets/venue/venue-001.jpg', title: 'Welcome Hall — Front Entrance Area' },
-            { img: '/assets/venue/venue-002.jpg', title: 'Dining Hall — Banquet Tables' },
-            { img: '/assets/venue/venue-003.jpg', title: 'Open Hall — Polished Marble Flooring' },
-            { img: '/assets/venue/venue-004.jpg', title: 'Dedicated Wash Basin Area' },
-            { img: '/assets/venue/venue-005.jpg', title: 'Grand Staircase with Glass Railings' },
-            { img: '/assets/venue/venue-006.jpg', title: 'Main Venue Exterior at Market Junction' },
-          ].map((photo, idx) => (
-            <div
-              key={idx}
-              onClick={() => setSelectedImage(photo.img)}
-              className="group relative h-52 rounded-2xl overflow-hidden cursor-pointer shadow-subtle border border-[rgba(226,184,178,0.22)] bg-[#240810] lens-hover"
+          {GALLERY_PHOTOS.map((photo, idx) => (
+            <button
+              type="button"
+              key={photo.src}
+              onClick={(e) => {
+                galleryTrigger.current = e.currentTarget;
+                setGalleryIndex(idx);
+              }}
+              className="group relative h-52 w-full text-left rounded-2xl overflow-hidden shadow-subtle border border-[rgba(226,184,178,0.22)] bg-[#240810] lens-hover"
             >
-              <img
-                src={photo.img}
+              <ResponsivePicture
+                image={imageKeyForSrc(photo.src)!}
                 alt={photo.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                loading="lazy"
+                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+                className="block w-full h-full"
+                imgClassName="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#18070c]/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-gradient-to-t from-[#18070c]/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity flex items-end p-4"
+              >
                 <div className="text-[#f7efe7] text-xs font-medium flex items-center justify-between w-full">
                   <span className="truncate">{photo.title}</span>
                   <Eye className="w-4 h-4 text-[#e7cfaf] shrink-0 ml-1.5" />
                 </div>
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </section>
@@ -436,26 +448,8 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Image Lightbox Modal */}
-      {selectedImage && (
-        <Modal
-          isOpen={Boolean(selectedImage)}
-          onClose={() => setSelectedImage(null)}
-          title="Thekkanath Souparnika Venue Photograph"
-          maxWidth="2xl"
-        >
-          <div className="space-y-4">
-            <img
-              src={selectedImage}
-              alt="Thekkanath Souparnika venue view"
-              className="w-full max-h-[70vh] object-contain rounded-2xl bg-[#18070c] shadow-md"
-            />
-            <p className="text-xs text-[rgba(203,184,185,0.85)] text-center font-medium">
-              Venue celebration gallery at Thekkanath Souparnika.
-            </p>
-          </div>
-        </Modal>
-      )}
+      {/* Shared photo lightbox */}
+      <Lightbox photos={GALLERY_PHOTOS} index={galleryIndex} onIndexChange={setGalleryIndex} returnFocusRef={galleryTrigger} />
     </div>
   );
 };
