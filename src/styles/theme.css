@@ -281,3 +281,53 @@
     transform: none;
   }
 }
+
+
+/* ------------------------------------------------------------------
+   Public brand tokens: burgundy, champagne gold, warm ivory.
+   Mirrors src/styles/brandTokens.ts. Admin colour scales are unchanged.
+   Champagne is never used as text on ivory (2.1:1); on burgundy it is 5.8:1.
+   ------------------------------------------------------------------ */
+:root {
+  --brand-burgundy-950: #1E0A10;
+  --brand-burgundy-900: #2E0F19;
+  --brand-burgundy-800: #3F1520;
+  --brand-burgundy-700: #541B2A;
+  --brand-burgundy-600: #6B2537;
+  --brand-champagne-300: #E6D3AE;
+  --brand-champagne-400: #D8BD8A;
+  --brand-champagne-500: #C9A56A;
+  --brand-bronze-700: #7A5A2E;
+  --brand-ivory-50: #FCFAF6;
+  --brand-ivory-100: #F8F3EB;
+  --brand-ivory-200: #EFE6D8;
+  --brand-ivory-muted: #D9CBBF;
+  --brand-charcoal-900: #2A2421;
+  --brand-charcoal-600: #5C524C;
+  --brand-rosegold: #C8907A;
+}
+
+/* Editorial surfaces. Each sets its own text colour and focus ring. */
+.surface-ivory {
+  background-color: var(--brand-ivory-100);
+  color: var(--brand-charcoal-900);
+}
+.surface-ivory-alt {
+  background-color: var(--brand-ivory-200);
+  color: var(--brand-charcoal-900);
+}
+.surface-burgundy {
+  background-color: var(--brand-burgundy-900);
+  background-image: linear-gradient(180deg, var(--brand-burgundy-900) 0%, var(--brand-burgundy-950) 100%);
+  color: var(--brand-ivory-100);
+}
+
+.surface-ivory :focus-visible,
+.surface-ivory-alt :focus-visible {
+  outline: 2px solid var(--brand-burgundy-700);
+  outline-offset: 2px;
+}
+.surface-burgundy :focus-visible {
+  outline: 2px solid var(--brand-champagne-400);
+  outline-offset: 2px;
+}
