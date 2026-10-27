@@ -65,7 +65,7 @@ export const HeroSection: React.FC = () => {
               <MapPin className="w-4 h-4 mt-0.5 text-brand-champagne-400 shrink-0" />
               <div className="text-xs leading-relaxed">
                 <div className="font-semibold text-brand-ivory-100">Market Junction, Nellikunnu</div>
-                <div className="text-brand-ivory-muted">Opposite RGLP School</div>
+                <div className="text-brand-ivory-100">Opposite RGLP School</div>
               </div>
             </div>
             <a

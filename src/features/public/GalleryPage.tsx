@@ -1,7 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { Eye, ShieldCheck } from 'lucide-react';
 import { Lightbox } from '../../components/public/Lightbox';
+import { PageHeader } from '../../components/public/PageHeader';
 import { ResponsivePicture, imageKeyForSrc } from '../../components/public/ResponsivePicture';
+import { GlassCard } from '../../glass/GlassCard';
 
 interface GalleryItem {
   id: string;
@@ -71,8 +73,17 @@ const GALLERY_ITEMS: GalleryItem[] = [
   },
 ];
 
+type Filter = 'all' | 'halls' | 'facilities' | 'exterior';
+
+const TABS: { id: Filter; label: string }[] = [
+  { id: 'all', label: 'All Photos (7)' },
+  { id: 'halls', label: 'Event Halls (4)' },
+  { id: 'facilities', label: 'Facilities & Amenities (2)' },
+  { id: 'exterior', label: 'Exterior & Entrance (1)' },
+];
+
 export const GalleryPage: React.FC = () => {
-  const [filter, setFilter] = useState<'all' | 'halls' | 'facilities' | 'exterior'>('all');
+  const [filter, setFilter] = useState<Filter>('all');
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const lightboxTrigger = useRef<HTMLElement | null>(null);
 
@@ -82,91 +93,80 @@ export const GalleryPage: React.FC = () => {
   });
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-10">
-      {/* Header */}
-      <div className="space-y-4 max-w-3xl">
-        <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.25em] text-[#E7CFAF]">
-          <ShieldCheck className="w-4 h-4 text-[#e8c7bc]" />
-          <span>Real Venue Photographs</span>
-        </div>
-        <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-light text-[#F7EFE7] tracking-tight leading-tight">
-          Visual Tour & Photo Gallery
-        </h1>
-        <p className="text-sm sm:text-base text-[#CBB8B9] leading-relaxed">
-          Browse real photographs of all four halls, the dining area, staircase, wash facilities, and exterior compound. Every picture shows the venue as it actually is.
-        </p>
-      </div>
+    <div>
+      <PageHeader
+        eyebrow="Real Venue Photographs"
+        icon={<ShieldCheck className="w-4 h-4" />}
+        title="Visual Tour & Photo Gallery"
+        intro="Browse real photographs of all four halls, the dining area, staircase, wash facilities, and exterior compound. Every picture shows the venue as it actually is."
+      />
 
-      {/* Category Tabs — Liquid Glass */}
-      <div className="flex flex-wrap items-center gap-2.5 border-b border-[rgba(226,184,178,0.15)] pb-4">
-        {[
-          { id: 'all', label: 'All Photos (7)' },
-          { id: 'halls', label: 'Event Halls (4)' },
-          { id: 'facilities', label: 'Facilities & Amenities (2)' },
-          { id: 'exterior', label: 'Exterior & Entrance (1)' },
-        ].map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => {
-              setFilter(tab.id as any);
-              setActiveIdx(null);
-            }}
-            className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${
-              filter === tab.id
-                ? 'bg-gradient-to-r from-[#5A1B2E] to-[#451323] text-[#F7EFE7] border border-[rgba(226,184,178,0.4)] shadow-md'
-                : 'glass-control text-[#CBB8B9] hover:text-[#F7EFE7] border border-[rgba(226,184,178,0.2)]'
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-
-      {/* Gallery Grid — Liquid Glass Cards with Lens Hover */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-        {filteredItems.map((item, idx) => (
-          <div
-            key={item.id}
-            className="group glass-panel rounded-3xl overflow-hidden border border-[rgba(226,184,178,0.22)] hover:border-[rgba(226,184,178,0.45)] transition-all duration-300 flex flex-col hover:-translate-y-1"
-          >
-            <div className="relative">
-            <button
-              type="button"
-              onClick={(e) => {
-                lightboxTrigger.current = e.currentTarget;
-                setActiveIdx(idx);
-              }}
-              className="lens-hover relative block w-full h-64 overflow-hidden bg-[#18070c] text-left"
-            >
-              <ResponsivePicture
-                image={imageKeyForSrc(item.src)!}
-                alt={item.title}
-                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                className="block w-full h-full"
-                imgClassName="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 bg-[#18070c]/50 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity flex items-center justify-center"
+      <div className="surface-ivory py-12 sm:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+          {/* Category Tabs */}
+          <div role="group" aria-label="Photo categories" className="flex flex-wrap items-center gap-2.5 border-b border-brand-champagne-500 pb-4">
+            {TABS.map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                aria-pressed={filter === tab.id}
+                onClick={() => {
+                  setFilter(tab.id);
+                  setActiveIdx(null);
+                }}
+                className={`px-4 min-h-[44px] rounded-full text-xs font-semibold transition-all border ${
+                  filter === tab.id
+                    ? 'bg-brand-burgundy-700 text-brand-ivory-100 border-brand-burgundy-700 shadow-md'
+                    : 'text-brand-burgundy-700 border-brand-burgundy-700 hover:bg-brand-ivory-200'
+                }`}
               >
-                <span className="p-3.5 rounded-full glass-control text-[#e8c7bc] border border-[rgba(226,184,178,0.4)] shadow-xl">
-                  <Eye className="w-5 h-5" />
-                </span>
-              </div>
-            </button>
-              <div className="absolute top-3 left-3 pointer-events-none glass-control text-[#E7CFAF] text-[11px] font-bold px-3 py-1 rounded-full border border-[rgba(226,184,178,0.3)] shadow-md">
-                {item.categoryLabel}
-              </div>
-            </div>
-
-            <div className="p-6 flex-1 flex flex-col justify-between space-y-2">
-              <h3 className="font-serif text-xl font-light text-[#F7EFE7] group-hover:text-[#E7CFAF] transition-colors">
-                {item.title}
-              </h3>
-              <p className="text-xs text-[#CBB8B9] leading-relaxed">{item.description}</p>
-            </div>
+                {tab.label}
+              </button>
+            ))}
           </div>
-        ))}
+
+          {/* Gallery Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {filteredItems.map((item, idx) => (
+              <GlassCard key={item.id} tone="light" className="group overflow-hidden flex flex-col border-brand-champagne-500">
+                <div className="relative rounded-t-[inherit] overflow-hidden">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      lightboxTrigger.current = e.currentTarget;
+                      setActiveIdx(idx);
+                    }}
+                    className="lens-hover relative block w-full h-64 overflow-hidden bg-brand-burgundy-900 text-left"
+                  >
+                    <ResponsivePicture
+                      image={imageKeyForSrc(item.src)!}
+                      alt={item.title}
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      className="block w-full h-full"
+                      imgClassName="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-0 bg-brand-burgundy-950 opacity-0 group-hover:opacity-60 group-focus-within:opacity-60 transition-opacity flex items-center justify-center"
+                    >
+                      <span className="p-3.5 rounded-full text-brand-champagne-300 border border-brand-champagne-500">
+                        <Eye className="w-5 h-5" />
+                      </span>
+                    </div>
+                  </button>
+                  <div className="absolute top-3 left-3 pointer-events-none bg-brand-burgundy-900 text-brand-champagne-300 text-[11px] font-bold px-3 py-1 rounded-full border border-brand-champagne-500 shadow-md">
+                    {item.categoryLabel}
+                  </div>
+                </div>
+
+                <div className="p-6 flex-1 flex flex-col justify-between space-y-2">
+                  <h2 className="font-serif text-xl font-light text-brand-charcoal-900 group-hover:text-brand-burgundy-700 transition-colors">{item.title}</h2>
+                  <p className="text-xs text-brand-charcoal-600 leading-relaxed">{item.description}</p>
+                </div>
+              </GlassCard>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Shared photo lightbox */}

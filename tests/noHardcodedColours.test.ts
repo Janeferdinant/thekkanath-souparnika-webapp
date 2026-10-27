@@ -6,16 +6,7 @@ import { join } from 'node:path';
  * Public files still using hard-coded colour literals. Each page-migration task removes its
  * files from this list; the list must reach [] before the PR is done.
  */
-export const PENDING_MIGRATION: string[] = [
-  'src/components/public/PreferredCaterersCard.tsx',
-  'src/features/public/ContactPage.tsx',
-  'src/features/public/EnquirePage.tsx',
-  'src/features/public/FAQPage.tsx',
-  'src/features/public/FacilitiesPage.tsx',
-  'src/features/public/GalleryPage.tsx',
-  'src/features/public/HallDetailPage.tsx',
-  'src/features/public/HallsPage.tsx',
-];
+export const PENDING_MIGRATION: string[] = [];
 
 const COLOUR = /#[0-9a-fA-F]{3,8}\b|rgba?\(/;
 

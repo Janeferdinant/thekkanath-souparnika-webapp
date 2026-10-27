@@ -9,7 +9,7 @@
 
 .glass-surface {
   --glass-fill-light: rgba(248, 243, 235, 0.72);
-  --glass-fill-dark: rgba(46, 15, 25, 0.62);
+  --glass-fill-dark: rgba(46, 15, 25, 0.92);
   --glass-radius: 1.25rem;
   --glass-light-x: 0.3;
   --glass-light-y: 0.2;
@@ -35,6 +35,12 @@
 }
 .glass-surface[data-interactive]:hover {
   transform: translateY(-2px);
+}
+
+/* Lenses sit over the hero photo, so they can be more see-through than surfaces on plain ivory/burgundy.
+   Tests keep both fills at WCAG AA for their text. */
+.glass-surface[data-glass-lens] {
+  --glass-fill-dark: rgba(46, 15, 25, 0.7);
 }
 
 /* lite, enhanced, and before JS has chosen a tier: blur the backdrop */
@@ -85,7 +91,7 @@
 }
 /* inside a lens whose canvas is refracting the photo, let the canvas show through */
 [data-glass-tier='enhanced'] .glass-surface[data-glass-refracting][data-tone='dark'] {
-  background: rgba(46, 15, 25, 0.25);
+  background: rgba(46, 15, 25, 0.5);
 }
 
 /* fallback: deliberate solid surfaces with a champagne hairline, top highlight and shadow */

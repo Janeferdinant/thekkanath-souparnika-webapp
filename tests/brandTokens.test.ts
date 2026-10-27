@@ -57,4 +57,34 @@ describe('brand tokens', () => {
       expect(css).toContain(`${cls} :focus-visible`);
     }
   });
+
+  // Dark glass is translucent, so its real background is the fill blended over whatever is behind it.
+  const blend = (fg: string, alpha: number, bg: string) => {
+    const f = parseInt(fg.slice(1), 16);
+    const b = parseInt(bg.slice(1), 16);
+    const mix = (shift: number) => Math.round(((f >> shift) & 255) * alpha + ((b >> shift) & 255) * (1 - alpha));
+    return '#' + [16, 8, 0].map((sh) => mix(sh).toString(16).padStart(2, '0')).join('');
+  };
+  const glassCss = readFileSync('src/styles/glass.css', 'utf8');
+  const fillAlpha = (selectorStart: string) => {
+    const re = new RegExp(selectorStart + String.raw`[^{}]*\{[^}]*--glass-fill-dark:\s*rgba\(46,\s*15,\s*25,\s*([0-9.]+)\)`);
+    const m = re.exec(glassCss);
+    expect(m, selectorStart).not.toBeNull();
+    return parseFloat(m![1]);
+  };
+
+  it('dark glass on a light surface keeps its text at AA (default fill over ivory)', () => {
+    const alpha = fillAlpha(String.raw`\.glass-surface`);
+    const bg = blend(BRAND['burgundy-900'], alpha, BRAND['ivory-50']);
+    for (const text of ['ivory-100', 'ivory-muted', 'champagne-300']) {
+      expect(contrast(BRAND[text], bg), `${text} on dark glass (alpha ${alpha}) over ivory`).toBeGreaterThanOrEqual(4.5);
+    }
+  });
+
+  it('dark glass over the hero photo (lens) keeps ivory text at AA against a bright paving highlight', () => {
+    const alpha = fillAlpha(String.raw`\.glass-surface\[data-glass-lens\]`);
+    const brightPaving = '#FFC864';
+    const bg = blend(BRAND['burgundy-900'], alpha, brightPaving);
+    expect(contrast(BRAND['ivory-100'], bg), `alpha ${alpha}`).toBeGreaterThanOrEqual(4.5);
+  });
 });

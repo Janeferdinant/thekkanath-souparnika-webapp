@@ -1,6 +1,6 @@
 import React from 'react';
 import { describe, it, expect } from 'vitest';
-import { render, fireEvent, within, screen } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { PublicHeader } from '../src/components/public/PublicHeader';
 import { PublicFooter } from '../src/components/public/PublicFooter';
@@ -94,11 +94,11 @@ describe('FAQ page repeated facts', () => {
       </MemoryRouter>,
     );
     // The accordion renders only the open answer (the first one starts open).
-    const headings = within(container).getAllByRole('heading', { level: 3 });
+    const headings = [...container.querySelectorAll<HTMLButtonElement>('button[aria-expanded]')];
     let parking = count(container.textContent ?? '', PARKING);
     let capacity = count(container.textContent ?? '', CAPACITY);
     for (const h of headings.slice(1)) {
-      fireEvent.click(h.closest('button')!);
+      fireEvent.click(h);
       const text = container.textContent ?? '';
       parking += count(text, PARKING);
       capacity += count(text, CAPACITY);

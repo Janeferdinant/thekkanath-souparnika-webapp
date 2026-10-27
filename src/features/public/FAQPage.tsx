@@ -1,78 +1,86 @@
-import React, { useState } from 'react';
+import React, { useId, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FAQS } from '../../data/venueData';
 import { HelpCircle, ChevronDown, ChevronUp, ShieldCheck, ArrowRight } from 'lucide-react';
-import { Button } from '../../components/ui/Button';
+import { PageHeader } from '../../components/public/PageHeader';
+import { GlassSurface } from '../../glass/GlassSurface';
 
 export const FAQPage: React.FC = () => {
   const [openIdx, setOpenIdx] = useState<number | null>(0);
+  const uid = useId();
 
   const toggle = (idx: number) => {
     setOpenIdx(openIdx === idx ? null : idx);
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-12">
-      {/* Title */}
-      <div className="space-y-4 text-center max-w-2xl mx-auto">
-        <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.25em] text-[#E7CFAF]">
-          <HelpCircle className="w-4 h-4 text-[#e8c7bc]" />
-          <span>Helpful Information</span>
-        </div>
-        <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-light text-[#F7EFE7] tracking-tight leading-tight">
-          Frequently Asked Questions
-        </h1>
-        <p className="text-sm sm:text-base text-[#CBB8B9] leading-relaxed">
-          Helpful answers to common questions about hall arrangements, seating capacity, sadhya dining, parking, and booking policies.
-        </p>
-      </div>
+    <div>
+      <PageHeader
+        eyebrow="Helpful Information"
+        icon={<HelpCircle className="w-4 h-4" />}
+        title="Frequently Asked Questions"
+        intro="Helpful answers to common questions about hall arrangements, seating capacity, sadhya dining, parking, and booking policies."
+        align="center"
+      />
 
-      {/* Accordion List — Liquid Glass Cards */}
-      <div className="space-y-3.5">
-        {FAQS.map((faq, idx) => {
-          const isOpen = openIdx === idx;
-          return (
-            <div
-              key={idx}
-              className="glass-panel rounded-3xl border border-[rgba(226,184,178,0.22)] overflow-hidden shadow-subtle transition-all duration-200"
-            >
-              <button
-                onClick={() => toggle(idx)}
-                className="w-full p-6 text-left flex items-center justify-between gap-4 hover:bg-[rgba(226,184,178,0.05)] transition-colors focus:outline-none"
+      <div className="surface-ivory py-12 sm:py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          {/* Accordion List */}
+          <div className="space-y-3.5">
+            {FAQS.map((faq, idx) => {
+              const isOpen = openIdx === idx;
+              const panelId = `${uid}-panel-${idx}`;
+              return (
+                <GlassSurface key={faq.id} tone="light" elevation="raised" className="overflow-hidden border-brand-champagne-500">
+                  <h2>
+                    <button
+                      type="button"
+                      onClick={() => toggle(idx)}
+                      aria-expanded={isOpen}
+                      aria-controls={panelId}
+                      className="w-full min-h-[44px] p-6 text-left flex items-center justify-between gap-4 hover:bg-brand-ivory-200 transition-colors"
+                    >
+                      <span className="font-serif text-lg sm:text-xl font-light text-brand-charcoal-900">{faq.question}</span>
+                      <span className="p-2 rounded-full text-brand-burgundy-700 shrink-0 border border-brand-burgundy-700" aria-hidden="true">
+                        {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                      </span>
+                    </button>
+                  </h2>
+
+                  {isOpen && (
+                    <div
+                      id={panelId}
+                      role="region"
+                      aria-label={faq.question}
+                      className="px-6 pb-6 text-xs sm:text-sm text-brand-charcoal-600 leading-relaxed border-t border-brand-champagne-500 pt-4 bg-brand-ivory-200"
+                    >
+                      {faq.answer}
+                    </div>
+                  )}
+                </GlassSurface>
+              );
+            })}
+          </div>
+
+          {/* Transparency Banner */}
+          <GlassSurface tone="dark" elevation="raised" className="p-8 sm:p-10 space-y-3">
+            <h2 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-champagne-300">
+              <ShieldCheck className="w-4 h-4" />
+              <span>Pricing & Booking Enquiries</span>
+            </h2>
+            <p className="text-xs sm:text-sm text-brand-ivory-muted leading-relaxed">
+              For hall availability, advance booking deposits, and event timing schedules, please reach out to us directly. We are happy to provide clear, upfront details tailored to your occasion.
+            </p>
+            <div className="pt-2">
+              <Link
+                to="/enquire"
+                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-6 rounded-full text-xs font-semibold text-brand-burgundy-900 bg-gradient-to-r from-brand-champagne-300 via-brand-champagne-400 to-brand-champagne-500 border border-brand-champagne-400 shadow-md glass-highlight"
               >
-                <h3 className="font-serif text-lg sm:text-xl font-light text-[#F7EFE7]">
-                  {faq.question}
-                </h3>
-                <span className="p-2 rounded-full glass-control text-[#e8c7bc] shrink-0 border border-[rgba(226,184,178,0.25)]">
-                  {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                </span>
-              </button>
-
-              {isOpen && (
-                <div className="px-6 pb-6 text-xs sm:text-sm text-[#CBB8B9] leading-relaxed border-t border-[rgba(226,184,178,0.15)] pt-4 bg-[#18070c]/40">
-                  {faq.answer}
-                </div>
-              )}
+                <span>Submit Date Enquiry ↗</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
-          );
-        })}
-      </div>
-
-      {/* Transparency Banner */}
-      <div className="glass-panel p-8 sm:p-10 rounded-3xl border border-[rgba(226,184,178,0.25)] space-y-3">
-        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#E7CFAF]">
-          <ShieldCheck className="w-4 h-4 text-[#e8c7bc]" />
-          <span>Pricing & Booking Enquiries</span>
-        </div>
-        <p className="text-xs sm:text-sm text-[#CBB8B9] leading-relaxed">
-          For hall availability, advance booking deposits, and event timing schedules, please reach out to us directly. We are happy to provide clear, upfront details tailored to your occasion.
-        </p>
-        <div className="pt-2">
-          <Link to="/enquire">
-            <Button variant="gold" size="sm" className="glass-highlight" rightIcon={<ArrowRight className="w-3.5 h-3.5" />}>
-              Submit Date Enquiry ↗
-            </Button>
-          </Link>
+          </GlassSurface>
         </div>
       </div>
     </div>
