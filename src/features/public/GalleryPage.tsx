@@ -4,6 +4,7 @@ import { Lightbox } from '../../components/public/Lightbox';
 import { PageHeader } from '../../components/public/PageHeader';
 import { ResponsivePicture, imageKeyForSrc } from '../../components/public/ResponsivePicture';
 import { GlassCard } from '../../glass/GlassCard';
+import { RefractiveOverlay } from '../../glass/RefractiveOverlay';
 
 interface GalleryItem {
   id: string;
@@ -82,6 +83,50 @@ const TABS: { id: Filter; label: string }[] = [
   { id: 'exterior', label: 'Exterior & Entrance (1)' },
 ];
 
+/** One gallery card: the photo opens the lightbox, the category chip sits on the photo. */
+const GalleryCard: React.FC<{ item: GalleryItem; onOpen: (trigger: HTMLElement) => void }> = ({ item, onOpen }) => {
+  const imgRef = useRef<HTMLImageElement>(null);
+  return (
+    <GlassCard tone="light" className="group overflow-hidden flex flex-col border-brand-champagne-500">
+      <div className="relative rounded-t-[inherit] overflow-hidden">
+        <button
+          type="button"
+          onClick={(e) => onOpen(e.currentTarget)}
+          className="lens-hover relative block w-full h-64 overflow-hidden bg-brand-burgundy-900 text-left"
+        >
+          <ResponsivePicture
+            image={imageKeyForSrc(item.src)!}
+            alt={item.title}
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="block w-full h-full"
+            imgClassName="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            imgRef={imgRef}
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-brand-burgundy-950 opacity-0 group-hover:opacity-60 group-focus-within:opacity-60 transition-opacity flex items-center justify-center"
+          >
+            <span className="p-3.5 rounded-full text-brand-champagne-300 border border-brand-champagne-500">
+              <Eye className="w-5 h-5" />
+            </span>
+          </div>
+        </button>
+        <RefractiveOverlay
+          imageRef={imgRef}
+          className="absolute top-3 left-3 pointer-events-none text-brand-champagne-300 text-[11px] font-bold px-3 py-1 rounded-full"
+        >
+          {item.categoryLabel}
+        </RefractiveOverlay>
+      </div>
+
+      <div className="p-6 flex-1 flex flex-col justify-between space-y-2">
+        <h2 className="font-serif text-xl font-light text-brand-charcoal-900 group-hover:text-brand-burgundy-700 transition-colors">{item.title}</h2>
+        <p className="text-xs text-brand-charcoal-600 leading-relaxed">{item.description}</p>
+      </div>
+    </GlassCard>
+  );
+};
+
 export const GalleryPage: React.FC = () => {
   const [filter, setFilter] = useState<Filter>('all');
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
@@ -128,42 +173,14 @@ export const GalleryPage: React.FC = () => {
           {/* Gallery Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {filteredItems.map((item, idx) => (
-              <GlassCard key={item.id} tone="light" className="group overflow-hidden flex flex-col border-brand-champagne-500">
-                <div className="relative rounded-t-[inherit] overflow-hidden">
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      lightboxTrigger.current = e.currentTarget;
-                      setActiveIdx(idx);
-                    }}
-                    className="lens-hover relative block w-full h-64 overflow-hidden bg-brand-burgundy-900 text-left"
-                  >
-                    <ResponsivePicture
-                      image={imageKeyForSrc(item.src)!}
-                      alt={item.title}
-                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                      className="block w-full h-full"
-                      imgClassName="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div
-                      aria-hidden="true"
-                      className="absolute inset-0 bg-brand-burgundy-950 opacity-0 group-hover:opacity-60 group-focus-within:opacity-60 transition-opacity flex items-center justify-center"
-                    >
-                      <span className="p-3.5 rounded-full text-brand-champagne-300 border border-brand-champagne-500">
-                        <Eye className="w-5 h-5" />
-                      </span>
-                    </div>
-                  </button>
-                  <div className="absolute top-3 left-3 pointer-events-none bg-brand-burgundy-900 text-brand-champagne-300 text-[11px] font-bold px-3 py-1 rounded-full border border-brand-champagne-500 shadow-md">
-                    {item.categoryLabel}
-                  </div>
-                </div>
-
-                <div className="p-6 flex-1 flex flex-col justify-between space-y-2">
-                  <h2 className="font-serif text-xl font-light text-brand-charcoal-900 group-hover:text-brand-burgundy-700 transition-colors">{item.title}</h2>
-                  <p className="text-xs text-brand-charcoal-600 leading-relaxed">{item.description}</p>
-                </div>
-              </GlassCard>
+              <GalleryCard
+                key={item.id}
+                item={item}
+                onOpen={(trigger) => {
+                  lightboxTrigger.current = trigger;
+                  setActiveIdx(idx);
+                }}
+              />
             ))}
           </div>
         </div>

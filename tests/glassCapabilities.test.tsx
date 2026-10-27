@@ -109,11 +109,17 @@ describe('readGlassEnvironment', () => {
 });
 
 const Probe: React.FC = () => {
-  const { tier, downgrade } = useGlassCapabilities();
+  const { tier, reasons, downgrade, reportReason } = useGlassCapabilities();
   return (
-    <button data-testid="probe" onClick={() => downgrade('lite', 'slow')}>
-      {tier}
-    </button>
+    <>
+      <button data-testid="probe" onClick={() => downgrade('lite', 'slow')}>
+        {tier}
+      </button>
+      <button data-testid="report" onClick={() => reportReason('card-refraction-disabled')}>
+        report
+      </button>
+      <output data-testid="reasons">{reasons.join(',')}</output>
+    </>
   );
 };
 
@@ -152,6 +158,18 @@ describe('GlassPerformanceManager', () => {
     );
     act(() => screen.getByTestId('probe').click());
     expect(document.documentElement.dataset.glassTier).toBe('fallback');
+  });
+
+  it('reportReason() records a note without changing the tier, once', () => {
+    render(
+      <GlassPerformanceManager env={CAPABLE}>
+        <Probe />
+      </GlassPerformanceManager>,
+    );
+    act(() => screen.getByTestId('report').click());
+    act(() => screen.getByTestId('report').click());
+    expect(screen.getByTestId('reasons').textContent).toBe('card-refraction-disabled');
+    expect(document.documentElement.dataset.glassTier).toBe('enhanced');
   });
 
   it('falls back to a safe default outside the provider', () => {

@@ -87,4 +87,21 @@ describe('brand tokens', () => {
     const bg = blend(BRAND['burgundy-900'], alpha, brightPaving);
     expect(contrast(BRAND['ivory-100'], bg), `alpha ${alpha}`).toBeGreaterThanOrEqual(4.5);
   });
+
+  it('the chip tint is a layer above the refraction canvas, so it always covers the photo', () => {
+    // an element's own background paints below a z-index:-1 canvas; the ::after tint paints above it
+    expect(glassCss).toMatch(/\.refractive-overlay::after\s*\{[^}]*z-index:\s*-1/);
+    const own = /\.refractive-overlay\s*\{([^}]*)\}/.exec(glassCss);
+    expect(own).not.toBeNull();
+    expect(own![1]).not.toMatch(/background:/);
+  });
+
+  it('badges and caption chips on photos keep their text at AA even over a white wall', () => {
+    const m = /\.refractive-overlay::after\s*\{[^}]*background:\s*rgba\(46,\s*15,\s*25,\s*([0-9.]+)\)/.exec(glassCss);
+    expect(m).not.toBeNull();
+    const bg = blend(BRAND['burgundy-900'], parseFloat(m![1]), '#FFFFFF');
+    for (const text of ['ivory-100', 'champagne-300']) {
+      expect(contrast(BRAND[text], bg), `${text} on a chip (alpha ${m![1]}) over white`).toBeGreaterThanOrEqual(4.5);
+    }
+  });
 });

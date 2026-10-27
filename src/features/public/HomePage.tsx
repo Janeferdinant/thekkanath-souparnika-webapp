@@ -18,6 +18,8 @@ import { ResponsivePicture, imageKeyForSrc } from '../../components/public/Respo
 import { HeroSection } from '../../components/public/HeroSection';
 import { GlassCard } from '../../glass/GlassCard';
 import { GlassSurface } from '../../glass/GlassSurface';
+import { RefractiveOverlay } from '../../glass/RefractiveOverlay';
+import type { Hall } from '../../types/models';
 
 const GALLERY_PHOTOS = [
   { src: '/assets/venue/venue-000.jpg', title: 'Stage Hall — Raised Stage & Seating' },
@@ -48,6 +50,71 @@ const Eyebrow: React.FC<{ tone: 'light' | 'dark'; icon?: React.ReactNode; childr
     <span>{children}</span>
   </div>
 );
+
+/** A hall card's photo with its floor and air-conditioning badges. */
+const HallCardImage: React.FC<{ hall: Hall }> = ({ hall }) => {
+  const imgRef = useRef<HTMLImageElement>(null);
+  const key = imageKeyForSrc(hall.coverImage);
+  return (
+    <div className="relative h-52 overflow-hidden bg-brand-burgundy-900 lens-hover rounded-t-[inherit]">
+      {key && (
+        <ResponsivePicture
+          image={key}
+          alt={hall.name}
+          sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
+          className="block w-full h-full"
+          imgClassName="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          imgRef={imgRef}
+        />
+      )}
+      <RefractiveOverlay
+        imageRef={imgRef}
+        className="absolute top-3 left-3 text-brand-champagne-300 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full"
+      >
+        {hall.floor}
+      </RefractiveOverlay>
+      <RefractiveOverlay
+        imageRef={imgRef}
+        className="absolute bottom-3 right-3 text-brand-ivory-100 text-[10px] font-medium px-2.5 py-1 rounded-full"
+      >
+        {hall.airConditioned ? 'Air-Conditioned' : 'Natural Airflow'}
+      </RefractiveOverlay>
+    </div>
+  );
+};
+
+/** One photo in the homepage gallery: a button that opens the lightbox, with a caption on hover. */
+const GalleryTile: React.FC<{ photo: { src: string; title: string }; onOpen: (trigger: HTMLElement) => void }> = ({ photo, onOpen }) => {
+  const imgRef = useRef<HTMLImageElement>(null);
+  return (
+    <button
+      type="button"
+      onClick={(e) => onOpen(e.currentTarget)}
+      className="group relative h-52 w-full text-left rounded-2xl overflow-hidden shadow-subtle border border-brand-champagne-500 bg-brand-burgundy-900 lens-hover"
+    >
+      <ResponsivePicture
+        image={imageKeyForSrc(photo.src)!}
+        alt={photo.title}
+        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+        className="block w-full h-full"
+        imgClassName="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+        imgRef={imgRef}
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-gradient-to-t from-brand-burgundy-950 via-transparent to-transparent opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity flex items-end p-3"
+      >
+        <RefractiveOverlay
+          imageRef={imgRef}
+          className="text-brand-ivory-100 text-xs font-medium flex items-center justify-between w-full rounded-xl px-3 py-2"
+        >
+          <span className="truncate">{photo.title}</span>
+          <Eye className="w-4 h-4 text-brand-champagne-300 shrink-0 ml-1.5" />
+        </RefractiveOverlay>
+      </div>
+    </button>
+  );
+};
 
 export const HomePage: React.FC = () => {
   const [galleryIndex, setGalleryIndex] = useState<number | null>(null);
@@ -94,26 +161,9 @@ export const HomePage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {HALLS.filter((h) => h.id !== 'auditorium').map((hall) => {
-              const key = imageKeyForSrc(hall.coverImage);
               return (
                 <GlassCard key={hall.id} tone="light" className="group overflow-hidden flex flex-col border-brand-champagne-500">
-                  <div className="relative h-52 overflow-hidden bg-brand-burgundy-900 lens-hover rounded-t-[inherit]">
-                    {key && (
-                      <ResponsivePicture
-                        image={key}
-                        alt={hall.name}
-                        sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
-                        className="block w-full h-full"
-                        imgClassName="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                      />
-                    )}
-                    <div className="absolute top-3 left-3 bg-brand-burgundy-900 text-brand-champagne-300 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border border-brand-champagne-500 shadow-md">
-                      {hall.floor}
-                    </div>
-                    <div className="absolute bottom-3 right-3 bg-brand-burgundy-900 text-brand-ivory-100 text-[10px] font-medium px-2.5 py-1 rounded-full shadow-md border border-brand-champagne-500">
-                      {hall.airConditioned ? 'Air-Conditioned' : 'Natural Airflow'}
-                    </div>
-                  </div>
+                  <HallCardImage hall={hall} />
 
                   <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                     <div>
@@ -258,32 +308,14 @@ export const HomePage: React.FC = () => {
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             {GALLERY_PHOTOS.map((photo, idx) => (
-              <button
-                type="button"
+              <GalleryTile
                 key={photo.src}
-                onClick={(e) => {
-                  galleryTrigger.current = e.currentTarget;
+                photo={photo}
+                onOpen={(trigger) => {
+                  galleryTrigger.current = trigger;
                   setGalleryIndex(idx);
                 }}
-                className="group relative h-52 w-full text-left rounded-2xl overflow-hidden shadow-subtle border border-brand-champagne-500 bg-brand-burgundy-900 lens-hover"
-              >
-                <ResponsivePicture
-                  image={imageKeyForSrc(photo.src)!}
-                  alt={photo.title}
-                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-                  className="block w-full h-full"
-                  imgClassName="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 bg-gradient-to-t from-brand-burgundy-950 via-transparent to-transparent opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity flex items-end p-4"
-                >
-                  <div className="text-brand-ivory-100 text-xs font-medium flex items-center justify-between w-full">
-                    <span className="truncate">{photo.title}</span>
-                    <Eye className="w-4 h-4 text-brand-champagne-300 shrink-0 ml-1.5" />
-                  </div>
-                </div>
-              </button>
+              />
             ))}
           </div>
         </div>

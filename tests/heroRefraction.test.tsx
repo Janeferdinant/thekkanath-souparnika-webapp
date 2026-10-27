@@ -88,7 +88,7 @@ const flushFrames = (timestamps: number[]) => {
 const renderHero = (downgrade = vi.fn(), tier: 'enhanced' | 'lite' = 'enhanced') => {
   const utils = render(
     <MemoryRouter>
-      <GlassContext.Provider value={{ tier, reasons: [], pageVisible: true, downgrade }}>
+      <GlassContext.Provider value={{ tier, reasons: [], pageVisible: true, downgrade, reportReason: vi.fn() }}>
         <HeroSection />
       </GlassContext.Provider>
     </MemoryRouter>,
