@@ -7,7 +7,6 @@ import { join } from 'node:path';
  * files from this list; the list must reach [] before the PR is done.
  */
 export const PENDING_MIGRATION: string[] = [
-  'src/components/public/AmbientParticles.tsx',
   'src/components/public/PreferredCaterersCard.tsx',
   'src/components/public/PublicFooter.tsx',
   'src/features/public/ContactPage.tsx',

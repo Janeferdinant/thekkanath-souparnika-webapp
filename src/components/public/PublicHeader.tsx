@@ -108,7 +108,7 @@ export const PublicHeader: React.FC = () => {
               className="w-11 h-11 object-contain logo-gold-glow"
             />
             <div>
-              <div className="font-serif font-medium text-xl sm:text-2xl text-brand-ivory-100 tracking-tight leading-none group-hover:text-brand-champagne-300 transition-colors">
+              <div className="font-serif font-medium text-xl sm:text-2xl text-brand-ivory-100 tracking-tight leading-none whitespace-nowrap group-hover:text-brand-champagne-300 transition-colors">
                 Thekkanath Souparnika
               </div>
               <div className="text-[9px] tracking-[0.18em] uppercase font-semibold text-brand-champagne-400 mt-1 flex items-center gap-1.5">
@@ -122,7 +122,7 @@ export const PublicHeader: React.FC = () => {
           {/* Desktop Nav */}
           <nav
             aria-label="Main"
-            className="hidden lg:flex items-center gap-7 text-xs uppercase tracking-wider font-medium text-brand-ivory-muted"
+            className="hidden xl:flex items-center gap-7 text-xs uppercase tracking-wider font-medium text-brand-ivory-muted"
           >
             {NAV_LINKS.map((link) => (
               <Link
@@ -164,7 +164,7 @@ export const PublicHeader: React.FC = () => {
             <button
               ref={toggleRef}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-xl text-brand-ivory-100 hover:bg-white/10"
+              className="xl:hidden inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-xl text-brand-ivory-100 hover:bg-white/10"
               aria-label="Toggle navigation menu"
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-nav"
@@ -179,7 +179,7 @@ export const PublicHeader: React.FC = () => {
           <div
             id="mobile-nav"
             data-testid="mobile-nav"
-            className="lg:hidden border-t border-brand-burgundy-700 bg-brand-burgundy-950 px-5 pt-4 pb-7 space-y-2.5 shadow-2xl"
+            className="xl:hidden border-t border-brand-burgundy-700 bg-brand-burgundy-950 px-5 pt-4 pb-7 space-y-2.5 shadow-2xl"
           >
             {NAV_LINKS.map((link) => (
               <Link

@@ -5,7 +5,6 @@ import {
   Sparkles,
   CheckCircle2,
   ArrowRight,
-  ShieldCheck,
   Eye,
   MapPin,
   ChevronRight,
@@ -15,94 +14,15 @@ import {
 } from 'lucide-react';
 import { VENUE_INFO, HALLS, FACILITIES, FAQS, HOME_FAQ_IDS } from '../../data/venueData';
 import { Modal } from '../../components/ui/Modal';
-import { AmbientParticles } from '../../components/public/AmbientParticles';
+import { HeroSection } from '../../components/public/HeroSection';
 
 export const HomePage: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   return (
     <div className="space-y-16 sm:space-y-24 pb-20">
-      {/* 1. Hero Section — Dark Burgundy + Rose Gold Editorial Experience */}
-      <section className="pt-4 sm:pt-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="relative rounded-3xl sm:rounded-[2rem] overflow-hidden min-h-[580px] sm:min-h-[640px] flex items-end shadow-luxury border border-[rgba(226,184,178,0.22)] bg-gradient-to-br from-[#260811] via-[#431320] to-[#1c070c] text-[#f7efe7]">
-          {/* Hero background image with luxury luminescence */}
-          <img
-            src="/assets/venue/venue-006.jpg"
-            alt="Thekkanath Souparnika building entrance and facade in Thrissur"
-            className="absolute inset-0 w-full h-full object-cover opacity-45 mix-blend-luminosity scale-105 transition-transform duration-1000 hover:scale-100 pointer-events-none"
-            fetchPriority="high"
-          />
-
-          {/* Graded dark wine overlays for optimal editorial contrast */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#18070c]/95 via-[#240810]/85 to-transparent pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#18070c] via-[#240810]/70 to-transparent pointer-events-none" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_25%,rgba(226,184,178,0.15),transparent_35%)] pointer-events-none" />
-
-          {/* Ambient Particles in Hero (Sparse, 28 desktop / 12 mobile, gentle bokeh) */}
-          <AmbientParticles variant="hero" className="z-0 opacity-80" />
-
-          {/* Hero Content */}
-          <div className="relative z-10 p-6 sm:p-12 lg:p-16 max-w-3xl space-y-6 sm:space-y-7">
-            {/* Brand heading */}
-            <h1 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-medium tracking-tight text-[#e7cfaf] leading-none">
-              Thekkanath Souparnika
-            </h1>
-
-            {/* Editorial Eyebrow */}
-            <div className="inline-flex items-center gap-2.5 text-[10px] sm:text-xs uppercase tracking-[0.2em] font-semibold text-[#e2b8b2]">
-              <span className="w-6 h-[1px] bg-[#c58e91]" />
-              <span>Traditional & Contemporary Celebrations in Thrissur</span>
-            </div>
-
-            {/* Cormorant Garamond Editorial Display Headline */}
-            <p className="font-serif text-4xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-[#f7efe7] leading-[1.02]">
-              Where family milestones <br />
-              <em className="text-[#e2b8b2] not-italic font-normal">
-                feel truly special.
-              </em>
-            </p>
-
-            <p className="text-sm sm:text-base text-[#e4d2d0] leading-relaxed max-w-xl font-normal">
-              Four connected halls—three fully air-conditioned—arranged for weddings, engagements, baptisms, and family celebrations. Includes 100-seat batch dining for traditional sadhya and easy ground-floor access for elders, at Market Junction, Nellikunnu.
-            </p>
-
-            {/* Responsive Actions with Specular Highlight Sheen */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
-              <Link
-                to="/halls"
-                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-6 py-3 rounded-full text-xs uppercase tracking-wider font-semibold text-[#2c0c15] bg-gradient-to-r from-[#e8c7bc] via-[#d8aba2] to-[#c58e91] hover:from-[#f3ded8] hover:to-[#d4a098] shadow-luxury border border-[#e9c6b9] transition-all hover:scale-[1.02] glass-highlight"
-              >
-                <span>Explore the Halls</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-              <Link
-                to="/enquire"
-                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-6 py-3 rounded-full text-xs uppercase tracking-wider font-semibold text-[#f7efe7] bg-[#2c0812]/50 hover:bg-[#2c0812]/80 border border-[rgba(226,184,178,0.35)] backdrop-blur-md transition-all glass-control"
-              >
-                <Calendar className="w-3.5 h-3.5 text-[#e7cfaf]" />
-                <span>Check Date / Enquire</span>
-              </Link>
-            </div>
-          </div>
-
-          {/* Floating Liquid Glass Info Panel */}
-          <div className="hidden xl:block absolute right-12 top-12 max-w-xs p-6 rounded-3xl glass-panel text-[#f7efe7] space-y-3 z-10 border border-[rgba(226,184,178,0.24)]">
-            <div className="flex items-center justify-between">
-              <div className="font-serif text-3xl font-medium text-[#e7cfaf]">
-                4 Spaces
-              </div>
-              <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
-            </div>
-            <p className="text-xs text-[rgba(203,184,185,0.9)] leading-relaxed">
-              Stage, Welcome, and Dining halls are air-conditioned. The Dining Hall seats 100 guests per batch for feasts. The entire venue is reserved exclusively for you.
-            </p>
-            <div className="text-[11px] text-[#e2b8b2] flex items-center gap-1.5 pt-1 border-t border-[rgba(226,184,178,0.2)]">
-              <ShieldCheck className="w-4 h-4 text-[#e7cfaf]" />
-              <span>Only One Event at a Time</span>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* 1. Hero: golden-hour entrance photo */}
+      <HeroSection />
 
       {/* 2. Venue Highlights — one strip of editorial metric tiles */}
       <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
