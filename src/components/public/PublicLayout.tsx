@@ -4,11 +4,13 @@ import { Building2, Calendar, Phone, MessageCircle } from 'lucide-react';
 import { PublicHeader } from './PublicHeader';
 import { PublicFooter } from './PublicFooter';
 import { VENUE_INFO } from '../../data/venueData';
+import { GlassPerformanceManager } from '../../glass/GlassPerformanceManager';
 
 export const PublicLayout: React.FC = () => {
   const location = useLocation();
 
   return (
+    <GlassPerformanceManager>
     <div className="public-luxury min-h-screen flex flex-col selection:bg-rose-700 selection:text-white relative font-sans">
       {/* Main sticky luxury navigation header */}
       <PublicHeader />
@@ -83,5 +85,6 @@ export const PublicLayout: React.FC = () => {
         </div>
       </nav>
     </div>
+    </GlassPerformanceManager>
   );
 };
