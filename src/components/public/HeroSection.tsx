@@ -1,9 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Calendar, MapPin } from 'lucide-react';
 import { VENUE_INFO } from '../../data/venueData';
 import { ResponsivePicture } from './ResponsivePicture';
 import { GlassHeroPanel } from '../../glass/GlassHeroPanel';
+import { useGlassCapabilities } from '../../glass/useGlassCapabilities';
+
+// Shader code is its own chunk, fetched only on enhanced devices after the photo has loaded.
+const HeroRefraction = lazy(() => import('../../glass/renderer/HeroRefraction'));
 
 /**
  * Homepage hero built around the golden-hour entrance photo.
@@ -17,12 +21,29 @@ export const HeroSection: React.FC = () => {
   const imgRef = useRef<HTMLImageElement>(null);
   const [imageReady, setImageReady] = useState(false);
   const [imageFailed, setImageFailed] = useState(false);
+  const [rendererWanted, setRendererWanted] = useState(false);
+  const { tier } = useGlassCapabilities();
 
   // A cached image can finish loading before React attaches onLoad
   useEffect(() => {
     const img = imgRef.current;
     if (img && img.complete && img.naturalWidth > 0) setImageReady(true);
   }, []);
+
+  // Start the WebGL layer only when the device can afford it, the photo is really on screen, and the
+  // browser is idle. Any other case leaves the plain photo, which is complete on its own.
+  useEffect(() => {
+    if (tier !== 'enhanced' || !imageReady) {
+      setRendererWanted(false);
+      return;
+    }
+    if (typeof window.requestIdleCallback === 'function') {
+      const handle = window.requestIdleCallback(() => setRendererWanted(true), { timeout: 1500 });
+      return () => window.cancelIdleCallback(handle);
+    }
+    const timer = window.setTimeout(() => setRendererWanted(true), 200);
+    return () => window.clearTimeout(timer);
+  }, [tier, imageReady]);
 
   return (
     <section className="surface-burgundy relative overflow-hidden -mt-20" aria-label="Welcome">
@@ -56,11 +77,17 @@ export const HeroSection: React.FC = () => {
             }}
           />
 
+          {rendererWanted && frameRef.current && imgRef.current && (
+            <Suspense fallback={null}>
+              <HeroRefraction frame={frameRef.current} image={imgRef.current} />
+            </Suspense>
+          )}
+
           {/* Phones: burgundy gradient over the paving so the text can start on the photo */}
           <div className="md:hidden absolute inset-x-0 bottom-0 h-[40%] bg-gradient-to-t from-brand-burgundy-950 to-transparent pointer-events-none" />
 
           {/* Glass info panel over the wet paving, never over the signage or entrance */}
-          <GlassHeroPanel className="hidden md:block absolute bottom-4 inset-x-4 lg:bottom-6 lg:left-6 lg:right-auto lg:max-w-xs p-5">
+          <GlassHeroPanel className="hidden md:block absolute z-10 bottom-4 inset-x-4 lg:bottom-6 lg:left-6 lg:right-auto lg:max-w-xs p-5">
             <div className="flex items-start gap-3">
               <MapPin className="w-4 h-4 mt-0.5 text-brand-champagne-400 shrink-0" />
               <div className="text-xs leading-relaxed">
