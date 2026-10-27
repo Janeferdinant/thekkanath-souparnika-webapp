@@ -33,18 +33,7 @@ const STORAGE_KEYS = {
   REFERRALS: 'ts_referrals',
 };
 
-/**
- * Checks if Supabase environment variables are available and properly configured
- */
-export function isSupabaseConfigured(): boolean {
-  const url = import.meta.env.VITE_SUPABASE_URL;
-  const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-  return Boolean(url && anonKey && url.startsWith('http') && anonKey.length > 20);
-}
-
-export function isDemoMode(): boolean {
-  return !isSupabaseConfigured();
-}
+export { isSupabaseConfigured, isDemoMode } from './demoMode';
 
 /**
  * Generic local storage loader with default fallback

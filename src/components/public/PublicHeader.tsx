@@ -11,7 +11,7 @@ import {
   MessageCircle,
 } from 'lucide-react';
 import { VENUE_INFO } from '../../data/venueData';
-import { isDemoMode } from '../../lib/storage';
+import { isDemoMode } from '../../lib/demoMode';
 
 export const PublicHeader: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
