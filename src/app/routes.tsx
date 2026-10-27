@@ -3,6 +3,7 @@ import { createBrowserRouter, Navigate, type RouteObject } from 'react-router-do
 import { PublicLayout } from '../components/public/PublicLayout';
 import { HomePage } from '../features/public/HomePage';
 import { RouteFallback } from './RouteFallback';
+import { RouteError } from './RouteError';
 
 // Everything except the home page and its layout is loaded on demand.
 const AdminRoot = lazy(() => import('./AdminRoot').then((m) => ({ default: m.AdminRoot })));
@@ -41,6 +42,7 @@ export const routes: RouteObject[] = [
   // Authentication
   {
     path: '/login',
+    errorElement: <RouteError fullPage />,
     element: withSuspense(
       <AdminRoot>
         <LoginPage />
@@ -53,21 +55,28 @@ export const routes: RouteObject[] = [
     path: '/',
     element: <PublicLayout />,
     children: [
-      { index: true, element: <HomePage /> },
-      { path: 'halls', element: withSuspense(<HallsPage />) },
-      { path: 'halls/:slug', element: withSuspense(<HallDetailPage />) },
-      { path: 'facilities', element: withSuspense(<FacilitiesPage />) },
-      { path: 'gallery', element: withSuspense(<GalleryPage />) },
-      { path: 'tour', element: <Navigate to="/gallery" replace /> },
-      { path: 'enquire', element: withSuspense(<EnquirePage />) },
-      { path: 'contact', element: withSuspense(<ContactPage />) },
-      { path: 'faq', element: withSuspense(<FAQPage />) },
+      {
+        // a page that fails to load shows its message inside the site header and footer
+        errorElement: <RouteError />,
+        children: [
+          { index: true, element: <HomePage /> },
+          { path: 'halls', element: withSuspense(<HallsPage />) },
+          { path: 'halls/:slug', element: withSuspense(<HallDetailPage />) },
+          { path: 'facilities', element: withSuspense(<FacilitiesPage />) },
+          { path: 'gallery', element: withSuspense(<GalleryPage />) },
+          { path: 'tour', element: <Navigate to="/gallery" replace /> },
+          { path: 'enquire', element: withSuspense(<EnquirePage />) },
+          { path: 'contact', element: withSuspense(<ContactPage />) },
+          { path: 'faq', element: withSuspense(<FAQPage />) },
+        ],
+      },
     ],
   },
 
   // Admin Routes (Protected)
   {
     path: '/admin',
+    errorElement: <RouteError fullPage />,
     element: withSuspense(
       <AdminRoot>
         <ProtectedRoute>

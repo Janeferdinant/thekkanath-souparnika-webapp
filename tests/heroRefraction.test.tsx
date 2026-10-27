@@ -191,6 +191,19 @@ describe('HeroRefraction mounting', () => {
     expect(ctx.frame.querySelector('canvas')).toBeNull();
   });
 
+  it('keeps the phone text scrim and the info panel above the canvas, so text never sits on raw photo', async () => {
+    const ctx = renderHero();
+    await mountRenderer(ctx);
+    const canvas = ctx.frame.querySelector('canvas') as HTMLCanvasElement;
+    const canvasZ = Number(canvas.style.zIndex);
+    const zOf = (el: Element) => Number(/(?:^|\s)(?:md:|lg:)?z-\[?(\d+)\]?(?:\s|$)/.exec(el.className)?.[1] ?? 0);
+    const scrim = ctx.frame.querySelector('[data-hero-scrim]')!;
+    expect(scrim).not.toBeNull();
+    expect(zOf(scrim)).toBeGreaterThan(canvasZ);
+    const panel = ctx.frame.querySelector('[data-glass-lens]')!;
+    expect(zOf(panel)).toBeGreaterThan(zOf(scrim));
+  });
+
   it('mounts a decorative canvas inside the frame once the photo has loaded and the browser is idle', async () => {
     const ctx = renderHero();
     await mountRenderer(ctx);

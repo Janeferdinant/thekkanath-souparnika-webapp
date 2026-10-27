@@ -91,7 +91,7 @@ export const EnquirePage: React.FC = () => {
   // validation moves focus to the first invalid field.
   useEffect(() => {
     stepHeadingRef.current?.focus({ preventScroll: false });
-  }, [step]);
+  }, [step, submittedEnquiry]);
 
   useEffect(() => {
     if (Object.keys(errors).length === 0) return;

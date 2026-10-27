@@ -63,6 +63,14 @@ function save<T>(key: string, data: T): void {
   }
 }
 
+/**
+ * Like save(), but for a write the caller must not pretend succeeded. A visitor's enquiry is only
+ * "received" if the browser really kept it, so a refused write (blocked or full storage) throws.
+ */
+function saveOrThrow<T>(key: string, data: T): void {
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
 export const StorageService = {
   // Clear all local storage data back to clean empty production state
   clearAllStorageData(): void {
@@ -167,7 +175,7 @@ export const StorageService = {
       updatedAt: new Date().toISOString(),
     };
     enquiries.unshift(newEnquiry);
-    save(STORAGE_KEYS.ENQUIRIES, enquiries);
+    saveOrThrow(STORAGE_KEYS.ENQUIRIES, enquiries);
 
     this.logAction('PUBLIC_ENQUIRY_CREATED', 'Enquiry', newEnquiry.id, `New enquiry ${newEnquiry.reference} from ${newEnquiry.customerName}`);
     return newEnquiry;

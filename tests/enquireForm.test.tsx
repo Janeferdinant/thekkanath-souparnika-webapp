@@ -125,6 +125,28 @@ describe('enquiry submission states', () => {
     expect(text).toMatch(/confirm availability|check our bookings calendar/i);
   });
 
+  it('moves focus to the success heading so screen-reader users hear the result', async () => {
+    vi.spyOn(StorageService, 'createEnquiry').mockReturnValue(FAKE_ENQUIRY);
+    reachReview();
+    fireEvent.click(screen.getByRole('button', { name: /Submit Booking Enquiry/i }));
+    await screen.findByText(/Enquiry Received/i, {}, { timeout: 3000 });
+    const heading = screen.getByRole('heading', { level: 1 });
+    expect(heading.textContent).toMatch(/Thank You/);
+    expect(document.activeElement).toBe(heading);
+  });
+
+  it('shows the error, not success, when the browser cannot save the enquiry (real storage path, no mock)', async () => {
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new DOMException('The quota has been exceeded.', 'QuotaExceededError');
+    });
+    reachReview();
+    fireEvent.click(screen.getByRole('button', { name: /Submit Booking Enquiry/i }));
+    const alert = await screen.findByRole('alert', {}, { timeout: 3000 });
+    expect(alert.textContent).toMatch(/error occurred while saving/i);
+    expect(screen.queryByText(/Enquiry Received/i)).toBeNull();
+    expect(document.body.textContent).not.toMatch(/received your enquiry/i);
+  });
+
   it('requires the consent box before submitting', () => {
     renderPage();
     fillStep1();

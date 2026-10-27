@@ -13,7 +13,11 @@ interface RefractiveOverlayProps {
 const HOVER_SETTLE_MS = 750;
 
 /** The renderer is its own chunk: fetched, and its WebGL context created, only when a card first needs a draw. */
-const loadCardRenderer = () => import('./renderer/cardRefraction').then((m) => m.getCardRenderer());
+// If the chunk cannot be fetched the label simply stays a plain chip.
+const loadCardRenderer = () =>
+  import('./renderer/cardRefraction')
+    .then((m) => m.getCardRenderer())
+    .catch(() => null);
 
 /**
  * A label on a photo (a badge, a caption chip). On an enhanced device it draws the photo behind

@@ -6,8 +6,12 @@ import { ResponsivePicture } from './ResponsivePicture';
 import { GlassHeroPanel } from '../../glass/GlassHeroPanel';
 import { useGlassCapabilities } from '../../glass/useGlassCapabilities';
 
-// Shader code is its own chunk, fetched only on enhanced devices after the photo has loaded.
-const HeroRefraction = lazy(() => import('../../glass/renderer/HeroRefraction'));
+// Shader code is its own chunk, fetched only on enhanced devices after the photo has loaded. It is purely
+// decorative, so if the chunk cannot be fetched (flaky network, or gone after a redeploy) the hero simply stays
+// the plain photo instead of the whole page failing.
+const HeroRefraction = lazy(() =>
+  import('../../glass/renderer/HeroRefraction').catch(() => ({ default: () => null })),
+);
 
 /**
  * Homepage hero built around the golden-hour entrance photo.
@@ -106,7 +110,11 @@ export const HeroSection: React.FC = () => {
           )}
 
           {/* Phones: burgundy gradient over the paving so the text can start on the photo */}
-          <div className="md:hidden absolute inset-x-0 bottom-0 h-[40%] bg-gradient-to-t from-brand-burgundy-950 to-transparent pointer-events-none" />
+          {/* z-[2]: it must paint above the refraction canvas (z-1) or the text would sit on raw photo */}
+          <div
+            data-hero-scrim
+            className="md:hidden absolute z-[2] inset-x-0 bottom-0 h-[40%] bg-gradient-to-t from-brand-burgundy-950 to-transparent pointer-events-none"
+          />
 
           {/* Glass info panel over the wet paving, never over the signage or entrance */}
           <GlassHeroPanel className="hidden md:block absolute z-10 bottom-4 inset-x-4 lg:bottom-6 lg:left-6 lg:right-auto lg:max-w-xs p-5">
