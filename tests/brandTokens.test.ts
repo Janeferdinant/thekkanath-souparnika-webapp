@@ -104,4 +104,28 @@ describe('brand tokens', () => {
       expect(contrast(BRAND[text], bg), `${text} on a chip (alpha ${m![1]}) over white`).toBeGreaterThanOrEqual(4.5);
     }
   });
+
+  describe('focus rings', () => {
+    const all = css + '\n' + glassCss;
+    /** The brand colour used by the outline declared right after `selector`. */
+    const ringColour = (selector: string): string | null => {
+      const at = all.indexOf(selector);
+      if (at < 0) return null;
+      const open = all.indexOf('{', at); // the rule this selector belongs to, grouped or not
+      const body = all.slice(open, all.indexOf('}', open));
+      return /outline:\s*2px solid var\(--brand-([a-z]+-[0-9]+)\)/.exec(body)?.[1] ?? null;
+    };
+
+    it('the whole public site has a visible ring by default, burgundy on the ivory base', () => {
+      expect(ringColour('.public-luxury :focus-visible')).toBe('burgundy-700');
+    });
+
+    it.each(['.surface-burgundy :focus-visible', '.public-strip :focus-visible', ".glass-surface[data-tone='dark'] :focus-visible"])(
+      'dark surface %s uses champagne and is declared after the default so it wins',
+      (selector) => {
+        expect(ringColour(selector)).toBe('champagne-400');
+        expect(all.indexOf(selector)).toBeGreaterThan(all.indexOf('.public-luxury :focus-visible {'));
+      },
+    );
+  });
 });

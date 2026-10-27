@@ -60,7 +60,7 @@ export const PublicHeader: React.FC = () => {
       )}
 
       {/* Top Essential Venue Strip */}
-      <div className="bg-brand-burgundy-950 text-brand-ivory-muted text-[11px] py-1.5 px-4 border-b border-brand-burgundy-800">
+      <div className="public-strip bg-brand-burgundy-950 text-brand-ivory-muted text-[11px] py-1.5 px-4 border-b border-brand-burgundy-800">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3 flex-wrap">
             <span className="inline-flex items-center gap-1.5 text-brand-ivory-100 font-medium">

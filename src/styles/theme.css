@@ -322,6 +322,13 @@
   color: var(--brand-ivory-100);
 }
 
+/* Every focusable thing on the public site gets a visible ring. Burgundy on the ivory base; the
+   dark surfaces below (and in glass.css) switch to champagne. This default must stay above them. */
+.public-luxury :focus-visible {
+  outline: 2px solid var(--brand-burgundy-700);
+  outline-offset: 2px;
+}
+
 .surface-ivory :focus-visible,
 .surface-ivory-alt :focus-visible {
   outline: 2px solid var(--brand-burgundy-700);

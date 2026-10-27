@@ -147,6 +147,11 @@
   border-bottom-color: rgba(201, 165, 106, 0.28);
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
 }
+.public-strip :focus-visible,
+.glass-surface[data-tone='dark'] :focus-visible {
+  outline: 2px solid var(--brand-champagne-400);
+  outline-offset: 2px;
+}
 .glass-nav-bar :focus-visible {
   outline: 2px solid var(--brand-champagne-400);
   outline-offset: 2px;
