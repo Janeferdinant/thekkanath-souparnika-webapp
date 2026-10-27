@@ -1,0 +1,74 @@
+{
+  "hero-entrance": {
+    "width": 1086,
+    "height": 1448,
+    "alt": "Thekkanath Souparnika entrance and building facade at golden hour, Thrissur",
+    "avif": "/assets/venue/hero/entrance-480.avif 480w, /assets/venue/hero/entrance-768.avif 768w, /assets/venue/hero/entrance-1086.avif 1086w",
+    "webp": "/assets/venue/hero/entrance-480.webp 480w, /assets/venue/hero/entrance-768.webp 768w, /assets/venue/hero/entrance-1086.webp 1086w",
+    "jpg": "/assets/venue/hero/entrance-480.jpg 480w, /assets/venue/hero/entrance-768.jpg 768w, /assets/venue/hero/entrance-1086.jpg 1086w",
+    "fallback": "/assets/venue/hero/entrance-1086.jpg"
+  },
+  "venue-000": {
+    "width": 1364,
+    "height": 680,
+    "alt": "Stage Hall with raised carpeted stage and cushioned seating",
+    "avif": "/assets/venue/opt/venue-000-640.avif 640w, /assets/venue/opt/venue-000-1024.avif 1024w, /assets/venue/opt/venue-000-1364.avif 1364w",
+    "webp": "/assets/venue/opt/venue-000-640.webp 640w, /assets/venue/opt/venue-000-1024.webp 1024w, /assets/venue/opt/venue-000-1364.webp 1364w",
+    "jpg": "/assets/venue/opt/venue-000-640.jpg 640w, /assets/venue/opt/venue-000-1024.jpg 1024w, /assets/venue/opt/venue-000-1364.jpg 1364w",
+    "fallback": "/assets/venue/opt/venue-000-1364.jpg"
+  },
+  "venue-001": {
+    "width": 1364,
+    "height": 680,
+    "alt": "Welcome Hall with front glass entrance and side seating",
+    "avif": "/assets/venue/opt/venue-001-640.avif 640w, /assets/venue/opt/venue-001-1024.avif 1024w, /assets/venue/opt/venue-001-1364.avif 1364w",
+    "webp": "/assets/venue/opt/venue-001-640.webp 640w, /assets/venue/opt/venue-001-1024.webp 1024w, /assets/venue/opt/venue-001-1364.webp 1364w",
+    "jpg": "/assets/venue/opt/venue-001-640.jpg 640w, /assets/venue/opt/venue-001-1024.jpg 1024w, /assets/venue/opt/venue-001-1364.jpg 1364w",
+    "fallback": "/assets/venue/opt/venue-001-1364.jpg"
+  },
+  "venue-002": {
+    "width": 1364,
+    "height": 680,
+    "alt": "Dining Hall with banquet tables and a tree outlook",
+    "avif": "/assets/venue/opt/venue-002-640.avif 640w, /assets/venue/opt/venue-002-1024.avif 1024w, /assets/venue/opt/venue-002-1364.avif 1364w",
+    "webp": "/assets/venue/opt/venue-002-640.webp 640w, /assets/venue/opt/venue-002-1024.webp 1024w, /assets/venue/opt/venue-002-1364.webp 1364w",
+    "jpg": "/assets/venue/opt/venue-002-640.jpg 640w, /assets/venue/opt/venue-002-1024.jpg 1024w, /assets/venue/opt/venue-002-1364.jpg 1364w",
+    "fallback": "/assets/venue/opt/venue-002-1364.jpg"
+  },
+  "venue-003": {
+    "width": 1364,
+    "height": 680,
+    "alt": "Open Hall with polished marble flooring and airflow fans",
+    "avif": "/assets/venue/opt/venue-003-640.avif 640w, /assets/venue/opt/venue-003-1024.avif 1024w, /assets/venue/opt/venue-003-1364.avif 1364w",
+    "webp": "/assets/venue/opt/venue-003-640.webp 640w, /assets/venue/opt/venue-003-1024.webp 1024w, /assets/venue/opt/venue-003-1364.webp 1364w",
+    "jpg": "/assets/venue/opt/venue-003-640.jpg 640w, /assets/venue/opt/venue-003-1024.jpg 1024w, /assets/venue/opt/venue-003-1364.jpg 1364w",
+    "fallback": "/assets/venue/opt/venue-003-1364.jpg"
+  },
+  "venue-004": {
+    "width": 1364,
+    "height": 680,
+    "alt": "Wash area with a long row of basins and mirrors",
+    "avif": "/assets/venue/opt/venue-004-640.avif 640w, /assets/venue/opt/venue-004-1024.avif 1024w, /assets/venue/opt/venue-004-1364.avif 1364w",
+    "webp": "/assets/venue/opt/venue-004-640.webp 640w, /assets/venue/opt/venue-004-1024.webp 1024w, /assets/venue/opt/venue-004-1364.webp 1364w",
+    "jpg": "/assets/venue/opt/venue-004-640.jpg 640w, /assets/venue/opt/venue-004-1024.jpg 1024w, /assets/venue/opt/venue-004-1364.jpg 1364w",
+    "fallback": "/assets/venue/opt/venue-004-1364.jpg"
+  },
+  "venue-005": {
+    "width": 1364,
+    "height": 680,
+    "alt": "Grand staircase with glass railings",
+    "avif": "/assets/venue/opt/venue-005-640.avif 640w, /assets/venue/opt/venue-005-1024.avif 1024w, /assets/venue/opt/venue-005-1364.avif 1364w",
+    "webp": "/assets/venue/opt/venue-005-640.webp 640w, /assets/venue/opt/venue-005-1024.webp 1024w, /assets/venue/opt/venue-005-1364.webp 1364w",
+    "jpg": "/assets/venue/opt/venue-005-640.jpg 640w, /assets/venue/opt/venue-005-1024.jpg 1024w, /assets/venue/opt/venue-005-1364.jpg 1364w",
+    "fallback": "/assets/venue/opt/venue-005-1364.jpg"
+  },
+  "venue-006": {
+    "width": 600,
+    "height": 800,
+    "alt": "Thekkanath Souparnika building facade and compound",
+    "avif": "/assets/venue/opt/venue-006-600.avif 600w",
+    "webp": "/assets/venue/opt/venue-006-600.webp 600w",
+    "jpg": "/assets/venue/opt/venue-006-600.jpg 600w",
+    "fallback": "/assets/venue/opt/venue-006-600.jpg"
+  }
+}
